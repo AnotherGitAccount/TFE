@@ -1,0 +1,17 @@
+# Fdb version 3
+["pdflatex"] 1598536030 "test.tex" "test.pdf" "test" 1598536031
+  "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1591545468 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmr12.tfm" 1591545468 1288 655e228510b4c2a1abe905c368440826 ""
+  "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1591545468 32722 d7379af29a190c3f453aba36302ff5a9 ""
+  "/usr/share/texmf-dist/tex/latex/base/article.cls" 1591545468 20023 e427dd9e17e239bf926ef3aab67fe35e ""
+  "/usr/share/texmf-dist/tex/latex/base/size12.clo" 1591545468 8447 5c4b8ee712f8e349df2722115bc8c513 ""
+  "/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def" 1591545468 25742 5de23a2d2bc67a3139433e702e64a437 ""
+  "/usr/share/texmf-dist/web2c/texmf.cnf" 1591545468 33301 a3134070eacafb10b1f371612ce2650d ""
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1598530826 4727905 1b81189106e2406a827797a37162c1c0 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1598530820 2514050 5d19381dbed41736027d785967d9f5ba ""
+  "test.aux" 1598536031 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
+  "test.tex" 1598536030 87 2ef1b54a2ef2e6080ef3260c382b3a69 ""
+  (generated)
+  "test.log"
+  "test.pdf"
+  "test.aux"
