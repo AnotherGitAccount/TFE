@@ -10,7 +10,7 @@
 **[11th September 2020] _Figuring out how to access the DDR3 RAM_**
 
 The DDR3 RAM (1Go) is only accessible from the ARM side but a bridge exists between
-the two sides of the SoC. This bridge must be activated and then used.
+the two sides of the chip. This bridge must be activated and then used.
 
 **Links that might help**
 - https://stackoverflow.com/questions/57525000/altera-de10-standard-writing-to-ddr-using-fpga
