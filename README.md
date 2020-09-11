@@ -16,6 +16,11 @@ the two sides of the chip. This bridge must be activated and then used.
 - https://stackoverflow.com/questions/57525000/altera-de10-standard-writing-to-ddr-using-fpga
 - https://community.intel.com/t5/FPGA-SoC-And-CPLD-Boards-And/How-to-directly-access-linux-s-RAM-with-FPGA-on-de10-nano/td-p/636169
 - https://zipcpu.com/blog/2018/11/03/soc-fpga.html
+- https://digibird1.wordpress.com/playing-with-the-cyclone-v-soc-system-de0-nano-soc-kitatlas-soc/
+
+[It seems that the solution is to create a QSys subsytem on the FPGA side and
+to make mmap system calls from the CPU side](https://www.reddit.com/r/FPGA/comments/7ejp7f/accessing_ram_from_fpga_on_a_de0nano_soc_board/).
+
 
 
 
