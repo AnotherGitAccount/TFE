@@ -19,7 +19,7 @@ the two sides of the chip. This bridge must be activated and then used.
 - https://digibird1.wordpress.com/playing-with-the-cyclone-v-soc-system-de0-nano-soc-kitatlas-soc/
 
 [It seems that the solution is to create a QSys subsytem on the FPGA side and
-to make mmap system calls from the CPU side](https://www.reddit.com/r/FPGA/comments/7ejp7f/accessing_ram_from_fpga_on_a_de0nano_soc_board/).
+to make mmap system calls from the CPU side](https://www.reddit.com/r/FPGA/comments/7ejp7f/accessing_ram_from_fpga_on_a_de0nano_soc_board/) (also explained p63-66 in the user manual).
 
 
 
