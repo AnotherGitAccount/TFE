@@ -1,6 +1,24 @@
 # Master thesis - Polet Quentin
 
+## Tasks
+
+- [x] Look for previous related works and read them
+- [ ] Find a way to access the DDR3 RAM from the FPGA side
+
 ## What's new
+
+**[11th September 2020] _Figuring out how to access the DDR3 RAM_**
+
+The DDR3 RAM (1Go) is only accessible from the ARM side but a bridge exists between
+the two sides of the SoC. This bridge must be activated and then used.
+
+**Links that might help**
+- https://stackoverflow.com/questions/57525000/altera-de10-standard-writing-to-ddr-using-fpga
+- https://community.intel.com/t5/FPGA-SoC-And-CPLD-Boards-And/How-to-directly-access-linux-s-RAM-with-FPGA-on-de10-nano/td-p/636169
+- https://zipcpu.com/blog/2018/11/03/soc-fpga.html
+
+
+
 
 **[27th August 2020] _Currently reading several documents and watching videos_**
 
@@ -24,8 +42,3 @@
 - [Bit by bit - How to fit 8 RISC V cores in a $38 FPGA board](https://www.youtube.com/watch?v=xjIxORBRaeQ)
 - [RISCV CPU on an FPGA: OpenSource and size optimized!](https://www.youtube.com/watch?v=k2rN8FE1jWM)
 - [MeganWachs - Keynote RISC-V and FPGAs: Open Source Hardware Hacking](https://www.youtube.com/watch?v=vCG5_nxm2G4)
-
-## Tasks
-
-- [x] Look for previous related works
-- [ ] Read the previous works and sumarize them
