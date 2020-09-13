@@ -3,26 +3,29 @@
 ## Tasks
 
 - [x] Look for previous related works and read them
-- [ ] Find a way to access the DDR3 RAM from the FPGA side
+- [x] Find a way to access the DDR3 RAM from the FPGA side
+- [ ] Try to set / load data to the RAM from the FPGA side
 
 ## What's new
 
 **[11th September 2020] _Figuring out how to access the DDR3 RAM_**
 
 The DDR3 RAM (1Go) is only accessible from the ARM side but a bridge exists between
-the two sides of the chip. This bridge must be activated and then used.
+the two sides of the chip. How to use it?
 
 **Links that might help**
 - https://stackoverflow.com/questions/57525000/altera-de10-standard-writing-to-ddr-using-fpga
 - https://community.intel.com/t5/FPGA-SoC-And-CPLD-Boards-And/How-to-directly-access-linux-s-RAM-with-FPGA-on-de10-nano/td-p/636169
 - https://zipcpu.com/blog/2018/11/03/soc-fpga.html
 - https://digibird1.wordpress.com/playing-with-the-cyclone-v-soc-system-de0-nano-soc-kitatlas-soc/
+- [Cornell university lectures on SoC+FPGA ships](https://www.youtube.com/watch?v=sKhvMhTiuM4&list=PLKcjQ_UFkrd7UcOVMm39A6VdMbWWq-e_c)
 
-[It seems that the solution is to create a QSys subsytem on the FPGA side and
-to make mmap system calls from the CPU side](https://www.reddit.com/r/FPGA/comments/7ejp7f/accessing_ram_from_fpga_on_a_de0nano_soc_board/) (also explained p63-66 in the user manual).
-
-
-
+In brief, one first need to create a program on the ARM side that maps the physical
+RAM to virtual RAM that is used in a bus that interconnects the ARM and FPGA sides.
+Then, a bus controller must be implemented on the FPGA side to communicate through
+the Avalon bus. The controller can be designed using QSys, a quartus tool that ease
+that kind of development, using a visual programming language. More over, QSys comes
+with libraries that already contains this kind of controller.
 
 
 **[27th August 2020] _Currently reading several documents and watching videos_**
