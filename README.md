@@ -8,6 +8,10 @@
 
 ## What's new
 
+**[23rd September 2020] _Continuing the work on DDR3 RAM acces_**
+
+Found new interesting stuff here https://github.com/robertofem/CycloneVSoC-examples/tree/master/Baremetal-applications/DMA_transfer_FPGA_DMAC.
+
 **[11th September 2020] _Figuring out how to access the DDR3 RAM_**
 
 The DDR3 RAM (1Go) is only accessible from the ARM side but a bridge exists between
