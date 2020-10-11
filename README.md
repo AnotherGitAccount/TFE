@@ -8,6 +8,15 @@
 
 ## What's new
 
+**[11th October 2020] _Adding code and first draft report on git_**
+
+The report is available in `latex/report.tex` and `latex/report.pdf`. Feel free to
+anotate the .tex file and push it on the repository.
+
+Simple counter project is available in `quartus/simple_counter`. This can be opened
+from Quartus Prime Lite 20.1 (click open project then select .qpf file). The project
+can be compiled. To visualize the generated "schematics" go in Tools/Netlist Viewers/RTL viewer (after compilation has terminated). Code files are available in .v files under `quartus/simple_counter` directory.
+
 **[23rd September 2020] _Continuing the work on DDR3 RAM acces_**
 
 Found new interesting stuff here https://github.com/robertofem/CycloneVSoC-examples/tree/master/Baremetal-applications/DMA_transfer_FPGA_DMAC.
