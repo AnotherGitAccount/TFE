@@ -1,12 +1,14 @@
 \documentclass[12pt]{article}
 \usepackage{graphicx}
 
+\newcommand{\PF}[1]{\marginpar{\tiny PF: #1}}
+
 \begin{document}
 
 \section{The DE10-nano board}
 
 \subsection{Intel Cyclone V chip}
-The DE10-nano development board is equipped with an FPGA from intel: Cyclone V. This chip is interesting because it not only contains an FPGA but also an ARM processor, it is a FPGA+SoC chip. The interest of this style of architecture is to have on one side an OS such as linux that runs on a real processor and on the other side the possibility to configure a kind of peripheral on the FPGA side. Moreover, the circuits implemented on the FPGA side can be configured from the ARM processor side, which makes the FPGA part editable in real time. A very interesting example of use is hardware acceleration. One might want to create an audio system on the processor and need different calculation functions: fourier transform, AC/DC converter, ... All these could simply be implemented by the ARM on the FPGA side whenever needed and use it afterward if the FPGA space is critical. In the case space is note critical, all the operations can simply be permanently implemented on the FPGA. By doing this, it is often possible to reduce the number of atomic operations required for the complex operation implemented - the operation is now done in hardware and no longer in software.
+The DE10-nano development board is equipped with an FPGA from intel: Cyclone V. This chip is interesting because it not only contains an FPGA but also an ARM processor, it is a FPGA+SoC chip. The advantage of this style of architecture is to have on one side an OS such as linux that runs on a real processor and on the other side the possibility to configure a kind of peripheral on the FPGA side. Moreover, the circuits implemented on the FPGA side can be configured from the ARM processor side, which makes the FPGA part editable in real time. A very interesting example of use is hardware acceleration. One might want to create an audio system on the processor and need different calculation functions: Fourier transform, AC/DC converter, ... All these could simply be implemented by the ARM on the FPGA side whenever needed and use it afterwards if the FPGA space is critical. In the case space is not critical, all the operations can simply be permanently implemented on the FPGA. By doing this, it is often possible to reduce the number of atomic operations required for the complex operation implemented - the operation is now done in hardware and no longer in software.
 
 \subsection{Peripherals}
 
@@ -29,7 +31,7 @@ TO BE COMPLETED AS SOON AS I AM ABLE TO ACCESS DDR3 MEMORY
 
 \section{First implementation on the FPGA side}
 
-As a first step, it was decided to verify that the use and implementation of circuits on the FPGA side was done in a traditional way. The first step was to create the top-level module and match its inputs and outputs to physical pins on the chip. These two steps were quickly completed using the system builder executable tool included in the development board CD-ROM provided by Terasic\footnote{Terasic is the manufacturer of the DE10-nano development board.}. A simple execution of this builder allows the generation of the project containing the mapping of the inputs and outputs as well as the top level module. Once this is done, it is possible to describe other modules and create an architecture to verify the functioning of the development chain of this FPGA.
+As a first step, it was decided to verify that the use and implementation of circuits on the FPGA side was done in a traditional way. The first step was to create the top-level module and match its inputs and outputs to physical pins on the chip. These two steps were quickly completed using the system builder executable tool included in the development board CD-ROM provided by Terasic\footnote{Terasic is the manufacturer of the DE10-nano development board.}. A simple execution of this builder allows the generation of the project containing the mapping of the inputs and outputs as well as the top level module. Once this is done, it is possible to describe other modules and create an architecture to verify the functioning of the development chain of this FPGA.\PF{Please rephrase}
 
 \subsection{8 bits counter with LEDs}
 
@@ -37,7 +39,7 @@ To check the development chain of this FPGA, an 8-bit counter has been implement
 
 \section{First implementation using both sides of the chip}
 
-Now that a counter has been created, the idea will be to access the DDR3 RAM on the ARM side from the FPGA side. To do this, the bridges and the avalon bus must be manipulated. The goal is to put a number at startup in the RAM (this is done on the ARM side), get it from the FPGA part, load it into the counter and start counting from there. Finally, the count has to be updated in RAM by the FPGA. Doing this ensures that the communication between the two parts of the chip, in both directions, works.
+Now that a counter has been created, the idea will be to access the DDR3 RAM on the ARM side from the FPGA side. To do this, the bridges and the avalon bus must be handled. The goal is to put a number at startup in the RAM (this is done on the ARM side), get it from the FPGA part, load it into the counter and start counting from there. Finally, the count has to be updated in RAM by the FPGA. Doing this ensures that the communication between the two parts of the chip, in both directions, works.
 
 \vspace{12pt}
 TO BE COMPLETED AS SOON AS I AM ABLE TO ACCESS DDR3 MEMORY
