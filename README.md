@@ -5,8 +5,14 @@
 - [x] Look for previous related works and read them
 - [x] Find a way to access the DDR3 RAM from the FPGA side
 - [ ] Try to set / load data to the RAM from the FPGA side
+- [ ] Modify counters + modify simple_counter content
+- [ ] Update latex file according to the remarks
 
 ## What's new
+
+**[27th October 2020] _Working on the memory_**
+
+I created the memory module, I still have to write the memory driver to drive the DDR3. Code of the memory module is available in `quartus/simple_memory`.
 
 **[11th October 2020] _Adding code and first draft report on git_**
 
