@@ -4,24 +4,50 @@
 
 - [x] Look for previous related works and read them
 - [x] Find a way to access the DDR3 RAM from the FPGA side
+- [x] Create memory modules
 - [ ] Try to set / load data to the RAM from the FPGA side
 - [ ] Modify counters + modify simple_counter content
-- [ ] Update latex file according to the remarks
+- [x] Update latex file according to the remarks
+- [ ] Looking for working machines available on the DE10-nano
+
+## Questions to answer
+
+- How to manage response delays in the memory?
 
 ## What's new
 
+**[2nd November 2020] _Completing the report_**
+
+I added the sections related to the communication between ARM and FPGA sides.
+
+**Important documentations**
+
+- [Avalon documentation](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/manual/mnl_avalon_spec.pdf)
+- [Cyclone V HPS documentation](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54001.pdf)
+
+**[29th October 2020] _Working on the memory_**
+
+I created the memory driver module that makes the link between FPGA memory and
+the physical memory - still need to test it. Code of the memory driver module is available in `quartus/simple_memory`.
+
 **[27th October 2020] _Working on the memory_**
 
-I created the memory module, I still have to write the memory driver to drive the DDR3. Code of the memory module is available in `quartus/simple_memory`.
+I created the memory module, I still have to write the memory driver to drive
+the DDR3. Code of the memory module is available in `quartus/simple_memory`.
 
 **[11th October 2020] _Adding code and first draft report on git_**
 
-The report is available in `latex/report.tex` and `latex/report.pdf`. Feel free to
+The report is available in `latex/report.tex` and `latex/report.pdf`. Feel free
+to
 anotate the .tex file and push it on the repository.
 
-Simple counter project is available in `quartus/simple_counter`. This can be opened
-from Quartus Prime Lite 20.1 (click open project then select .qpf file). The project
-can be compiled. To visualize the generated "schematics" go in Tools/Netlist Viewers/RTL viewer (after compilation has terminated). Code files are available in .v files under `quartus/simple_counter` directory.
+Simple counter project is available in `quartus/simple_counter`. This can be
+opened
+from Quartus Prime Lite 20.1 (click open project then select .qpf file). The
+project
+can be compiled. To visualize the generated "schematics" go in Tools/Netlist
+Viewers/RTL viewer (after compilation has terminated). Code files are available
+in .v files under `quartus/simple_counter` directory.
 
 **[23rd September 2020] _Continuing the work on DDR3 RAM acces_**
 
@@ -29,7 +55,8 @@ Found new interesting stuff here https://github.com/robertofem/CycloneVSoC-examp
 
 **[11th September 2020] _Figuring out how to access the DDR3 RAM_**
 
-The DDR3 RAM (1Go) is only accessible from the ARM side but a bridge exists between
+The DDR3 RAM (1Go) is only accessible from the ARM side but a bridge exists
+between
 the two sides of the chip. How to use it?
 
 **Links that might help**
@@ -39,11 +66,16 @@ the two sides of the chip. How to use it?
 - https://digibird1.wordpress.com/playing-with-the-cyclone-v-soc-system-de0-nano-soc-kitatlas-soc/
 - [Cornell university lectures on SoC+FPGA ships](https://www.youtube.com/watch?v=sKhvMhTiuM4&list=PLKcjQ_UFkrd7UcOVMm39A6VdMbWWq-e_c)
 
-In brief, one first need to create a program on the ARM side that maps the physical
-RAM to virtual RAM that is used in a bus that interconnects the ARM and FPGA sides.
-Then, a bus controller must be implemented on the FPGA side to communicate through
-the Avalon bus. The controller can be designed using QSys, a quartus tool that ease
-that kind of development, using a visual programming language. More over, QSys comes
+In brief, one first need to create a program on the ARM side that maps the
+physical
+RAM to virtual RAM that is used in a bus that interconnects the ARM and FPGA
+sides.
+Then, a bus controller must be implemented on the FPGA side to communicate
+through
+the Avalon bus. The controller can be designed using QSys, a quartus tool that
+ease
+that kind of development, using a visual programming language. More over, QSys
+comes
 with libraries that already contains this kind of controller.
 
 

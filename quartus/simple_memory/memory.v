@@ -15,7 +15,7 @@ module memory(CLK, DRIVER_ADDRESS, DRIVER_RDATA, DRIVER_WDATA, DRIVER_RW, DRIVER
 	output 		       PENDING;
 
 	// CONSTANTS
-	`define READY  2'b00	// READY STATE
+	`define READY  2'b00 // READY STATE
 	`define SET    2'b01 // SET STATE
 	`define LOAD   2'b10 // LOAD STATE
 
