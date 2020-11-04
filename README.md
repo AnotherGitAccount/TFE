@@ -5,16 +5,27 @@
 - [x] Look for previous related works and read them
 - [x] Find a way to access the DDR3 RAM from the FPGA side
 - [x] Create memory modules
-- [ ] Try to set / load data to the RAM from the FPGA side
+- [x] Try to set / load data to the RAM from the FPGA side
 - [ ] Modify counters + modify simple_counter content
 - [x] Update latex file according to the remarks
-- [ ] Looking for working machines available on the DE10-nano
+- [x] Looking for working machines available on the DE10-nano
 
 ## Questions to answer
-
-- How to manage response delays in the memory?
+Nothing
 
 ## What's new
+
+**[4th November 2020] _Reading stuff about on-chip memory_**
+
+**Documentation** :
+- https://www.studocu.com/en-us/document/university-of-alabama/digital-systems-design/lecture-notes/lec-6-memory-implementation-on-altera-cyclone-v-devices/1064914/view
+- http://www.ee.ic.ac.uk/pcheung/teaching/ee2_digital/Lecture%2014%20-%20FPGA%20Embedded%20Memory.pdf
+- And the Cyclone V datasheet obviously : [Overview](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_51001.pdf) and [Handbook volume I](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_5v2.pdf)
+
+**[3rd November 2020] _Getting ready for the meeting_**
+
+I finished the test for reading and writing in the memory and completed the report.
+I also modified the counters. Finally, I checked foralready existing machines available on the board that I use.
 
 **[2nd November 2020] _Completing the report_**
 

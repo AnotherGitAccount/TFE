@@ -36,6 +36,10 @@ On the card, numerous peripherals are made available to the user. Some of them w
 All these devices are shown in the Figure \ref{fig:de10nano_peripherals}. It should be noted that the devices are always linked to one of the two parts of Cyclone-V. This means that the other part cannot access them directly. In order to access one of the peripherals on the other side, it will be necessary to use one of the bridges between the ARM part and the FPGA
 part.
 
+\subsection{Maximum resource counts}
+
+\subsection{On-chip memory}
+
 \subsection{Connections between ARM and FPGA sides}
 
 The two parts of the architecture can communicate with each other. Indeed, there are several bridges that allow this. First of all, there are those in which the ARM processor is the master: HDS-TO-FPGA bridge and the lightweight HDS-TO-FPGA bridge. Both allow the same operations, except that the lightweight is limited to 32-bit words, while the other allows words up to 128 bits. In the other direction, where the FPGA is the master, there are two bridges again but this time they are more different. The first one is the FPGA-TO-HDS bridge which works like its counterpart, the HDS-TO-FPGA which goes the other way. The second bridge is the FPGA-TO-SDRAM bridge which allows 6 masters on the FPGA side to have direct access to the SDRAM controller. The advantage of the second bridge is that it allows a simple access to the memory but it has the disadvantage of not being cache-coherent with respect to the ARM processor cache. If one wants to have cache-coherency, it is necessary to go through the FPGA-TO-HPS bridge which has the advantage of going through the ARM processor and its cache to access the RAM.
