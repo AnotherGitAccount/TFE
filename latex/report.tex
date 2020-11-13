@@ -1,4 +1,6 @@
 \documentclass[12pt]{article}
+
+\usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
 
 \newcommand{\PF}[1]{\marginpar{\tiny PF: #1}}
@@ -25,7 +27,7 @@ The DE10-nano development board is equipped with an FPGA from intel: Cyclone V. 
 
 \begin{figure}[ht!]
   \center
-  \includegraphics[width=12cm]{"res/chapter1/layout_components.png"}
+  \includegraphics[width=\linewidth]{"res/board/layout_components.png"}
   \caption{Layout and peripherals of the DE10-nano board}
   \label{fig:de10nano_peripherals}
 \end{figure}
@@ -36,9 +38,35 @@ On the card, numerous peripherals are made available to the user. Some of them w
 All these devices are shown in the Figure \ref{fig:de10nano_peripherals}. It should be noted that the devices are always linked to one of the two parts of Cyclone-V. This means that the other part cannot access them directly. In order to access one of the peripherals on the other side, it will be necessary to use one of the bridges between the ARM part and the FPGA
 part.
 
-\subsection{Maximum resource counts}
-
 \subsection{On-chip memory}
+\label{sec:ocm}
+
+Several types of on-chip memories are available in the version of Cyclone V that is used. The first are the M10k memories, these are 10 kilobit blocks. 557 are available, making a total of 5,570 kb for this type of memory. Then, there are the MLAB type memories which provide a total of 621 kb. And finally, there are also 166,036 bits on registers. A sumary is shown in Table \ref{tab:memory}.
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Type} & \textbf{Capacity} \\
+    \hline
+    M10k & 5,570 kb \\
+    MLAB & 621 kb \\
+    Register & 166,036 bits \\
+    \hline
+  \end{tabular}
+\caption{On-chip memory types and their capacities}
+\label{tab:memory}
+\end{table}
+
+\subsubsection{Comparison}
+
+Let's start with the registers. These are nothing more than the registers available at the ALM\footnote{Adaptative Logic Module. J'expliquerai correctement à quoi ça correspond dès que j'écrirai les premières sections sur le fonctionnement de la FPGA au niveau physique. Mais en gros, les ALM sont les éléments de base de l'architecture d'une FPGA. Ils possèdent 2 adders, 2 lookup tables, des multiplexers et 4 registres 1 bit. Leur programmation décrit l'hardware.} level. Using them therefore costs logical units which limits the hardware description of the other components. Moreover, they do not constitute memory per se, they are only one-bit registers distributed in different places in the FPGA. That said, this type of memory is very practical and convenient for small memories containing only one or few words.
+
+\vspace{12pt}
+MLAB is also implemented using ALMs, so using them also reduces the hardware description capacity of the FPGA. However, the memory here has a real architecture which allows to create real memory blocks from 10 ALMs. The main advantage of this memory is its speed, it allows to use frequencies up to 420MHz but only allows blocks of maximum 640 bits. Moreover, these blocks do not allow dual port access.
+
+\vspace{12pt}
+Finally, the M10Ks provide ALM-independent memory blocks which is ideal when a large amount of fast access memory is required. Their maximum frequency is 315MHz, which is more than 6 times higher than the frequency used on the DE10-Nano development board. Also, this memory is not limited to single port but also accepts dual port. Each port accepts one write or read instruction at a time.
 
 \subsection{Connections between ARM and FPGA sides}
 
@@ -49,8 +77,8 @@ The different bridges and their points of departure and arrival are described in
 
 \begin{figure}[ht!]
   \center
-  \includegraphics[width=12cm]{"res/chapter1/board_schematic.png"}
-  \caption{High level schematic of the DE10-nano board}
+  \includegraphics[width=\linewidth]{"res/board/board_schematic.png"}
+  \caption{High level schematic of the Cyclove-V}
   \label{fig:de10nano_schematic}
 \end{figure}
 
@@ -67,7 +95,7 @@ First, let's start by reading. The sequence diagram of the protocol for the read
 
 \begin{figure}[ht!]
   \center
-  \includegraphics[width=12cm]{"res/chapter1/avalon_mm_read.png"}
+  \includegraphics[width=\linewidth]{"res/board/avalon_mm_read.png"}
   \caption{Read burst operation using Avalon MM}
   \label{fig:avalon_mm_read}
 \end{figure}
@@ -78,7 +106,7 @@ For writing, it's even simpler. As can be seen in Figure \ref{fig:avalon_mm_writ
 
 \begin{figure}[ht!]
   \center
-  \includegraphics[width=12cm]{"res/chapter1/avalon_mm_write.png"}
+  \includegraphics[width=\linewidth]{"res/board/avalon_mm_write.png"}
   \caption{Write burst operation using Avalon MM}
   \label{fig:avalon_mm_write}
 \end{figure}
@@ -87,20 +115,32 @@ For writing, it's even simpler. As can be seen in Figure \ref{fig:avalon_mm_writ
 
 In the end, communicating is not very complicated. However, the whole architecture using the bridges and this protocol must be able to manage delays and be adapted to them so that they do not degrade the efficiency of the machine too much. In these delays, it is necessary on the one hand to take into account the delays of the slaves, as well as the delays induced by the bursts if they are used. Cache and other solutions of the kind are to be studied in order to accelerate as much as possible the operations related to the communications between the two parts of the chip when it is possible.
 
-\section{Getting hands: first implementations}
+\section{The beta machine}
 
-In this section two projects are described, one only using the FPGA side of the chip and the other one using the two sides. The reason for these first sub-projects is to verify the workflow of this
-FPGA+SoC chip and to start working on it without having to directly confront a heavy and complete architecture. In addition, these two sub-projects consist of the realization of blocks that will be needed later on anyway. So nothing is lost.
+\subsection{Main memory}
 
-\subsection{Using the FPGA side only: 8 bits counter with LEDs}
+\subsection{Register file}
 
-To check the development chain of this FPGA, an 8-bit counter has been implemented. This can be described very simply in verilog. As input this module takes the FPGA clock which oscillates at 50MHz and outputs the number contained in the 8-bit counter. The 8 bits are then mapped to the 8 LEDs on the board to make the number visible. However, with this update frequency, it is impossible to distinguish different numbers at the LEDs. The counter update frequency must therefore be reduced. An input is then added to the counter, the clock enable that will warn it when it needs to increment its value. To generate the clock enable, another module is implemented: the clock manager. This module is a counter that runs directly on the 50MHz except that it never returns its number. It will only count until it reaches a certain number that allows tuning the output frequency. In fact, as soon as the number is reached, the counter is reset to 0 and the clock enable goes to 1 for one clock tick. If the maximum number of the counter is set to $50 \times 10^6$, the clock enable will be generated once a second and the counter linked to the LEDs will be updated once a second as well. This makes reading at the LED level possible. The commented Quartus\footnote{Quartus Prime Lite 20.1 to be exact.} project of this subsection is available in \textsc{quartus/simple\_counter}.
+The register file whose block view is shown in Figure \ref{fig:reg_file_block} contains the registers that the machine can work on. A value must always be put in a register before it can be read and used. This part of the machine allows two simultaneous reads and a write. Writing only takes place when a write enable is in the high state. The block therefore consists of five inputs and two outputs.
 
-\subsection{Using both the FPGA and the ARM sides}
-
-Now that a counter has been created, the idea will be to access the DDR3 RAM on the ARM side from the FPGA side. To do this, the bridges and the avalon bus must be handled. The goal is to put a number at startup in the RAM (this is done on the ARM side), get it from the FPGA part, load it into the counter and start counting from there. Finally, the count has to be updated in RAM by the FPGA. Doing this ensures that the communication between the two parts of the chip, in both directions, works.
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=12cm]{res/machine/reg_file.png}
+\caption{Block representation of the register file}
+\label{fig:reg_file_block}
+\end{figure}
 
 \vspace{12pt}
-TO BE COMPLETED AS SOON AS IT IS DONE
+For this work, the registers are addressed on 5 bits, which gives a total number of 32 registers. Also, the machine operates on 32 bits, these 32 registers are composed of the same number of bits. So we have 32 registers of 32bits. Of course, these registers are not really separated. Instead, a memory of 32 words of 32 bits will be used.
+
+\vspace{12pt}
+As just explained, the block needs two reads simultaneously with one write. However, in Section \ref{sec:ocm} it was seen that the on-chip memories offered at best two ports which can each be either write or read at a given time. It is therefore not possible to implement this kind of memory directly. But if the memory is duplicated as shown in Figure \ref{fig:reg_file}, by using two dual port M10K memories, it becomes possible. Indeed one port of each of the two memories is used for writing while the other is used for reading. So it has one write that is duplicated and two independent reads. This corresponds to what was expected from this block. In Figure \ref{fig:reg_file} another module is also shown: the memory\_port. In fact, this module is simply a wraper that wraps altsyncram for convenience.
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=\linewidth]{res/machine/reg_file_internal.png}
+  \caption{Internal design of the register file}
+  \label{fig:reg_file}
+\end{figure}
 
 \end{document}
