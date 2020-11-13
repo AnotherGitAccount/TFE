@@ -6,14 +6,20 @@
 - [x] Find a way to access the DDR3 RAM from the FPGA side
 - [x] Create memory modules
 - [x] Try to set / load data to the RAM from the FPGA side
-- [ ] Modify counters + modify simple_counter content
 - [x] Update latex file according to the remarks
 - [x] Looking for working machines available on the DE10-nano
+- [ ] Re-writing the memory module
+- [ ] Writing the FPGA section in the report
+- [ ] Writing the memory section in the report
 
 ## Questions to answer
 Nothing
 
 ## What's new
+
+**[13th November 2020] __Working on the report and register file__**
+
+Register file is now ready and I added register file and on-chip memory sections to the report.
 
 **[4th November 2020] _Reading stuff about on-chip memory_**
 
