@@ -51,9 +51,8 @@ export PROJECT=$TOP_FOLDER/projects/project_name
 
 ## Hardware with Quartus
 
-The first step is to [get the DE10-Nano CD-ROM given by Terasic](http://www.terasic.com.tw/cgi-bin/page/archive.pl?
-Language=English&CategoryNo=205&No=1046&PartNo=4) and unzip it in the `utils` folder.This step can be skipped if the `utils` 
-folder already contains de unzipped CD file.
+The first step is to [get the DE10-Nano CD-ROM given by Terasic](http://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=205&No=1046&PartNo=4)
+ and unzip it in the `utils` folder.This step can be skipped if the `utils` folder already contains de unzipped CD file.
 
 ```
 mkdir $TOP_FOLDER/utils/board_cd && cd $TOP_FOLDER/utils/board_cd 
