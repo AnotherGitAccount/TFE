@@ -17,7 +17,7 @@ Nothing
 
 ## What's new
 
-**[14 - 17th November 2020] __Preloader / Bootloader / Linux Kernel / System file__
+**[14 - 17th November 2020] __Preloader / Bootloader / Linux Kernel / System file__**
 
 It took me 4 days but I'm now able to create custom preloader / bootloader / linux kernel
 and system file and boot them all on the ARM. The preloader also boot the FPGA et set
