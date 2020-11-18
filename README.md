@@ -20,7 +20,7 @@ Nothing
 **[18 November 2020] __Thinking on how to re-emplement the RAM__**
 
 - [Physical Page Allocation on linux](https://www.kernel.org/doc/gorman/html/understand/understand009.html)
-- [How to access devices from FPGA](ftp://ftp.intel.com/pub/fpgaup/pub/Teaching_Materials/current/Tutorials/Accessing_HPS_Devices_from_FPGA.pdf)
+- How to access devices from FPGA -> ftp://ftp.intel.com/pub/fpgaup/pub/Teaching_Materials/current/Tutorials/Accessing_HPS_Devices_from_FPGA.pdf
 - [Accelerator Coherency Port](https://developer.arm.com/documentation/ddi0434/c/snoop-control-unit/about-the-scu/accelerator-coherency-port)
 
 
@@ -33,7 +33,7 @@ its content on the way.
 -> I'm happy
 
 **Links that helped (a lot)**
-- [Embedded Linux Beginners Guide from RocketBoards.org](ftp://ftp.intel.com/pub/fpgaup/pub/Teaching_Materials/current/Tutorials/Accessing_HPS_Devices_from_FPGA.pdf)
+- Embedded Linux Beginners Guide from RocketBoards.org -> ftp://ftp.intel.com/pub/fpgaup/pub/Teaching_Materials/current/Tutorials/Accessing_HPS_Devices_from_FPGA.pdf
 - [FPGA/Linux co-design with Cyclone V tutorial from aignacio's](https://blog.aignacio.com/hardware-software-design-in-cyclone-v-de10-nano/)
 - [Bitlog's tutorial on Building embedded Linux for the Terasic DE10-Nano (and other Cyclone V SoC FPGAs)](https://bitlog.it/20170820_building_embedded_linux_for_the_terasic_de10-nano.html)
 
