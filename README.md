@@ -17,11 +17,17 @@ Nothing
 
 ## What's new
 
-**[18 November 2020] __Thinking on how to re-emplement the RAM__**
+**[18 - 19th November 2020] __Thinking on how to re-emplement the RAM__**
 
 - [Physical Page Allocation on linux](https://www.kernel.org/doc/gorman/html/understand/understand009.html)
 - How to access devices from FPGA -> ftp://ftp.intel.com/pub/fpgaup/pub/Teaching_Materials/current/Tutorials/Accessing_HPS_Devices_from_FPGA.pdf
 - [Accelerator Coherency Port](https://developer.arm.com/documentation/ddi0434/c/snoop-control-unit/about-the-scu/accelerator-coherency-port)
+- [3.6 Managing Coherency for FPGA Accelerators](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/an/an-cv-av-soc-ddg.pdf)
+  I must use the AXI protocol instead of the Avalon one because the Avalon protocol doesn't support cached operations.
+- [Level 2 Cache Controller Technical Reference Manual](https://developer.arm.com/documentation/ddi0246/h)
+- [A video on AXI protocol](https://www.youtube.com/watch?v=Vw2_1pqa2h0)
+- [The AXI protocol reference](http://www.gstitt.ece.ufl.edu/courses/fall15/eel4720_5721/labs/refs/AXI4_specification.pdf)
+- [Understanding AXI addressing](https://zipcpu.com/blog/2019/04/27/axi-addr.html)
 
 
 **[14 - 17th November 2020] __Preloader / Bootloader / Linux Kernel / System file__**
