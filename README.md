@@ -25,9 +25,11 @@ Nothing
 - [3.6 Managing Coherency for FPGA Accelerators](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/an/an-cv-av-soc-ddg.pdf)
   I must use the AXI protocol instead of the Avalon one because the Avalon protocol doesn't support cached operations.
 - [Level 2 Cache Controller Technical Reference Manual](https://developer.arm.com/documentation/ddi0246/h)
-- [A video on AXI protocol](https://www.youtube.com/watch?v=Vw2_1pqa2h0)
+- [A video on AXI protocol (theoretical aspects)](https://www.youtube.com/watch?v=Vw2_1pqa2h0)
 - [The AXI protocol reference](http://www.gstitt.ece.ufl.edu/courses/fall15/eel4720_5721/labs/refs/AXI4_specification.pdf)
+- [Another playlist of 5 videos on AXI protocol (practical aspects)](https://www.youtube.com/watch?v=1zw1HBsjDH8&list=PLaSdxhHqai2_7WZIhCszu5PLSbZURmibN)
 - [Understanding AXI addressing](https://zipcpu.com/blog/2019/04/27/axi-addr.html)
+- [Building a basic AXI Master](https://zipcpu.com/blog/2020/03/23/wbm2axisp.html)
 
 
 **[14 - 17th November 2020] __Preloader / Bootloader / Linux Kernel / System file__**
