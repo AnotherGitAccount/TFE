@@ -17,7 +17,23 @@ Nothing
 
 ## What's new
 
-**[18 - 19th November 2020] __Thinking on how to re-emplement the RAM__**
+**[25th November 2020] __Re-implementing the RAM__**
+
+I finished implementing a very simple "cache" that has only one line containing two 32-bit words because the ACP (Accelerator Coherency Port) works on 64bits. 
+I'm currently writing the testbench that is supposed to allow me to simulate and test it. 
+
+- [Creating a Qsys IP](https://www.youtube.com/watch?v=v6rhbVABlo8)
+- [Section 30 : simulating the hps](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54001.pdf)
+- [Example on youtube (not sure that it is the way to go)](https://www.youtube.com/watch?v=tFLaiqIdDlQ)
+
+**[18 - 19th and 23rd November 2020] __Thinking on how to re-implement the RAM__**
+
+As the ram I was using was partly a black box provided by Terasic (the card manufacturer), I prefer to rebuild it myself (only the communication part). 
+The goal is to be able to manage the protocol (AXI4) and thus choose how the data is transferred. Moreover, it makes it easier for me to understand how 
+everything works and to be able to integrate it into the complete system including linux (to link it to the preloader and correctly configure the device tree).
+
+The idea is to create a simple memory access on the FPGA side that will communicate with the ACP (Accelerator Coherency Port) as a master. 
+The ACP allows hidden memory access by 64-bit lines. 
 
 - [Physical Page Allocation on linux](https://www.kernel.org/doc/gorman/html/understand/understand009.html)
 - How to access devices from FPGA -> ftp://ftp.intel.com/pub/fpgaup/pub/Teaching_Materials/current/Tutorials/Accessing_HPS_Devices_from_FPGA.pdf
