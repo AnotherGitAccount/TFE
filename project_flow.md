@@ -21,7 +21,7 @@
 ### Step 3. Connecting to the board to the computer
 
 * Place the sd card in you de10 nano sd card reader
-* Set the boot switches to 010101
+* Set the boot switches (from 1 to 6) to ON ON ON ON ON X
 * Plug the J4 USB port to your computer
 * Power the de10 nano board
 
@@ -60,7 +60,12 @@
 * Browse your files and select your .sof file
 * Click generate
 
-### Step 4. Configuring the FPGA
+
+### Step 4. Creating the preloader
+
+* Follow the steps in 
+
+### Step 4. Configuring the FPGA and the preloader
 
 * The FPGA is configured by the preloader. It simply sets the FPGA up while booting. Thus, we need to put the .rbf file in the sd card
 * Place the sd card in your computer
