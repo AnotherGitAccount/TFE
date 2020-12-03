@@ -60,14 +60,9 @@
 * Browse your files and select your .sof file
 * Click generate
 
+### Step 4. Configuring the FPGA
 
-### Step 4. Creating the preloader
-
-* Follow the steps in 
-
-### Step 4. Configuring the FPGA and the preloader
-
-* The FPGA is configured by the preloader. It simply sets the FPGA up while booting. Thus, we need to put the .rbf file in the sd card
+* The FPGA is configured by the bootloader (u-boot). It simply sets the FPGA up while booting. Thus, we need to put the .rbf file in the sd card
 * Place the sd card in your computer
 * Open the FAT partition (do not format the others if windows suggest it!!!). If the partition doesn't appear use "repair device" and it should appear. Once again, do not format if asked
 * Place your .rbf file in the fat partition
