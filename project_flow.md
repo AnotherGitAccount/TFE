@@ -1,82 +1,74 @@
-# Project flow with DE10-Nano (Cyclone V SE)
+# [Windows 10] Project flow with DE10-Nano (Cyclone V SE) 
 
 ## Prerequistes softwares
-- SoC EDS Standard
-- Quartus Lite (can be installed with SoCEDS)
+- balenaEtcher - used to flash image files (.iso) to sdcard
+- PuTTY - tool to connect using SSH and Serial connections
+- Quartus Prime Lite 16.0 (note that the version is important to work well with Terasic preconfigured projects) - used to describe FPGA side hardware logic
 
-## Folder Structure
+## Installing linux
 
-The main folder is divided in two parts: `utils` and `projects`. The former contains utils that can be used for all the projects to build
-the sd card image. Concerning the latter it contains all the projects that are also divided in many sub-folders.
+### Step 1. Download the linux image 
 
-```
-de10-nano
-├── projects
-│   └── project_name
-│       ├── hardware
-│       ├── report
-│       ├── sd_card
-│       │   ├── a2
-│       │   ├── ext3
-│       │   └── fat32
-│       └── software
-│           ├── application
-│           ├── bootloader
-│           ├── linux
-│           └── preloader
-└── utils
-```
+* The linux console image is available [here](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=167&No=1046&PartNo=4)
+* Unzip it
 
-### Project sub-folder structure
+### Step 2. Flash the linux image on the SD card
 
-1. **harware**: contains all the quartus related files, that's where the hardware is descripted
-2. **report** (optionnal): report files (latex, markdown, ...)
-3. **sd_card**: sd_card related files with 
-	- **ext3**: ext3 partition
-	- **fat32**: fat32 partition
-	- **a2**: bootloader folder
-4. **software**: 
-	- **application**: contains the application that will run on the ARM cpu
-	- **bootloader**: contains the linux kernel image, the u-boot image, the u-boot scipt, the device tree, ...
-	- **linux**: root filesystem
+* Place the SD card in your SD card reader
+* Open balenaEtcher, select the iso file and the sd card
+* Flash the sd card
 
-## Preamble
+### Step 3. Connecting to the board to the computer
 
-Go in your de10-nano folder and create an environment variables containing shortcuts for the paths. 
+* Place the sd card in you de10 nano sd card reader
+* Set the boot switches to 010101
+* Plug the J4 USB port to your computer
+* Power the de10 nano board
 
-```
-export TOP_FOLDER=`pwd`
-export PROJECT=$TOP_FOLDER/projects/project_name
-```
+### Step 4. Getting the serial USB drivers
 
-## Hardware with Quartus
+* Follow the steps described on this [website](https://www.usb-drivers.org/ft232r-usb-uart-driver.html).
 
-The first step is to [get the DE10-Nano CD-ROM given by Terasic](http://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=205&No=1046&PartNo=4)
- and unzip it in the `utils` folder.This step can be skipped if the `utils` folder already contains de unzipped CD file.
+### Step 5. Verify the SD card content
 
-```
-mkdir $TOP_FOLDER/utils/board_cd && cd $TOP_FOLDER/utils/board_cd 
-unzip ~/Downloads/DE10-Nano_v.1.3.8_HWrevC_SystemCD.zip
-rm ~/Downloads/DE10-Nano_v.1.3.8_HWrevC_SystemCD.zip
-```
+* Open your device manager and look for the DE10 nano in the ports, note the COM number
+* Open PuTTY and select Serial, use COMx (where x is the number you just noted) and set the baud rate (speed) to 115200
+* Click open, a new window should pops. Click on it and press enter if nothing appears
+* You are now asked to log in to anström, simply enter "root"
+* You are now logged
 
-Then, we need to extract the Golden Hardware Reference Design (GHRD) and store it in the `hardware` folder. This design can be taken as a 
-template for the De10-Nano board. It already contains the pin definition, the time constaints, the HPS (Hard Processor System - the ARM 
-cpu) definition, ...
+## Creating your own hardware description for the FPGA side
 
-```
-cp -r $TOP_FOLDER/utils/board_cd/Demonstrations/SoC_FPGA/DE10_NANO_SoC_GHRD/* $PROJECT/hardware/
-```
+### Step 1. Get the GHRD project
 
-Any modification of the hardware can be done in quartus now. Note that quartus might warn that the ip files are not up to date. 
-In that case, just let Quartus update them automaticaly. Once your modifications are done, compile the project. This will modify 
-the content of `hardware/hps_isw_handoff` and create a new `hardware/output_files/DE10_NANO_SoC_GHRD.sof` file. You need to convert 
-it to a .rbf.
+* Download the CD-ROM corresponding to your revision of the board on the [Terasic website](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=167&No=1046&PartNo=4)
+* Unzip it and get x_SystemCD/Demonstrations/SoC_FPGA/DE10_NANO_SoC_GHRD. This folder contains all the configurations for the board (RAM timings, GPIOs, ... are set for you).
+* Open this project with Quartus Prime Lite 16.0 and modify it as you wish.
 
-To do so, go in **Quartus > File > Converting Programming Files**. Then chose Raw Binary File (.rbf) and add the sof file in the box.
-Finally, click on generate. This file can be moved in the `sd_card/fat32` folder. It will be used by the bootloader script to program the
-FPGA side of the chip.
+### Step 2. Save the project
 
-```
-cp $PROJECT/hardware/output_files/output_file.rbf $PROJECT/sd_card/fat32/soc_system.rbf
-```
+* Once all your modifications are done, you have to compile the whole project (and correct your errors if any)
+* The compilation process will output a .sof file in the project sub-folder "output_files"
+
+### Step 3. Compress the sof file
+
+* Open Quartus Prime lite 16.0
+* Open File > Convert Programming File
+* In "Programming file type" select Raw Binary File (.rbf)
+* Modify the file name to soc_system.rbf, I advise to put it in the same folder as your .sof file to make it easier to find it afterward
+* In the bottom-most field "Input files to convert", click on SOF Data and then "Add File..." on the right side of the field
+* Browse your files and select your .sof file
+* Click generate
+
+### Step 4. Configuring the FPGA
+
+* The FPGA is configured by the preloader. It simply sets the FPGA up while booting. Thus, we need to put the .rbf file in the sd card
+* Place the sd card in your computer
+* Open the FAT partition (do not format the others if windows suggest it!!!). If the partition doesn't appear use "repair device" and it should appear. Once again, do not format if asked
+* Place your .rbf file in the fat partition
+* Place it back in your board and reboot it
+* Your hardware is now ready on the FPGA
+
+## Creating your own software on the ARM side
+
+### W.I.P
