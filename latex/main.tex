@@ -1,0 +1,34 @@
+\documentclass[12pt]{report}
+
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{graphicx}
+
+\title{Implementing the beta machine on a Terasic DE10 SoC+FPGA development board}
+\author{Master's thesis carried out to obtain the degree of Master of Science\\ in Electrical 
+Engineering by Polet Quentin\\ \\ University of Liège - School of Engineering and Computer Science}
+\date{Academic year 2020-2021}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\vspace*{3cm}
+\begin{figure}[h!]
+    \centering
+    \includegraphics{res/uliege-logo-couleurs-300.jpg}
+\end{figure}
+{\let\newpage\relax\maketitle}
+\vspace*{\fill}
+
+\newpage
+
+\pagenumbering{arabic}
+
+\include{Chapter0-Intro/intro.tex}
+\include{Chapter1-Beta/beta.tex}
+\include{Chapter2-FPGA/fpga.tex}
+\include{Chapter3-Hardware/hardware.tex}
+\include{Chapter4-SoC/soc.tex}
+\include{Chapter5-Boot/boot.tex}
+\include{Chapter6-Communication/communication.tex}
+
+\end{document}
