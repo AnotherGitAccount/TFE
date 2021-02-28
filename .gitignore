@@ -1,6 +1,5 @@
-latex/report.log
-latex/report.fls
-latex/report.pdf
-latex/report.fdb_latexmk
-latex/report.aux
-latex/report.synctex.gz
+# Ignores all files but tex ones in latex folders
+latex/*
+!latex/*.tex
+archives/*
+!archives/*.tex
