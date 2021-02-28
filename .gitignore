@@ -1,5 +1,5 @@
-# Ignores all files but tex ones in latex folders
-latex/*
-!latex/*.tex
-archives/*
-!archives/*.tex
+# Ignores all latex files not finishing with .tex
+archives/latex/**
+!archives/latex/**.tex
+latex/**
+!latex/**.tex

@@ -2,9 +2,9 @@
 
 ## Tasks
 
-- [] Creating a new software on the arm side to allow machine programming
-- [] Implementing returns in the machine and the software
-- [] Report
+- [ ] Creating a new software on the arm side to allow machine programming
+- [ ] Implementing returns in the machine and the software
+- [ ] Report
 
 ## Questions to answer
 Nothing
