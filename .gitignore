@@ -1,7 +1,8 @@
-# Ignores all latex files not finishing with .tex
+# Removes all report files that are not tex files or resources
 archives/latex/*
-!archives/latex/**/*.tex
+!archives/latex/*.tex
+!archives/latex/res/
 
-latex/*
-!latex/**/*.tex
-
+latex/*/*
+!latex/*/*.tex
+!latex/*/res/
