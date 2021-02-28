@@ -2,20 +2,19 @@
 
 ## Tasks
 
-- [x] Look for previous related works and read them
-- [x] Find a way to access the DDR3 RAM from the FPGA side
-- [x] Create memory modules
-- [x] Try to set / load data to the RAM from the FPGA side
-- [x] Update latex file according to the remarks
-- [x] Looking for working machines available on the DE10-nano
-- [ ] Re-writing the memory module
-- [ ] Writing the FPGA section in the report
-- [ ] Writing the memory section in the report
+- [] Creating a new software on the arm side to allow machine programming
+- [] Implementing returns in the machine and the software
+- [] Report
 
 ## Questions to answer
 Nothing
 
 ## What's new
+
+**[28th February 2021] __The base machine is finished__**
+
+The machine is now finished. It still has to be verified (do all operations work properly?). But
+a Fibonacci sequence has been computed with success.
 
 **[25th November 2020] __Re-implementing the RAM__**
 
