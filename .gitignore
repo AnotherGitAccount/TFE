@@ -1,5 +1,7 @@
 # Ignores all latex files not finishing with .tex
-archives/latex/**
-!archives/latex/**.tex
-latex/**
-!latex/**.tex
+archives/latex/*
+!archives/latex/**/*.tex
+
+latex/*
+!latex/**/*.tex
+
