@@ -1,8 +1,6 @@
-# Removes all report files that are not tex files or resources
-archives/latex/*
-!archives/latex/*.tex
-!archives/latex/res/
-
-latex/*/*
-!latex/*/*.tex
-!latex/*/res/
+*.pdf
+*.aux
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.log
