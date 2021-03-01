@@ -11,6 +11,11 @@ Nothing
 
 ## What's new
 
+**[1st March 2021] __Writing report__**
+
+Two first sections of the third chapter are now writen. I decided to start back to zero as what I
+previously wrote wasn't totaly OK. The new chaptering looks more logical.
+
 **[28th February 2021] __The base machine is finished__**
 
 The machine is now finished. It still has to be verified (do all operations work properly?). But
