@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210301115306" modified="D:20210301115306"/>
+<info created="D:20210301115306" modified="D:20210301232918"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,11 +312,14 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<path layer="alpha" matrix="1 0 0 1 -0.345859 -15.7327" stroke="black" fill="white" pen="heavier" arrow="normal/normal">
+<path layer="alpha" matrix="1 0 0 1 0.303094 -15.4814" stroke="black" fill="white" pen="heavier">
 96.9661 736.104 m
 131.379 736.104 l
 </path>
-<group>
+<path matrix="1 0 0 1 99.1843 -15.7323" stroke="black" fill="white" pen="heavier">
+96.9661 736.104 m
+131.379 736.104 l
+</path>
 <path matrix="1 0 0 1 35.7544 -23.6283" stroke="black" fill="white" pen="heavier">
 96 784 m
 96 704 l
@@ -324,22 +327,13 @@ h
 160 784 l
 h
 </path>
-<group>
-<text matrix="1 0 0 1 3.75442 -12" transformations="translations" pos="160 736" stroke="black" type="label" width="28.04" height="8.459" depth="0.83" halign="center" valign="center" style="math">2^k \times n</text>
-<text matrix="1 0 0 1 -5.12302 -0.819682" transformations="translations" pos="156.908 712.919" stroke="black" type="label" width="23.938" height="6.808" depth="0" valign="baseline">ROM</text>
+<group matrix="1 0 0 1 -0.00002 -1.2162">
+<text matrix="1 0 0 1 3.75442 -9.2978" transformations="translations" pos="160 736" stroke="black" type="label" width="28.04" height="8.459" depth="0.83" halign="center" valign="center" style="math">2^k \times n</text>
+<text matrix="1 0 0 1 -5.12302 -1.0899" transformations="translations" pos="156.908 712.919" stroke="black" type="label" width="23.938" height="6.808" depth="0" valign="baseline">ROM</text>
 </group>
-</group>
-<path matrix="1 0 0 1 99.1843 -15.7323" stroke="black" fill="white" pen="heavier" arrow="normal/normal">
-96.9661 736.104 m
-131.379 736.104 l
-</path>
-<group>
-<text matrix="1 0 0 1 -2.9639 -16.6231" transformations="translations" pos="99.4755 728.999" stroke="black" type="label" width="3.857" height="3.459" depth="0" valign="baseline" size="tiny" style="math">k</text>
-<text matrix="1 0 0 1 -5.37384 -19.2129" transformations="translations" pos="106.215 731.695" stroke="black" type="label" width="18.646" height="3.395" depth="0.96" valign="baseline" size="tiny">inputs</text>
-</group>
-<group matrix="1 0 0 1 0 0.0243642">
-<text matrix="1 0 0 1 -0.392255 -19.3022" transformations="translations" pos="203.268 731.919" stroke="black" type="label" width="4.388" height="2.145" depth="0" valign="baseline" size="tiny" style="math">n</text>
-<text matrix="1 0 0 1 -9.27076 -20.4237" transformations="translations" pos="217.197 733.043" stroke="black" type="label" width="22.728" height="3.072" depth="0.96" valign="baseline" size="tiny">outputs</text>
-</group>
+<text matrix="1 0 0 1 -4.89633 -6.16093" transformations="translations" pos="99.4755 728.999" stroke="black" type="label" width="5.061" height="6.227" depth="0" valign="baseline" size="small" style="math">k</text>
+<text matrix="1 0 0 1 -3.97828 -8.75073" transformations="translations" pos="106.215 731.695" stroke="black" type="label" width="25.138" height="6.003" depth="1.74" valign="baseline" size="small">inputs</text>
+<text matrix="1 0 0 1 -4.24113 -9.08589" transformations="translations" pos="203.268 731.919" stroke="black" type="label" width="5.559" height="3.861" depth="0" valign="baseline" size="small" style="math">n</text>
+<text matrix="1 0 0 1 -11.2476 -10.4154" transformations="translations" pos="217.197 733.043" stroke="black" type="label" width="30.769" height="5.518" depth="1.74" valign="baseline" size="small">outputs</text>
 </page>
 </ipe>
