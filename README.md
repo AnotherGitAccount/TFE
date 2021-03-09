@@ -11,6 +11,13 @@ Nothing
 
 ## What's new
 
+**[9th March 2021] __Working on the hardware design__**
+
+I designed a 640x480 12bits colors (4bits for each primary color) display controller that hopefuly 
+handles HDMI properly. Need to be tested with the CPU.
+
+Notes: gc always add 1 to h and v counts, weird behavior on rgb too.
+
 **[1st March 2021] __Writing report__**
 
 Two first sections of the third chapter are now writen. I decided to start back to zero as what I
