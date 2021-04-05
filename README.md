@@ -2,14 +2,27 @@
 
 ## Tasks
 
-- [ ] Creating a new software on the arm side to allow machine programming
-- [ ] Implementing returns in the machine and the software
-- [ ] Report
+- [ ] 6/4: Adding missing hardware components for read and write operations
+- [ ] 7/4: Adding program length counter + hardware interrupt and stop when done
+- [ ] 8/4: Figuring how to catch the interrupt and handle it
+- [ ] 9/4: Writing C software for writing a program from a file + getting the result when interrupt
+- [ ] 10/4: Same as yesterday
+- [ ] 11/4: Adding Romain's assembler to the programming flow
+- [ ] 12/4: Adding a result comparator: Ram and RF contents
+- [ ] 13/4: Same as yesterday
+
+## Tasks to schedule
+
+- [ ] Before end of April: Writing some "verifications" and comparing results with Romain's machine 
+- [ ] Before end of April: Writing a graphical demo, + making the mask ROM programmable if time
+- [ ] May: Writing hardware benchmarks + simulation + report
 
 ## Questions to answer
 Nothing
 
 ## What's new
+
+**[End of March] __Working on the graphical output__**
 
 **[19th March 2021] __Modifying linux distro__**
 
