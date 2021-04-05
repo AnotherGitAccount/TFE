@@ -11,6 +11,13 @@ Nothing
 
 ## What's new
 
+**[19th March 2021] __Modifying linux distro__**
+
+The distro that was used seemed to be outdated and not supported anymore. The project
+now uses ubuntu.
+
+**[18th March 2021] __Working on communications__**
+
 **[9th March 2021] __Working on the hardware design__**
 
 I designed a 640x480 12bits colors (4bits for each primary color) display controller that hopefuly 

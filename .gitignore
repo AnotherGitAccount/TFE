@@ -4,3 +4,8 @@
 *.fls
 *.synctex.gz
 *.log
+hardware/db/
+hardware/greybox_tmp/
+hardware/incremental_db/
+hardware/simulation
+hardware/hps_isw_handoff

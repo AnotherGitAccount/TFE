@@ -1,0 +1,202 @@
+`define S_READY 2'b00
+`define S_WRITE 2'b01
+`define S_READ  2'b10
+`define S_RESET 2'b11
+
+`define AXI_S_READY         3'b000
+`define AXI_S_WPENDING_ADDR 3'b001
+`define AXI_S_WPENDING_DATA 3'b010
+`define AXI_S_WPENDING_BOTH 3'b011
+`define AXI_S_WPENDING_ANS  3'b100
+`define AXI_S_RPENDING_ADDR 3'b101 
+`define AXI_S_RPENDING_DATA 3'b110
+`define AXI_S_UNUSED        3'b111
+
+`define READ  1'b0
+`define WRITE 1'b1
+
+`define ACP_BASE_ADDRESS 32'h80000000
+
+module ram_access(
+    // AXI general signals
+    input wire ACLK,
+    input wire ARESETn,
+
+    // AXI Read Address Channel
+    output reg  [31:0] ARADDR,       
+    output reg  [2:0]  ARPROT,
+    output reg  ARVALID, 
+    input  wire ARREADY, 
+    output reg  [3:0] ARCACHE,
+    output reg  ARUSER,
+    
+    // AXI Read Data Channel
+    input  wire [63:0] RDATA, 
+    input  wire RVALID,
+    output reg  RREADY,
+
+    // AXI Write Address Channel
+    output reg  [31:0] AWADDR,       
+    output reg  [2:0]  AWPROT, 
+    output reg  AWVALID, 
+    input  wire AWREADY, 
+    output reg  [3:0] AWCACHE,
+    output reg  AWUSER,
+    
+    // AXI Write Data Channel
+    output reg  [63:0] WDATA,
+    output reg  WVALID,
+    input  wire WREADY,
+    output reg  WLAST,
+    
+    // AXI Write Response Channel
+    input  wire BVALID,
+    output reg  BREADY,
+
+    // Cache ports (32Mb of RAM reachable)
+    input  wire RW,
+    input  wire [19:0] ADDRESS,
+    input  wire [31:0] IN_DATA,
+    output reg  [31:0] OUT_DATA,
+    output reg  PAUSE
+);
+    reg [1:0]  axi_state;
+    reg [1:0]  state;
+    reg [18:0] cache_base; 
+    reg coherent;
+
+    // TODO vérifier l'ordre pour l'ACP
+    // lines[0] = mm[cache_base] 
+    // lines[1] = mm[cache_base + 1]
+    reg [31:0] lines [1:0]; 
+
+    always @(posedge(ACLK)) begin
+        ARCACHE <= 4'b0010;
+        AWCACHE <= 4'b0010;
+        ARUSER  <= 1'b0;
+        AWUSER  <= 1'b0;
+        
+        if(ARESETn) begin
+            ARVALID <= 1'b0;
+            RREADY  <= 1'b0;
+            AWVALID <= 1'b0;
+            WVALID  <= 1'b0;
+            BREADY  <= 1'b0;
+            PAUSE   <= 1'b1;
+            state   <= `S_RESET;
+        end else begin
+            case (state)
+                `S_READY : begin
+                    if (ADDRESS[19:1] != cache_base) begin
+                        if (!coherent)
+                            state <= `S_WRITE;
+                        else
+                            state <= `S_READ;
+                        PAUSE <= 1'b1;
+                    end else begin
+                        if (RW == `READ)
+                            OUT_DATA <= lines[ADDRESS[0]];
+                        else begin
+                            lines[ADDRESS[0]] <= IN_DATA;
+                            coherent          <= 1'b0;
+                        end
+                        PAUSE <= 1'b0;
+                    end
+                end
+                
+                `S_WRITE : begin
+                    // Maps the address and aligns it on 64bits
+                    AWADDR <= `ACP_BASE_ADDRESS + ADDRESS & 20'hffffe;
+                    WDATA  <= {lines[1], lines[0]};
+                    WLAST  <= 1'b1;
+                    
+                    case (axi_state)
+                        `AXI_S_READY : begin
+                            AWVALID   <= 1'b1;
+                            WVALID    <= 1'b1;
+                            axi_state <= `AXI_S_WPENDING_BOTH;
+                        end
+                        
+                        `AXI_S_WPENDING_ADDR : begin
+                            if (AWREADY) begin
+                                AWVALID <= 1'b0;
+                                BREADY  <= 1'b1;
+                                axi_state <= `AXI_S_WPENDING_ANS;
+                            end
+                        end
+                        
+                        `AXI_S_WPENDING_DATA : begin
+                            if (WREADY) begin
+                                WVALID <= 1'b0;
+                                BREADY <= 1'b1;
+                                axi_state <= `AXI_S_WPENDING_ANS;
+                            end
+                        end
+                        
+                        `AXI_S_WPENDING_BOTH : begin
+                            if (AWREADY && WREADY) begin
+                                AWVALID <= 1'b0;
+                                WVALID  <= 1'b0;
+                                BREADY  <= 1'b1;
+                                axi_state <= `AXI_S_WPENDING_ANS;
+                            end else if (AWREADY) begin
+                                AWVALID <= 1'b0;
+                                axi_state <= `AXI_S_WPENDING_DATA;
+                            end else if (WREADY) begin
+                                WVALID  <= 1'b0;
+                                axi_state <= `AXI_S_WPENDING_ADDR;
+                            end
+                        end
+                        
+                        `AXI_S_WPENDING_ANS : begin
+                            if (BVALID) begin
+                                BREADY    <= 1'b0;
+                                coherent  <= 1'b1;
+                                axi_state <= `AXI_S_READY;
+                                state     <= `S_READ;
+                            end
+                        end
+                    endcase
+                end
+                
+                `S_READ : begin
+                    // Maps the address and aligns it on 64bits
+                    ARADDR <= `ACP_BASE_ADDRESS + ADDRESS & 20'hffffe;
+                    
+                    case (axi_state)
+                        `AXI_S_READY : begin
+                            ARVALID <= 1'b1;
+                            axi_state <= `AXI_S_RPENDING_ADDR;
+                        end
+                        
+                        `AXI_S_RPENDING_ADDR : begin
+                            if(ARREADY) begin
+                                ARVALID <= 1'b0;
+                                RREADY  <= 1'b1;
+                                axi_state <= `AXI_S_RPENDING_DATA;
+                            end
+                        end
+                        
+                        `AXI_S_RPENDING_DATA : begin
+                            if (RVALID) begin
+                                RREADY    <= 1'b0;
+                                lines[1]  <= RDATA[63:32];
+                                lines[0]  <= RDATA[31:0];
+                                axi_state <= `AXI_S_READY;
+                                state     <= `S_READY;
+                                PAUSE     <= 1'b0;
+                            end
+                        end
+                    endcase
+                end
+                
+                `S_RESET :
+                    state <= `S_READY;
+            endcase
+        end
+    end
+
+endmodule
+
+
+

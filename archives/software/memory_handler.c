@@ -37,26 +37,7 @@ MemoryHandler* map_memory(file_descriptor fd, off_t offset, size_t span, size_t 
     return memory_handler;
 }
 
-void close(MemoryHandler* memory_handler) {
+void close_handler(MemoryHandler* memory_handler) {
     munmap(memory_handler->memory, memory_handler->page_offset + memory_handler->span);
     free(memory_handler);
-}
-
-void print_memory(MemoryHandler* memory_handler) {
-    size_t n_words = memory_handler->data_span / memory_handler->word_size;
-    for(off_t word_offset = 0; word_offset < n_words; ++word_offset) {
-        switch(memory_handler->word_size) {
-            case 1:
-                uint8_t* word = *((uint8_t*)(memory_handler->memory)) + word_offset;
-                printf("%u\n\r", *word);
-            case 2:
-                 uint16_t* word = *((uint16_t*)(memory_handler->memory)) + word_offset;
-                printf("%u\n\r", *word);
-            case 4:
-                 uint32_t* word = *((uint32_t*)(memory_handler->memory)) + word_offset;
-                printf("%u\n\r", *word);
-            default:
-                printf("This word_size is not supported.");
-        }
-    }
 }
