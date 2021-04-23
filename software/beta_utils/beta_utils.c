@@ -223,8 +223,8 @@ int parse_read(int argc, char **argv) {
         return -1;
     }
 
-    int is_on = 0;
-    while(is_on != 1) {
+    int is_on = is_machine_on();
+    while(is_on != 0) {
         sleep(1);
         is_on = is_machine_on();
     }
@@ -259,11 +259,12 @@ int parse_read(int argc, char **argv) {
     }
 
     size_t i;
-    for(i = (size_t) start; i < (size_t) end; ++i) {
+    for(i = (size_t) start; i <= (size_t) end; ++i) {
         printf("%02x ", res[i - (size_t) start]);
         if((i - (size_t) start) % 4 == 3)
             printf("\n");
     }
+    printf("\n");
     free(res);
     
     return 0;
