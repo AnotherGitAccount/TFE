@@ -2,8 +2,8 @@ CC=gcc
 CFLAGS=-g --pedantic -Wall -Wextra -Wmissing-prototypes -std=c99 
 PROGRAM=beta
 SRC_DIR	:= .
-INC_DIR := ./src/include
-OBJ_DIR	:= ./src/obj
+INC_DIR := ./include
+OBJ_DIR	:= ./obj
 BIN_DIR	:= .
 
 EXE := $(BIN_DIR)/$(PROGRAM)

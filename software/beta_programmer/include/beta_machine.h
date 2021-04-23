@@ -45,7 +45,7 @@ uint8_t* _read_bin(char* path, size_t size);
  * Gets a file descriptor of /dev/mem
  * @return the file descriptor, negative value if any error occured
  */
-_file_descriptor _get_file_descriptor();
+_file_descriptor _get_file_descriptor(void);
 
 /*
  * Closes a file descriptor
@@ -74,7 +74,7 @@ void _free_mapping(uint8_t* mapping, size_t word_size, size_t word_cnt);
  *         1 if machine is ON,
  *        -1 if an error occured
  */
-int is_machine_on();
+int is_machine_on(void);
 
 /*
  * Starts the machine if it is stopped, doesn't do anything if it is already ON.
@@ -82,7 +82,7 @@ int is_machine_on();
  *         0 if machine already ON and so machine startup not succesful,
  *        -1 if any error occured and so machine startup not succesful
  */
-int start_machine();
+int start_machine(void);
 
 /*
  * Stops the machine if it is ON, doesn't do anything if it is already OFF.
@@ -90,7 +90,7 @@ int start_machine();
  *         0 if machine already OFF and so machine stop not succesful,
  *        -1 if any error occured and so machine stop not succesful
  */
-int stop_machine();
+int stop_machine(void);
 
 /*
  * Writes bytes present in the file at path in a memory

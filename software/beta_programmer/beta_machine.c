@@ -183,7 +183,7 @@ uint8_t* read_from(off_t offset, size_t word_size, size_t word_cnt, off_t start,
 
         if(is_on == (int) 0) {
             // machine is OFF
-            if(start > end || end >= word_cnt * word_size) {
+            if(start > end || end >= (off_t) (word_cnt * word_size)) {
                 _free_mapping(mapping, word_size, word_cnt);
                 _close_file_descriptor(fd);
                 return NULL;
@@ -192,7 +192,7 @@ uint8_t* read_from(off_t offset, size_t word_size, size_t word_cnt, off_t start,
             uint8_t* bytes = malloc((end - start + 1) * sizeof(uint8_t));
             
             size_t i;
-            for(i = start; i <= end; ++i) {
+            for(i = start; i <= (size_t) end; ++i) {
                 bytes[i - start] = mapping[i];
             }
 

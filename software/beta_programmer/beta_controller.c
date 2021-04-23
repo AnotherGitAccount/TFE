@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "beta_machine.h"
 
@@ -38,7 +39,8 @@ static const char help[] =
 
 static const char err_help[] = "-h, --help for help";
 
-int parse_help(int argc, char **argv) {
+int parse_help(int argc);
+int parse_help(int argc) {
     if(argc < 2) {
         printf("Not enough arguments\n");
         printf(err_help);
@@ -48,7 +50,8 @@ int parse_help(int argc, char **argv) {
     return 0;
 }
 
-int parse_start(int argc, char **argv) {
+int parse_start(int argc);
+int parse_start(int argc) {
     if(argc < 2) {
         printf("Not enough arguments\n");
         printf(err_help);
@@ -57,24 +60,25 @@ int parse_start(int argc, char **argv) {
     printf("Starting the machine...\n");
     int res = start_machine();
     switch(res) {
-        case -1: {
-            printf("An error occured while starting the machine\n"); 
-            return -1;
-        }
-
         case  0: {
             printf("The machine is already started\n"); 
             return 0;
         }
 
-        case  1: {
+        case 1: {
             printf("The machine started successfully\n"); 
             return 0;
+        }
+
+        default: {
+            printf("An error occured while starting the machine\n"); 
+            return -1;
         }
     } 
 }
 
-int parse_stop(int argc, char **argv) {
+int parse_stop(int argc);
+int parse_stop(int argc) {
     if(argc < 2) {
         printf("Not enough arguments\n");
         printf(err_help);
@@ -83,23 +87,24 @@ int parse_stop(int argc, char **argv) {
     printf("Stopping the machine...\n");
     int res = stop_machine();
     switch(res) {
-        case -1: {
-            printf("An error occured while stopping the machine\n"); 
-            return -1;
-        }
-
         case  0: {
             printf("The machine is already stopped\n"); 
             return 0;
         }
 
-        case  1: {
+        case 1: {
             printf("The machine stopped successfully\n"); 
             return 0;
+        }
+
+        default: {
+            printf("An error occured while stopping the machine\n"); 
+            return -1;
         }
     }     
 }
 
+int parse_program(int argc, char **argv);
 int parse_program(int argc, char **argv) {
     if(argc < 5) {
         printf("Not enough arguments\n");
@@ -140,11 +145,6 @@ int parse_program(int argc, char **argv) {
     }
 
     switch(res) {
-        case -1: {
-            printf("An error occured\n"); 
-            return -1;
-        }
-
         case  0: {
             printf("The machine can't be programmed when it is running...\n"); 
             return 0;
@@ -154,9 +154,15 @@ int parse_program(int argc, char **argv) {
             printf("Successful\n"); 
             return 0;
         }
+
+        default: {
+            printf("An error occured\n"); 
+            return -1;
+        }
     }
 }
 
+int parse_information(int argc, char **argv);
 int parse_information(int argc, char **argv) {
     if(argc < 2) {
         printf("Not enough arguments\n");
@@ -198,6 +204,7 @@ int parse_information(int argc, char **argv) {
     return 0;
 }
 
+int parse_read(int argc, char **argv);
 int parse_read(int argc, char **argv) {
     if(argc < 5) {
         printf("Not enough arguments\n");
@@ -215,7 +222,7 @@ int parse_read(int argc, char **argv) {
     }
 
     int is_on = 0;
-    while(it_on != 1) {
+    while(is_on != 1) {
         sleep(1);
         is_on = is_machine_on();
     }
@@ -251,8 +258,8 @@ int parse_read(int argc, char **argv) {
 
     size_t i;
     for(i = (size_t) start; i < (size_t) end; ++i) {
-        printf("%0.2x ", res[i - (size_t) start]);
-        if((i - (size_t) start]) % 4 == 3)
+        printf("%02x ", res[i - (size_t) start]);
+        if((i - (size_t) start) % 4 == 3)
             printf("\n");
     }
     free(res);
@@ -268,11 +275,11 @@ int main(int argc, char **argv) {
     }
 
     if(strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0) {
-        return parse_help(argc, argv);
+        return parse_help(argc);
     } else if(strcmp(argv[1], "-st") == 0 || strcmp(argv[1], "--start") == 0) {
-        return parse_start(argc, argv);
+        return parse_start(argc);
     } else if(strcmp(argv[1], "-sd") == 0 || strcmp(argv[1], "--shutdown") == 0) {
-        return parse_stop(argc, argv);
+        return parse_stop(argc);
     } else if(strcmp(argv[1], "-p") == 0 || strcmp(argv[1], "--program") == 0) {
         return parse_program(argc, argv);
     } else if(strcmp(argv[1], "-i") == 0 || strcmp(argv[1], "--information") == 0) {
@@ -280,7 +287,7 @@ int main(int argc, char **argv) {
     } else if(strcmp(argv[1], "-r") == 0 || strcmp(argv[1], "--read") == 0) {
         return parse_read(argc, argv);
     } else {
-        printf("Unknown functionality\n")
+        printf("Unknown functionality\n");
         printf(err_help);
         return -1;
     }
