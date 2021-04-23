@@ -1,6 +1,6 @@
 CC=gcc 
 CFLAGS=-g --pedantic -Wall -Wextra -Wmissing-prototypes -std=c99 
-PROGRAM=beta
+PROGRAM=beta-utils
 SRC_DIR	:= .
 INC_DIR := ./include
 OBJ_DIR	:= ./obj

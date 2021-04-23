@@ -6,38 +6,38 @@
 
 static const char help[] = 
     " -h, --help\n"
-    "\tDisplays help\n"
+    "Displays help\n"
     "\n"
     "-st, --start\n"
-    "\tStarts the machine\n"
+    "Starts the machine\n"
     "\n"
     "-sd, --shutdown\n"
-    "\tStops the machine\n"
+    "Stops the machine\n"
     "\n"
     "-p, --program <memory_id> <file_path> <size>\n"
-    "\tPrograms a memory with a binary file - only works if machine is off, parameters are"
+    "Programs a memory with a binary file - only works if machine is off, parameters are\n"
     "\t.memory_id: the id of the memory to be programmed.\n"
     "\t.file_path: path to the binary file\n"
     "\t.size: number of bytes in the binary file\n"
     "\n"
     "-i, --information <memory_id>\n"
-    "\tGives information about the memory, parameters are"
+    "Gives information about the memory, parameters are\n"
     "\t.memory_id: the id of the memory.\n"
     "\n"
     "-r, --read <memory_id> <start> <end>\n"
-    "\tReads a memory from start to end - waits the machine to end, parameters are"
+    "Reads a memory from start to end - waits the machine to end, parameters are\n"
     "\t.memory_id: the id of the memory to be read\n"
     "\t.start: first byte index to be read\n"
     "\t.start: last byte index to be read\n"
     "\n"
-    "~ MEMORY IDs ~"
+    "~ MEMORY IDs ~\n"
     "\tIM: Instruction Memory\n"
     "\tDM: Data Memory\n"
     "\tRF: Register File\n"
     "\tIO: IO Memory\n"
     "\tMK: Mask Memory\n";
 
-static const char err_help[] = "-h, --help for help";
+static const char err_help[] = "-h, --help for help\n";
 
 int parse_help(int argc);
 int parse_help(int argc) {
@@ -164,7 +164,7 @@ int parse_program(int argc, char **argv) {
 
 int parse_information(int argc, char **argv);
 int parse_information(int argc, char **argv) {
-    if(argc < 2) {
+    if(argc < 3) {
         printf("Not enough arguments\n");
         printf(err_help);
         return -1;
@@ -200,7 +200,9 @@ int parse_information(int argc, char **argv) {
         return -1;
     }
 
-    printf("WORD_CNT:%dwords\tWORD_SIZE:%dbytes\tOFFSET:%dbytes", word_cnt, word_size, offset);
+    printf("WORD_CNT:  %d words\n"
+           "WORD_SIZE: %d bytes\n"
+           "OFFSET:    %d bytes\n", word_cnt, word_size, offset);
     return 0;
 }
 
