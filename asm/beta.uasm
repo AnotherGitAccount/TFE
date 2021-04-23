@@ -250,7 +250,7 @@ SP = sp
 .macro BNE(RA, LABEL)		BETABR(0x1E,RA,r31,LABEL)
 .macro BT(RA,LABEL,RC)		BNE(RA,LABEL,RC)
 .macro BT(RA,LABEL)		BNE(RA,LABEL)
-.macro BR(LABEL,RC)		BEQ(r31, LABEL, RC)
+.macro BR(LABEL,RC)		BEQ(r0, LABEL, RC)
 .macro BR(LABEL)		BR(LABEL, r31)
 .macro JMP(RA, RC)		betaopc(0x1B,RA,0,RC)
 .macro JMP(RA)			betaopc(0x1B,RA,0,r31)
@@ -261,8 +261,8 @@ SP = sp
 .macro ST(RC, CC)		betaopc(0x19,R31,CC,RC)
 .macro LDR(CC, RC)		BETABR(0x1F, R31, RC, CC)
 
-.macro MOVE(RA, RC)		ADD(RA, R31, RC)
-.macro CMOVE(CC, RC)		ADDC(R31, CC, RC)
+.macro MOVE(RA, RC)		ADD(RA, R0, RC)
+.macro CMOVE(CC, RC)		ADDC(R0, CC, RC)
 
 .macro PUSH(RA)		ADDC(SP,4,SP)  ST(RA,-4,SP)
 .macro POP(RA)		LD(SP,-4,RA)   ADDC(SP,-4,SP)
