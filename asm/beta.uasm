@@ -62,6 +62,7 @@
 | MOVE(RA, RC)		| RC <- <RA>
 | CMOVE(CC, RC)		| RC <- CC
 | HALT()		| STOPS SIMULATOR.
+| EXIT()          | STOPS the beta machine (fpga)
 
 | PUSH(RA)		| (2) <SP> <- <RA>; SP <- <SP> - 4
 | POP(RA)		| (2) RA <- <<SP>+4>; SP <- <SP> + 4
@@ -271,6 +272,8 @@ SP = sp
 
 .macro RTN()		JMP(LP)
 .macro XRTN()		JMP(XP)
+
+.macro EXIT()                 betaop(0x3f, R0, R0, R0)
 
 | Controversial Extras
 | Calling convention:
