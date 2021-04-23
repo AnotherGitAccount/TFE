@@ -1,6 +1,8 @@
 
 module soc_system (
+	button_pio_external_connection_export,
 	clk_clk,
+	dipsw_pio_external_connection_export,
 	hps_0_f2h_cold_reset_req_reset_n,
 	hps_0_f2h_debug_reset_req_reset_n,
 	hps_0_f2h_stm_hw_events_stm_hwevents,
@@ -54,6 +56,7 @@ module soc_system (
 	hps_0_hps_io_hps_io_gpio_inst_GPIO53,
 	hps_0_hps_io_hps_io_gpio_inst_GPIO54,
 	hps_0_hps_io_hps_io_gpio_inst_GPIO61,
+	led_pio_external_connection_export,
 	memory_mem_a,
 	memory_mem_ba,
 	memory_mem_ck,
@@ -71,17 +74,52 @@ module soc_system (
 	memory_mem_dm,
 	memory_oct_rzqin,
 	reset_reset_n,
-	im_avbus_acknowledge,
-	im_avbus_irq,
-	im_avbus_address,
-	im_avbus_bus_enable,
-	im_avbus_byte_enable,
-	im_avbus_rw,
-	im_avbus_write_data,
-	im_avbus_read_data,
-	ctrl_export);	
+	io_bus_acknowledge,
+	io_bus_irq,
+	io_bus_address,
+	io_bus_bus_enable,
+	io_bus_byte_enable,
+	io_bus_rw,
+	io_bus_write_data,
+	io_bus_read_data,
+	rf_bus_acknowledge,
+	rf_bus_irq,
+	rf_bus_address,
+	rf_bus_bus_enable,
+	rf_bus_byte_enable,
+	rf_bus_rw,
+	rf_bus_write_data,
+	rf_bus_read_data,
+	dm_bus_acknowledge,
+	dm_bus_irq,
+	dm_bus_address,
+	dm_bus_bus_enable,
+	dm_bus_byte_enable,
+	dm_bus_rw,
+	dm_bus_write_data,
+	dm_bus_read_data,
+	im_bus_acknowledge,
+	im_bus_irq,
+	im_bus_address,
+	im_bus_bus_enable,
+	im_bus_byte_enable,
+	im_bus_rw,
+	im_bus_write_data,
+	im_bus_read_data,
+	mask_bus_acknowledge,
+	mask_bus_irq,
+	mask_bus_address,
+	mask_bus_bus_enable,
+	mask_bus_byte_enable,
+	mask_bus_rw,
+	mask_bus_write_data,
+	mask_bus_read_data,
+	power_in_port,
+	power_out_port);	
 
+	input	[1:0]	button_pio_external_connection_export;
 	input		clk_clk;
+	input	[3:0]	dipsw_pio_external_connection_export;
 	input		hps_0_f2h_cold_reset_req_reset_n;
 	input		hps_0_f2h_debug_reset_req_reset_n;
 	input	[27:0]	hps_0_f2h_stm_hw_events_stm_hwevents;
@@ -135,6 +173,7 @@ module soc_system (
 	inout		hps_0_hps_io_hps_io_gpio_inst_GPIO53;
 	inout		hps_0_hps_io_hps_io_gpio_inst_GPIO54;
 	inout		hps_0_hps_io_hps_io_gpio_inst_GPIO61;
+	output	[6:0]	led_pio_external_connection_export;
 	output	[14:0]	memory_mem_a;
 	output	[2:0]	memory_mem_ba;
 	output		memory_mem_ck;
@@ -152,13 +191,46 @@ module soc_system (
 	output	[3:0]	memory_mem_dm;
 	input		memory_oct_rzqin;
 	input		reset_reset_n;
-	input		im_avbus_acknowledge;
-	input		im_avbus_irq;
-	output	[16:0]	im_avbus_address;
-	output		im_avbus_bus_enable;
-	output	[3:0]	im_avbus_byte_enable;
-	output		im_avbus_rw;
-	output	[31:0]	im_avbus_write_data;
-	input	[31:0]	im_avbus_read_data;
-	output	[7:0]	ctrl_export;
+	input		io_bus_acknowledge;
+	input		io_bus_irq;
+	output	[17:0]	io_bus_address;
+	output		io_bus_bus_enable;
+	output	[3:0]	io_bus_byte_enable;
+	output		io_bus_rw;
+	output	[31:0]	io_bus_write_data;
+	input	[31:0]	io_bus_read_data;
+	input		rf_bus_acknowledge;
+	input		rf_bus_irq;
+	output	[17:0]	rf_bus_address;
+	output		rf_bus_bus_enable;
+	output	[3:0]	rf_bus_byte_enable;
+	output		rf_bus_rw;
+	output	[31:0]	rf_bus_write_data;
+	input	[31:0]	rf_bus_read_data;
+	input		dm_bus_acknowledge;
+	input		dm_bus_irq;
+	output	[17:0]	dm_bus_address;
+	output		dm_bus_bus_enable;
+	output	[3:0]	dm_bus_byte_enable;
+	output		dm_bus_rw;
+	output	[31:0]	dm_bus_write_data;
+	input	[31:0]	dm_bus_read_data;
+	input		im_bus_acknowledge;
+	input		im_bus_irq;
+	output	[17:0]	im_bus_address;
+	output		im_bus_bus_enable;
+	output	[3:0]	im_bus_byte_enable;
+	output		im_bus_rw;
+	output	[31:0]	im_bus_write_data;
+	input	[31:0]	im_bus_read_data;
+	input		mask_bus_acknowledge;
+	input		mask_bus_irq;
+	output	[11:0]	mask_bus_address;
+	output		mask_bus_bus_enable;
+	output	[15:0]	mask_bus_byte_enable;
+	output		mask_bus_rw;
+	output	[127:0]	mask_bus_write_data;
+	input	[127:0]	mask_bus_read_data;
+	input		power_in_port;
+	output		power_out_port;
 endmodule

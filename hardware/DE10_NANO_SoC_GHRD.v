@@ -91,6 +91,7 @@ module DE10_NANO_SoC_GHRD(
 //=======================================================
 wire hps_fpga_reset_n;
 wire     [1: 0]     fpga_debounced_buttons;
+wire     [6: 0]     fpga_led_internal;
 wire     [2: 0]     hps_reset_req;
 wire                hps_cold_reset;
 wire                hps_warm_reset;
@@ -98,19 +99,11 @@ wire                hps_debug_reset;
 wire     [27: 0]    stm_hw_events;
 wire                fpga_clk_50;
 // connection of internal logics
+assign LED[7: 1] = fpga_led_internal;
 assign fpga_clk_50 = FPGA_CLK1_50;
-// Machine
-wire [7:0] ctrl;
-wire alive;
-// DMAs
-wire        im_avbus_acknowledge;         
-wire        im_avbus_irq;                 
-wire [16:0] im_avbus_address;                     
-wire        im_avbus_bus_enable;                   
-wire [3:0]  im_avbus_byte_enable;                  
-wire        im_avbus_rw;                           
-wire [31:0] im_avbus_write_data;                   
-wire [31:0] im_avbus_read_data;    
+assign stm_hw_events = {{15{1'b0}}, SW, fpga_led_internal, fpga_debounced_buttons};
+
+
 
 //=======================================================
 //  Structural coding
@@ -192,26 +185,63 @@ soc_system u0(
                .hps_0_hps_io_hps_io_gpio_inst_GPIO53(HPS_LED),              //                               .hps_io_gpio_inst_GPIO53
                .hps_0_hps_io_hps_io_gpio_inst_GPIO54(HPS_KEY),              //                               .hps_io_gpio_inst_GPIO54
                .hps_0_hps_io_hps_io_gpio_inst_GPIO61(HPS_GSENSOR_INT),      //                               .hps_io_gpio_inst_GPIO61
-
+               //FPGA Partion
+               .led_pio_external_connection_export(fpga_led_internal),      //    led_pio_external_connection.export
+               .dipsw_pio_external_connection_export(SW),                   //  dipsw_pio_external_connection.export
+               .button_pio_external_connection_export(fpga_debounced_buttons),
+                                                                            // button_pio_external_connection.export
                .hps_0_h2f_reset_reset_n(hps_fpga_reset_n),                  //                hps_0_h2f_reset.reset_n
                .hps_0_f2h_cold_reset_req_reset_n(~hps_cold_reset),          //       hps_0_f2h_cold_reset_req.reset_n
                .hps_0_f2h_debug_reset_req_reset_n(~hps_debug_reset),        //      hps_0_f2h_debug_reset_req.reset_n
+               .hps_0_f2h_stm_hw_events_stm_hwevents(stm_hw_events),        //        hps_0_f2h_stm_hw_events.stm_hwevents
                .hps_0_f2h_warm_reset_req_reset_n(~hps_warm_reset),          //       hps_0_f2h_warm_reset_req.reset_n
-					// Programmer
-					.im_avbus_acknowledge(im_avbus_acknowledge),                 //                  im_avbus.acknowledge
-		         .im_avbus_irq(im_avbus_irq),                                 //                          .irq
-		         .im_avbus_address(im_avbus_address),                         //                          .address
-					.im_avbus_bus_enable(im_avbus_bus_enable),                   //                          .bus_enable
-					.im_avbus_byte_enable(im_avbus_byte_enable),                 //                          .byte_enable
-					.im_avbus_rw(im_avbus_rw),                                   //                          .rw
-					.im_avbus_write_data(im_avbus_write_data),                   //                          .write_data
-					.im_avbus_read_data(im_avbus_read_data),                     //                          .read_data
-					// Ctrl
-					.ctrl_export(ctrl)
+					// POLET Quentin's modifications below
+					// BUS
+					.im_bus_acknowledge(im_bus_acknowledge),  
+					.im_bus_irq(im_bus_irq),          
+					.im_bus_address(im_bus_address),      
+					.im_bus_bus_enable(im_bus_bus_enable),   
+					.im_bus_byte_enable(im_bus_byte_enable),  
+					.im_bus_rw(im_bus_rw),          
+					.im_bus_write_data(im_bus_write_data),   
+					.im_bus_read_data(im_bus_read_data),    
+					.dm_bus_acknowledge(dm_bus_acknowledge), 
+					.dm_bus_irq(dm_bus_irq),          
+					.dm_bus_address(dm_bus_address),      
+					.dm_bus_bus_enable(dm_bus_bus_enable),   
+					.dm_bus_byte_enable(dm_bus_byte_enable),  
+					.dm_bus_rw(dm_bus_rw),          
+					.dm_bus_write_data(dm_bus_write_data),   
+					.dm_bus_read_data(dm_bus_read_data),    
+					.rf_bus_acknowledge(rf_bus_acknowledge),  
+					.rf_bus_irq(rf_bus_irq),          
+					.rf_bus_address(rf_bus_address),      
+					.rf_bus_bus_enable(rf_bus_bus_enable),   
+					.rf_bus_byte_enable(rf_bus_byte_enable),  
+					.rf_bus_rw(rf_bus_rw),          
+					.rf_bus_write_data(rf_bus_write_data),   
+					.rf_bus_read_data(rf_bus_read_data),   
+					.io_bus_acknowledge(io_bus_acknowledge),  
+					.io_bus_irq(io_bus_irq),          
+					.io_bus_address(io_bus_address),      
+					.io_bus_bus_enable(io_bus_bus_enable),   
+					.io_bus_byte_enable(io_bus_byte_enable), 
+					.io_bus_rw(io_bus_rw),          
+					.io_bus_write_data(io_bus_write_data),   
+					.io_bus_read_data(io_bus_read_data),    
+					.mask_bus_acknowledge(mask_bus_acknowledge),
+					.mask_bus_irq(mask_bus_irq),        
+					.mask_bus_address(mask_bus_address),    
+					.mask_bus_bus_enable(mask_bus_bus_enable), 
+					.mask_bus_byte_enable(mask_bus_byte_enable),
+					.mask_bus_rw(mask_bus_rw),        
+					.mask_bus_write_data(mask_bus_write_data),
+					.mask_bus_read_data(mask_bus_read_data), 
+					// POWER SWITCH
+					.power_in_port(power_in_port),
+			      .power_out_port(power_out_port)
            );
 
-//assign LED[7:0] = data[7:0];
-			  
 // Debounce logic to clean out glitches within 1ms
 debounce debounce_inst(
              .clk(fpga_clk_50),
@@ -260,231 +290,215 @@ defparam pulse_debug_reset.PULSE_EXT = 32;
 defparam pulse_debug_reset.EDGE_TYPE = 1;
 defparam pulse_debug_reset.IGNORE_RST_WHILE_BUSY = 1;
 
-/**
-*
-*		MACHINE DESCRIPTION
-*
-**/
 
-// CLK
+// Quentin Polet's code
 
-wire clk;
-wire [6:0] machine_clk;
-/*reg [31:0] cnt;
-reg clk_r;
+// CLKU
+wire         cpu_clk;
+wire 			 gpu_clk;
 
-always @(posedge(FPGA_CLK1_50)) begin
-	cnt <= cnt + 32'b1;
-	if(cnt == 32'd25000000) begin 
-		if(clk_r == 1'b0) begin
-			clk_r <= 1'b1;
-		end else begin
-			clk_r <= 1'b0;
-		end 
-		cnt <= 32'b0;
-	end
-end */
-
-assign clk = FPGA_CLK1_50;
-
-clock_controller cc(
-	clk,
-	machine_clk,
-	ctrl,
-	alive	
+clku beta_clku(
+	.clk(fpga_clk_50),
+	.rst(hps_debug_reset),
+	.cpu_clk(cpu_clk),
+	.gpu_clk(gpu_clk)
 );
 
-// CONTROL LOGIC
+// MAU
+wire         im_bus_acknowledge;  
+wire         im_bus_irq;          
+wire [17:0]  im_bus_address;      
+wire         im_bus_bus_enable;   
+wire [3:0]   im_bus_byte_enable;  
+wire         im_bus_rw;           
+wire [31:0]  im_bus_write_data;   
+wire [31:0]  im_bus_read_data;    
+wire         dm_bus_acknowledge;  
+wire         dm_bus_irq;          
+wire [17:0]  dm_bus_address;      
+wire         dm_bus_bus_enable;   
+wire [3:0]   dm_bus_byte_enable;  
+wire         dm_bus_rw;           
+wire [31:0]  dm_bus_write_data;   
+wire [31:0]  dm_bus_read_data;    
+wire         rf_bus_acknowledge;  
+wire         rf_bus_irq;          
+wire [17:0]  rf_bus_address;      
+wire         rf_bus_bus_enable;   
+wire [3:0]   rf_bus_byte_enable;  
+wire         rf_bus_rw;           
+wire [31:0]  rf_bus_write_data;   
+wire [31:0]  rf_bus_read_data;     
+wire         io_bus_acknowledge;  
+wire         io_bus_irq;          
+wire [17:0]  io_bus_address;      
+wire         io_bus_bus_enable;   
+wire [3:0]   io_bus_byte_enable;  
+wire         io_bus_rw;           
+wire [31:0]  io_bus_write_data;   
+wire [31:0]  io_bus_read_data;    
+wire         mask_bus_acknowledge;
+wire         mask_bus_irq;        
+wire [11:0]  mask_bus_address;    
+wire         mask_bus_bus_enable; 
+wire [15:0]  mask_bus_byte_enable;
+wire         mask_bus_rw;         
+wire [127:0] mask_bus_write_data; 
+wire [127:0] mask_bus_read_data;  
+wire         power_in_port;       
+wire         power_out_port;      
+wire [17:0]  im_address;
+wire [31:0]  im_read_data;
+wire [31:0]  im_write_data;
+wire         im_wren;
+wire [31:0]  dm_address;
+wire [31:0]  dm_read_data;
+wire [31:0]  dm_write_data;
+wire         dm_wren;
+wire [31:0]  rf_address;
+wire [31:0]  rf_read_data;
+wire [31:0]  rf_write_data;
+wire         rf_wren;
+wire [31:0]  io_address;
+wire [31:0]  io_read_data;
+wire [31:0]  io_write_data;
+wire         io_wren;
+wire [7:0]   mask_address;
+wire [127:0] mask_read_data;
+wire [127:0] mask_write_data;
+wire         mask_wren;
 
-wire [5:0]  cl_addr;
-wire [11:0] cl_data;
-
-control_logic clogic(
-	.address(cl_addr),
-	.clock(clk),
-	.clk_en(machine_clk[1]),
-	.q(cl_data)
+mau beta_mau(
+	.clk(cpu_clk),
+	.bus_acknowledge_im(im_bus_acknowledge),                  
+	.bus_irq_im(im_bus_irq),                          
+	.bus_address_im(im_bus_address),                     
+	.bus_bus_enable_im(im_bus_bus_enable),                   
+	.bus_byte_enable_im(im_bus_byte_enable),                  
+	.bus_rw_im(im_bus_rw),                          
+	.bus_write_data_im(im_bus_write_data),                   
+	.bus_read_data_im(im_bus_read_data),
+	.address_im(im_address),
+	.read_data_im(im_read_data),
+	.write_data_im(im_write_data),
+	.wren_im(im_wren),
+	.bus_acknowledge_dm(dm_bus_acknowledge),                  
+	.bus_irq_dm(dm_bus_irq),                          
+	.bus_address_dm(dm_bus_address),                     
+	.bus_bus_enable_dm(dm_bus_bus_enable),                   
+	.bus_byte_enable_dm(dm_bus_byte_enable),                  
+	.bus_rw_dm(dm_bus_rw),                          
+	.bus_write_data_dm(dm_bus_write_data),                   
+	.bus_read_data_dm(dm_bus_read_data),
+	.address_dm(dm_address),
+	.read_data_dm(dm_read_data),
+	.write_data_dm(dm_write_data),
+	.wren_dm(dm_wren),
+	.bus_acknowledge_rf(rf_bus_acknowledge),                  
+	.bus_irq_rf(rf_bus_irq),                          
+	.bus_address_rf(rf_bus_address),                     
+	.bus_bus_enable_rf(rf_bus_bus_enable),                   
+	.bus_byte_enable_rf(rf_bus_byte_enable),                  
+	.bus_rw_rf(rf_bus_rw),                          
+	.bus_write_data_rf(rf_bus_write_data),                   
+	.bus_read_data_rf(rf_bus_read_data),
+	.address_rf(rf_address),
+	.read_data_rf(rf_read_data),
+	.write_data_rf(rf_write_data),
+	.wren_rf(rf_wren),
+	.bus_acknowledge_io(io_bus_acknowledge),                  
+	.bus_irq_io(io_bus_irq),                          
+	.bus_address_io(io_bus_address),                     
+	.bus_bus_enable_io(io_bus_bus_enable),                   
+	.bus_byte_enable_io(io_bus_byte_enable),                  
+	.bus_rw_io(io_bus_rw),                          
+	.bus_write_data_io(io_bus_write_data),                   
+	.bus_read_data_io(io_bus_read_data),
+	.address_io(io_address),
+	.read_data_io(io_read_data),
+	.write_data_io(io_write_data),
+	.wren_io(io_wren),
+	.bus_acknowledge_mask(mask_bus_acknowledge),                  
+	.bus_irq_mask(mask_bus_irq),                          
+	.bus_address_mask(mask_bus_address),                     
+	.bus_bus_enable_mask(mask_bus_bus_enable),                   
+	.bus_byte_enable_mask(mask_bus_byte_enable),                  
+	.bus_rw_mask(mask_bus_rw),                          
+	.bus_write_data_mask(mask_bus_write_data),                   
+	.bus_read_data_mask(mask_bus_read_data),
+	.address_mask(mask_address),
+	.read_data_mask(mask_read_data),
+	.write_data_mask(mask_write_data),
+	.wren_mask(mask_wren)
 );
 
-// CONTROL SIGNALS
-
-wire [1:0] pcsel;
-wire       ra2sel;
-wire       wr;
-wire [1:0] wdsel;
-wire       bsel;
-wire       werf;
-wire [3:0] alufn;
-
-assign pcsel  = cl_data[1:0];
-assign ra2sel = cl_data[2];
-assign wr     = cl_data[3];
-assign wdsel  = cl_data[5:4];
-assign bsel   = cl_data[6];
-assign werf   = cl_data[7];
-assign alufn  = cl_data[11:8];
-
-// PROGRAM COUNTER
-
-wire [31:0] pc_loop;
-wire [31:0] pc_addr;
-
-program_counter pc(
-	.clk(clk),
-	.rst(~alive),
-	.clk_en(machine_clk[6]),
-	.pcsel(pcsel),
-	.pc_in(pc_loop),
-	.offset(lit),
-	.address(pc_addr),
-	.pc_out(pc_loop)
+// CTRLU
+wire halt;
+wire alive;
+wire [1:0] state;
+assign power_in_port = ~state[0] & ~state[1]; // 1 if stopped
+ 
+ctrlu ctrlu_beta(
+	.clk(cpu_clk),
+	.hps_cmd(power_out_port),
+	.cpu_halt(halt),
+	.state(state),
+	.alive(alive),
+	.halt_clr(/* unused for now */)
 );
 
-// INSTRUCTION MEMORY DMA
+// CPU
+wire [6:0]  clk_sequence;
+wire        exported_wren;
+wire [31:0] exported_data;
+wire [31:0] exported_address;
 
-wire [14:0] im_dma_address; 
-wire [31:0] im_dma_data;
-wire 			im_dma_wren;
-
-im_dma instruction_dma(
-	.clk(clk),
-	
-	.bus_acknowledge(im_avbus_acknowledge),                  
-	.bus_irq(im_avbus_irq),                          
-	.bus_address(im_avbus_address),                     
-	.bus_bus_enable(im_avbus_bus_enable),                   
-	.bus_byte_enable(im_avbus_byte_enable),                  
-	.bus_rw(im_avbus_rw),                          
-	.bus_write_data(im_avbus_write_data),                   
-	.bus_read_data(im_avbus_read_data),
-	
-	.dma_en(~alive),
-	.address(im_dma_address),
-	.data(im_dma_data),
-	.wren(im_dma_wren)
+cpu beta_cpu(
+	.clk(cpu_clk),
+	.mau_address_im(im_address),
+	.mau_read_data_im(im_read_data),
+	.mau_write_data_im(im_write_data),
+	.mau_wren_im(im_wren),
+	.mau_address_dm(dm_address),
+	.mau_read_data_dm(dm_read_data),
+	.mau_write_data_dm(dm_write_data),
+	.mau_wren_dm(dm_wren),
+	.mau_address_rf(rf_address),
+	.mau_read_data_rf(rf_read_data),
+	.mau_write_data_rf(rf_write_data),
+	.mau_wren_rf(rf_wren),
+	.alive(alive),
+	.halt(halt),
+	.clk_sequence(clk_sequence),
+	.exported_wren(exported_wren),
+	.exported_data(exported_data),
+	.exported_address(exported_address)
 );
-
-// INSTRUCTION MEMORY
-
-wire im_clk_en;
-wire [31:0] im_data; // might change..
-wire [12:0] im_address;
-wire 			im_wren;
-
-assign im_clk_en = machine_clk[0] || ~alive; // tf = transaction flag
-assign im_address = (alive == 1'b1) ? pc_loop[12:0] : im_dma_address[12:0];  // TODO Same sizes for all address words...
-assign im_wren = (alive == 1'b1) ? 1'b0 : im_dma_wren;
-
-ram instruction_memory(
-	.clock(clk),
-	.clk_en(im_clk_en),
-	.address(im_address),
-	.data(im_dma_data),
-	.wren(im_wren),
-	.q(im_data)
-);
-							 
-// OPERATION SIGNALS
-
-wire [4:0]  ra;
-wire [4:0]  rb;
-wire [4:0]  rc;
-wire [15:0] lit;
-wire [5:0]  opcode;
-
-assign lit     = im_data[15:0];
-assign rb      = im_data[15:11];
-assign ra      = im_data[20:16];
-assign rc      = im_data[25:21];
-assign opcode  = im_data[31:26];
-assign cl_addr = opcode;
-
-// REGISTER FILE
-
-wire [4:0]  rf_addr_r2;
-wire [31:0] rf_data_w;
-wire [31:0] rf_data_r1;
-wire [31:0] rf_data_r2;
-wire        rf_nz;
-
-assign rf_addr_r2 = (ra2sel == 1'b0) ? rb : rc;
-
-assign pc_addr = rf_data_r1;
-
-register_file regfile(
-	.CLK(clk),
-	.CLK_EN({machine_clk[5], machine_clk[2]}),
-	.READ_ADDRESS1(ra),
-	.READ_ADDRESS2(rf_addr_r2),
-	.WRITE_ADDRESS(rc),
-	.WRITE_ENABLE(werf),
-	.WRITE_DATA(rf_data_w),
-	.READ_DATA1(rf_data_r1),
-	.READ_DATA2(rf_data_r2),
-	.leds(LED[6:0])
-);
-
-// ALU
-
-wire [31:0] alu_data_b;
-wire [31:0] alu_res;
-
-assign alu_data_b = (bsel == 1'b0) ? {16'b0, lit} : rf_data_r2;
-
-alu the_alu(
-	.clk(clk),
-	.clk_en(machine_clk[3]),
-	.data_a(rf_data_r1),
-	.data_b(alu_data_b),
-	.alufn(alufn),
-	.res(alu_res)
-);
-
-// DATA MEMORY
-
-wire [31:0] dm_data_r;
-
-ram data_memory(
-	.clock(clk),
-	.clk_en(machine_clk[4]),
-	.address(alu_res),
-	.data(rf_data_r2),
-	.wren(wr),
-	.q(dm_data_r)
-);
-
-assign rf_data_w = (wdsel[1] == 1'b0) ? ((wdsel[0] == 1'b0) ? pc_loop : alu_res) : dm_data_r;
 
 // GPU
-gpu igpu(
-	.clk(clk),
-	.pclk(HDMI_TX_CLK),
-	.clk_en(machine_clk),
-	.wren(wr),
-	.data(rf_data_r2),
-	.address(alu_res),
-	.red(HDMI_TX_D[23:20]),
-	.green(HDMI_TX_D[15:12]),
-	.blue(HDMI_TX_D[7:4]),
-	.sync_h(HDMI_TX_HS),
-	.sync_v(HDMI_TX_VS),
-	.disp_en(HDMI_TX_DE)  
+assign HDMI_TX_CLK = gpu_clk;
+
+gpu beta_gpu(
+	.cpu_clk(cpu_clk),
+	.gpu_clk(gpu_clk),
+	.clk_sequence(clk_sequence),
+	.wren(exported_wren),
+	.data(exported_data),
+	.address(exported_address),
+	.mau_address_mask(mask_address),
+	.mau_read_data_mask(mask_read_data),
+	.mau_write_data_mask(mask_write_data),
+	.mau_wren_mask(mask_wren),
+	.alive(alive),
+	.hdmi_sync_h(HDMI_TX_HS),
+	.hdmi_sync_v(HDMI_TX_VS),
+	.hdmi_disp_en(HDMI_TX_DE),
+	.hdmi_tx_d(HDMI_TX_D),
+	.hdmi_i2c_scl(HDMI_I2C_SCL),
+	.hdmi_i2c_sda(HDMI_I2C_SDA),
+	.hdmi_tx_int(HDMI_TX_INT)
 );
 
-assign HDMI_TX_D[19:16] = 4'b0;
-assign HDMI_TX_D[11:8]  = 4'b0;
-assign HDMI_TX_D[3:0]   = 4'b0;
-
-I2C_HDMI_Config u_I2C_HDMI_Config (
-	.iCLK(clk),
-	.iRST_N(1'b1),
-	.I2C_SCLK(HDMI_I2C_SCL),
-	.I2C_SDAT(HDMI_I2C_SDA),
-	.HDMI_TX_INT(HDMI_TX_INT)
-);
-	
-// LEDS
-
-assign LED[7]   = alive;
+assign LED[0] = alive;
 
 endmodule

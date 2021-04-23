@@ -1,0 +1,172 @@
+module cpu(
+	clk,
+	mau_address,
+	mau_data_write,
+	mau_data_read,
+	mau_rw,
+	ctrlu_alive,
+	halt,
+	sequence,
+	gpu_data,
+	gpu_address
+);
+
+	input  wire        clk;
+	input  wire [31:0] mau_address;
+	input  wire [31:0] mau_data_write;
+	output wire [31:0] mau_data_read; 
+	input  wire 		 mau_rw;
+	input  wire        ctrlu_alive;
+	output wire        halt;
+	output wire [6:0]  sequence;
+	output wire [31:0] gpu_data;
+	output wire [31:0] gpu_address;
+	
+	wire [6:0] sequence;
+
+	clock_controller cc(
+		clk,
+		sequence,
+		ctrl,
+		alive	
+	);
+
+	// CONTROL LOGIC
+
+	wire [5:0]  cl_addr;
+	wire [11:0] cl_data;
+
+	control_logic clogic(
+		.address(cl_addr),
+		.clock(clk),
+		.clk_en(sequence[1]),
+		.q(cl_data)
+	);
+
+	// CONTROL SIGNALS
+
+	wire [1:0] pcsel;
+	wire       ra2sel;
+	wire       wr;
+	wire [1:0] wdsel;
+	wire       bsel;
+	wire       werf;
+	wire [3:0] alufn;
+
+	assign pcsel  = cl_data[1:0];
+	assign ra2sel = cl_data[2];
+	assign wr     = cl_data[3];
+	assign wdsel  = cl_data[5:4];
+	assign bsel   = cl_data[6];
+	assign werf   = cl_data[7];
+	assign alufn  = cl_data[11:8];
+
+	// PROGRAM COUNTER
+
+	wire [31:0] pc_loop;
+	wire [31:0] pc_addr;
+	wire [15:0] lit;
+
+	program_counter pc(
+		.clk(clk),
+		.rst(~alive),
+		.clk_en(sequence[6]),
+		.pcsel(pcsel),
+		.pc_in(pc_loop),
+		.offset(lit),
+		.address(pc_addr),
+		.pc_out(pc_loop)
+	);
+
+	// INSTRUCTION MEMORY
+
+	wire im_clk_en;
+	wire [31:0] im_data; // might change..
+	wire [12:0] im_address;
+	wire 			im_wren;
+
+	assign im_clk_en = sequence[0] || ~alive; // tf = transaction flag
+	assign im_address = (alive == 1'b1) ? pc_loop[12:0] : im_dma_address[12:0];  // TODO Same sizes for all address words...
+	assign im_wren = (alive == 1'b1) ? 1'b0 : im_dma_wren;
+
+	ram instruction_memory(
+		.clock(clk),
+		.clk_en(im_clk_en),
+		.address(im_address),
+		.data(im_dma_data),
+		.wren(im_wren),
+		.q(im_data)
+	);
+								 
+	// OPERATION SIGNALS
+
+	wire [4:0]  ra;
+	wire [4:0]  rb;
+	wire [4:0]  rc;
+	wire [5:0]  opcode;
+
+	assign lit     = im_data[15:0];
+	assign rb      = im_data[15:11];
+	assign ra      = im_data[20:16];
+	assign rc      = im_data[25:21];
+	assign opcode  = im_data[31:26];
+	assign cl_addr = opcode;
+
+	// REGISTER FILE
+
+	wire [4:0]  rf_addr_r2;
+	wire [31:0] rf_data_w;
+	wire [31:0] rf_data_r1;
+	wire [31:0] rf_data_r2;
+	wire        rf_nz;
+
+	assign rf_addr_r2 = (ra2sel == 1'b0) ? rb : rc;
+
+	assign pc_addr = rf_data_r1;
+
+	register_file regfile(
+		.CLK(clk),
+		.CLK_EN({sequence[5], sequence[2]}),
+		.READ_ADDRESS1(ra),
+		.READ_ADDRESS2(rf_addr_r2),
+		.WRITE_ADDRESS(rc),
+		.WRITE_ENABLE(werf),
+		.WRITE_DATA(rf_data_w),
+		.READ_DATA1(rf_data_r1),
+		.READ_DATA2(rf_data_r2),
+		.leds(LED[6:0])
+	);
+
+	// ALU
+
+	wire [31:0] alu_data_b;
+	wire [31:0] alu_res;
+
+	assign alu_data_b = (bsel == 1'b0) ? {16'b0, lit} : rf_data_r2;
+
+	alu the_alu(
+		.clk(clk),
+		.clk_en(sequence[3]),
+		.data_a(rf_data_r1),
+		.data_b(alu_data_b),
+		.alufn(alufn),
+		.res(alu_res)
+	);
+
+	// DATA MEMORY
+
+	wire [31:0] dm_data_r;
+
+	ram data_memory(
+		.clock(clk),
+		.clk_en(sequence[4]),
+		.address(alu_res),
+		.data(rf_data_r2),
+		.wren(wr),
+		.q(dm_data_r)
+	);
+
+	assign rf_data_w = (wdsel[1] == 1'b0) ? ((wdsel[0] == 1'b0) ? pc_loop : alu_res) : dm_data_r;
+
+
+endmodule 

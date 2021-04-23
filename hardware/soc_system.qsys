@@ -13,7 +13,7 @@
    {
       datum _sortIndex
       {
-         value = "7";
+         value = "10";
          type = "int";
       }
    }
@@ -30,7 +30,46 @@
          type = "String";
       }
    }
+   element button_pio
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element button_pio.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "20480";
+         type = "String";
+      }
+   }
    element clk_0
+   {
+      datum _sortIndex
+      {
+         value = "11";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element dipsw_pio
    {
       datum _sortIndex
       {
@@ -41,6 +80,43 @@
       {
          value = "1";
          type = "boolean";
+      }
+   }
+   element dipsw_pio.external_connection
+   {
+      datum _tags
+      {
+         value = "";
+         type = "String";
+      }
+   }
+   element dipsw_pio.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "16384";
+         type = "String";
+      }
+   }
+   element dm_bus
+   {
+      datum _sortIndex
+      {
+         value = "13";
+         type = "int";
+      }
+   }
+   element dm_bus.avalon_slave
+   {
+      datum baseAddress
+      {
+         value = "1048576";
+         type = "String";
       }
    }
    element f2sdram_only_master
@@ -98,6 +174,38 @@
          type = "boolean";
       }
    }
+   element im_bus
+   {
+      datum _sortIndex
+      {
+         value = "12";
+         type = "int";
+      }
+   }
+   element im_bus.avalon_slave
+   {
+      datum baseAddress
+      {
+         value = "0";
+         type = "String";
+      }
+   }
+   element io_bus
+   {
+      datum _sortIndex
+      {
+         value = "15";
+         type = "int";
+      }
+   }
+   element io_bus.avalon_slave
+   {
+      datum baseAddress
+      {
+         value = "3145728";
+         type = "String";
+      }
+   }
    element jtag_uart
    {
       datum _sortIndex
@@ -124,6 +232,48 @@
          type = "String";
       }
    }
+   element led_pio
+   {
+      datum _sortIndex
+      {
+         value = "9";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element led_pio.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "12288";
+         type = "String";
+      }
+   }
+   element mask_bus
+   {
+      datum _sortIndex
+      {
+         value = "16";
+         type = "int";
+      }
+   }
+   element mask_bus.avalon_slave
+   {
+      datum baseAddress
+      {
+         value = "4194304";
+         type = "String";
+      }
+   }
    element mm_bridge_0
    {
       datum _sortIndex
@@ -140,19 +290,35 @@
          type = "boolean";
       }
    }
-   element pio_0
+   element power
    {
       datum _sortIndex
       {
-         value = "10";
+         value = "17";
          type = "int";
       }
    }
-   element soc_system
+   element power.s1
    {
-      datum _originalDeviceFamily
+      datum baseAddress
       {
-         value = "Cyclone V";
+         value = "262144";
+         type = "String";
+      }
+   }
+   element rf_bus
+   {
+      datum _sortIndex
+      {
+         value = "14";
+         type = "int";
+      }
+   }
+   element rf_bus.avalon_slave
+   {
+      datum baseAddress
+      {
+         value = "2097152";
          type = "String";
       }
    }
@@ -182,22 +348,6 @@
          type = "String";
       }
    }
-   element test_mem_0.Avalon_MM_Slave
-   {
-      datum baseAddress
-      {
-         value = "1048576";
-         type = "String";
-      }
-   }
-   element to_external_bus_bridge_0
-   {
-      datum _sortIndex
-      {
-         value = "9";
-         type = "int";
-      }
-   }
 }
 ]]></parameter>
  <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
@@ -219,10 +369,20 @@
  <parameter name="timeStamp" value="0" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
+ <interface
+   name="button_pio_external_connection"
+   internal="button_pio.external_connection"
+   type="conduit"
+   dir="end" />
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
  <interface
-   name="ctrl"
-   internal="pio_0.external_connection"
+   name="dipsw_pio_external_connection"
+   internal="dipsw_pio.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="dm_bus"
+   internal="dm_bus.external_interface"
    type="conduit"
    dir="end" />
  <interface
@@ -253,12 +413,37 @@
  <interface name="hps_0_h2f_user0_clock" internal="hps_0.h2f_user0_clock" />
  <interface name="hps_0_hps_io" internal="hps_0.hps_io" type="conduit" dir="end" />
  <interface
-   name="im_avbus"
-   internal="to_external_bus_bridge_0.external_interface"
+   name="im_bus"
+   internal="im_bus.external_interface"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="io_bus"
+   internal="io_bus.external_interface"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="led_pio_external_connection"
+   internal="led_pio.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="mask_bus"
+   internal="mask_bus.external_interface"
    type="conduit"
    dir="end" />
  <interface name="memory" internal="hps_0.memory" type="conduit" dir="end" />
+ <interface
+   name="power"
+   internal="power.external_connection"
+   type="conduit"
+   dir="end" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
+ <interface
+   name="rf_bus"
+   internal="rf_bus.external_interface"
+   type="conduit"
+   dir="end" />
  <module
    name="ILC"
    kind="interrupt_latency_counter"
@@ -268,11 +453,50 @@
   <parameter name="INTR_TYPE" value="0" />
   <parameter name="IRQ_PORT_CNT" value="3" />
  </module>
+ <module name="button_pio" kind="altera_avalon_pio" version="16.0" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="true" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="true" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Input" />
+  <parameter name="edgeType" value="FALLING" />
+  <parameter name="generateIRQ" value="true" />
+  <parameter name="irqType" value="EDGE" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="2" />
+ </module>
  <module name="clk_0" kind="clock_source" version="16.0" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module name="dipsw_pio" kind="altera_avalon_pio" version="16.0" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="true" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="true" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Input" />
+  <parameter name="edgeType" value="ANY" />
+  <parameter name="generateIRQ" value="true" />
+  <parameter name="irqType" value="EDGE" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="4" />
+ </module>
+ <module
+   name="dm_bus"
+   kind="altera_up_avalon_to_external_bus_bridge"
+   version="15.1"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="addr_size" value="256" />
+  <parameter name="addr_size_multiplier" value="Kbytes" />
+  <parameter name="data_size" value="32" />
  </module>
  <module
    name="f2sdram_only_master"
@@ -675,7 +899,7 @@
   <parameter name="S2FINTERRUPT_UART_Enable" value="false" />
   <parameter name="S2FINTERRUPT_USB_Enable" value="false" />
   <parameter name="S2FINTERRUPT_WATCHDOG_Enable" value="false" />
-  <parameter name="S2F_Width" value="2" />
+  <parameter name="S2F_Width" value="3" />
   <parameter name="SDIO_Mode" value="4-bit Data" />
   <parameter name="SDIO_PinMuxing" value="HPS I/O Set 0" />
   <parameter name="SEQUENCER_TYPE" value="NIOS" />
@@ -848,6 +1072,28 @@
   <parameter name="USE_PLI" value="0" />
  </module>
  <module
+   name="im_bus"
+   kind="altera_up_avalon_to_external_bus_bridge"
+   version="15.1"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="addr_size" value="256" />
+  <parameter name="addr_size_multiplier" value="Kbytes" />
+  <parameter name="data_size" value="32" />
+ </module>
+ <module
+   name="io_bus"
+   kind="altera_up_avalon_to_external_bus_bridge"
+   version="15.1"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="addr_size" value="256" />
+  <parameter name="addr_size_multiplier" value="Kbytes" />
+  <parameter name="data_size" value="32" />
+ </module>
+ <module
    name="jtag_uart"
    kind="altera_avalon_jtag_uart"
    version="16.0"
@@ -865,6 +1111,31 @@
   <parameter name="useRelativePathForSimFile" value="false" />
   <parameter name="writeBufferDepth" value="64" />
   <parameter name="writeIRQThreshold" value="8" />
+ </module>
+ <module name="led_pio" kind="altera_avalon_pio" version="16.0" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="127" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="7" />
+ </module>
+ <module
+   name="mask_bus"
+   kind="altera_up_avalon_to_external_bus_bridge"
+   version="15.1"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="addr_size" value="4" />
+  <parameter name="addr_size_multiplier" value="Kbytes" />
+  <parameter name="data_size" value="128" />
  </module>
  <module
    name="mm_bridge_0"
@@ -884,19 +1155,30 @@
   <parameter name="USE_AUTO_ADDRESS_WIDTH" value="1" />
   <parameter name="USE_RESPONSE" value="0" />
  </module>
- <module name="pio_0" kind="altera_avalon_pio" version="16.0" enabled="1">
+ <module name="power" kind="altera_avalon_pio" version="16.0" enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="false" />
   <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Output" />
+  <parameter name="direction" value="InOut" />
   <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
+  <parameter name="generateIRQ" value="true" />
   <parameter name="irqType" value="LEVEL" />
   <parameter name="resetValue" value="0" />
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="8" />
+  <parameter name="width" value="1" />
+ </module>
+ <module
+   name="rf_bus"
+   kind="altera_up_avalon_to_external_bus_bridge"
+   version="15.1"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="addr_size" value="256" />
+  <parameter name="addr_size_multiplier" value="Kbytes" />
+  <parameter name="data_size" value="32" />
  </module>
  <module
    name="sysid_qsys"
@@ -905,24 +1187,49 @@
    enabled="1">
   <parameter name="id" value="-1395322110" />
  </module>
- <module
-   name="to_external_bus_bridge_0"
-   kind="altera_up_avalon_to_external_bus_bridge"
-   version="15.1"
-   enabled="1">
-  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
-  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
-  <parameter name="addr_size" value="128" />
-  <parameter name="addr_size_multiplier" value="Kbytes" />
-  <parameter name="data_size" value="32" />
- </module>
  <connection
    kind="avalon"
    version="16.0"
-   start="hps_0.h2f_lw_axi_master"
-   end="to_external_bus_bridge_0.avalon_slave">
+   start="hps_0.h2f_axi_master"
+   end="mask_bus.avalon_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00400000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.0"
+   start="hps_0.h2f_axi_master"
+   end="im_bus.avalon_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.0"
+   start="hps_0.h2f_axi_master"
+   end="dm_bus.avalon_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00100000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.0"
+   start="hps_0.h2f_axi_master"
+   end="rf_bus.avalon_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00200000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.0"
+   start="hps_0.h2f_axi_master"
+   end="io_bus.avalon_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00300000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -938,7 +1245,7 @@
    kind="avalon"
    version="16.0"
    start="hps_0.h2f_lw_axi_master"
-   end="pio_0.s1">
+   end="power.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00040000" />
   <parameter name="defaultConnection" value="false" />
@@ -968,6 +1275,29 @@
    end="sysid_qsys.control_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x1000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection kind="avalon" version="16.0" start="mm_bridge_0.m0" end="led_pio.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x3000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.0"
+   start="mm_bridge_0.m0"
+   end="dipsw_pio.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x4000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.0"
+   start="mm_bridge_0.m0"
+   end="button_pio.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x5000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -1016,16 +1346,46 @@
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
+   kind="avalon"
+   version="16.0"
+   start="fpga_only_master.master"
+   end="button_pio.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x5000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.0"
+   start="fpga_only_master.master"
+   end="led_pio.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x3000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.0"
+   start="fpga_only_master.master"
+   end="dipsw_pio.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x4000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
    kind="clock"
    version="16.0"
    start="clk_0.clk"
    end="hps_only_master.clk" />
  <connection kind="clock" version="16.0" start="clk_0.clk" end="sysid_qsys.clk" />
+ <connection kind="clock" version="16.0" start="clk_0.clk" end="led_pio.clk" />
  <connection
    kind="clock"
    version="16.0"
    start="clk_0.clk"
    end="fpga_only_master.clk" />
+ <connection kind="clock" version="16.0" start="clk_0.clk" end="dipsw_pio.clk" />
+ <connection kind="clock" version="16.0" start="clk_0.clk" end="button_pio.clk" />
  <connection kind="clock" version="16.0" start="clk_0.clk" end="jtag_uart.clk" />
  <connection
    kind="clock"
@@ -1034,12 +1394,12 @@
    end="f2sdram_only_master.clk" />
  <connection kind="clock" version="16.0" start="clk_0.clk" end="mm_bridge_0.clk" />
  <connection kind="clock" version="16.0" start="clk_0.clk" end="ILC.clk" />
- <connection
-   kind="clock"
-   version="16.0"
-   start="clk_0.clk"
-   end="to_external_bus_bridge_0.clk" />
- <connection kind="clock" version="16.0" start="clk_0.clk" end="pio_0.clk" />
+ <connection kind="clock" version="16.0" start="clk_0.clk" end="im_bus.clk" />
+ <connection kind="clock" version="16.0" start="clk_0.clk" end="dm_bus.clk" />
+ <connection kind="clock" version="16.0" start="clk_0.clk" end="rf_bus.clk" />
+ <connection kind="clock" version="16.0" start="clk_0.clk" end="io_bus.clk" />
+ <connection kind="clock" version="16.0" start="clk_0.clk" end="mask_bus.clk" />
+ <connection kind="clock" version="16.0" start="clk_0.clk" end="power.clk" />
  <connection
    kind="clock"
    version="16.0"
@@ -1064,8 +1424,36 @@
    kind="interrupt"
    version="16.0"
    start="hps_0.f2h_irq0"
-   end="to_external_bus_bridge_0.interrupt">
-  <parameter name="irqNumber" value="0" />
+   end="im_bus.interrupt">
+  <parameter name="irqNumber" value="3" />
+ </connection>
+ <connection
+   kind="interrupt"
+   version="16.0"
+   start="hps_0.f2h_irq0"
+   end="dm_bus.interrupt">
+  <parameter name="irqNumber" value="4" />
+ </connection>
+ <connection
+   kind="interrupt"
+   version="16.0"
+   start="hps_0.f2h_irq0"
+   end="rf_bus.interrupt">
+  <parameter name="irqNumber" value="5" />
+ </connection>
+ <connection
+   kind="interrupt"
+   version="16.0"
+   start="hps_0.f2h_irq0"
+   end="io_bus.interrupt">
+  <parameter name="irqNumber" value="6" />
+ </connection>
+ <connection
+   kind="interrupt"
+   version="16.0"
+   start="hps_0.f2h_irq0"
+   end="mask_bus.interrupt">
+  <parameter name="irqNumber" value="7" />
  </connection>
  <connection
    kind="interrupt"
@@ -1074,8 +1462,35 @@
    end="jtag_uart.irq">
   <parameter name="irqNumber" value="2" />
  </connection>
+ <connection
+   kind="interrupt"
+   version="16.0"
+   start="hps_0.f2h_irq0"
+   end="button_pio.irq">
+  <parameter name="irqNumber" value="1" />
+ </connection>
+ <connection
+   kind="interrupt"
+   version="16.0"
+   start="hps_0.f2h_irq0"
+   end="dipsw_pio.irq">
+  <parameter name="irqNumber" value="0" />
+ </connection>
+ <connection
+   kind="interrupt"
+   version="16.0"
+   start="hps_0.f2h_irq0"
+   end="power.irq">
+  <parameter name="irqNumber" value="8" />
+ </connection>
  <connection kind="interrupt" version="16.0" start="ILC.irq" end="jtag_uart.irq">
   <parameter name="irqNumber" value="2" />
+ </connection>
+ <connection kind="interrupt" version="16.0" start="ILC.irq" end="button_pio.irq">
+  <parameter name="irqNumber" value="1" />
+ </connection>
+ <connection kind="interrupt" version="16.0" start="ILC.irq" end="dipsw_pio.irq">
+  <parameter name="irqNumber" value="0" />
  </connection>
  <connection
    kind="reset"
@@ -1101,6 +1516,21 @@
    kind="reset"
    version="16.0"
    start="clk_0.clk_reset"
+   end="led_pio.reset" />
+ <connection
+   kind="reset"
+   version="16.0"
+   start="clk_0.clk_reset"
+   end="dipsw_pio.reset" />
+ <connection
+   kind="reset"
+   version="16.0"
+   start="clk_0.clk_reset"
+   end="button_pio.reset" />
+ <connection
+   kind="reset"
+   version="16.0"
+   start="clk_0.clk_reset"
    end="jtag_uart.reset" />
  <connection
    kind="reset"
@@ -1111,8 +1541,28 @@
    kind="reset"
    version="16.0"
    start="clk_0.clk_reset"
-   end="to_external_bus_bridge_0.reset" />
- <connection kind="reset" version="16.0" start="clk_0.clk_reset" end="pio_0.reset" />
+   end="im_bus.reset" />
+ <connection
+   kind="reset"
+   version="16.0"
+   start="clk_0.clk_reset"
+   end="dm_bus.reset" />
+ <connection
+   kind="reset"
+   version="16.0"
+   start="clk_0.clk_reset"
+   end="rf_bus.reset" />
+ <connection
+   kind="reset"
+   version="16.0"
+   start="clk_0.clk_reset"
+   end="io_bus.reset" />
+ <connection
+   kind="reset"
+   version="16.0"
+   start="clk_0.clk_reset"
+   end="mask_bus.reset" />
+ <connection kind="reset" version="16.0" start="clk_0.clk_reset" end="power.reset" />
  <connection kind="reset" version="16.0" start="clk_0.clk_reset" end="ILC.reset_n" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
