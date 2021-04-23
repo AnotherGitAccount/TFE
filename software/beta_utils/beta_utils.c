@@ -5,7 +5,7 @@
 #include "beta_machine.h"
 
 static const char help[] = 
-    " -h, --help\n"
+    "-h, --help\n"
     "Displays help\n"
     "\n"
     "-st, --start\n"
