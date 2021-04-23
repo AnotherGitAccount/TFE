@@ -25,6 +25,12 @@
 #define IO_SIZE         0          // IO memory number of words
 #define MK_SIZE         256        // Mask memory number of words
 
+#define IM_ID           "IM"       // Instruction memory string id
+#define DM_ID           "DM"       // Data memory string id
+#define RF_ID           "RF"       // Register file string id
+#define IO_ID           "IO"       // IO memory string id
+#define MK_ID           "MK"       // Mask memory string id
+
 typedef int _file_descriptor;
 
 /*
@@ -87,112 +93,30 @@ int start_machine();
 int stop_machine();
 
 /*
- * Writes all the words contained in a binary file in the instruction memory if the machine is
- * OFF, doesn't do anything if it is ON.
+ * Writes bytes present in the file at path in a memory
+ * @param offset the offset (in bytes) in the bus address space
+ * @param word_size the size (in bytes) of a word
+ * @param word_cnt the number of words present in the memory
  * @param path the path to the binary file
  * @param size size of the file in bytes
- * @return 1 if instruction memory write succesful,
- *         0 if machine is ON and so memory write not succesful,
- *        -1 if any error occured and so memory write not succesful
+ * @return 1 if write succesful,
+ *         0 if machine is ON and so write not succesful,
+ *        -1 if any error occured and so write not succesful
  */
-int write_instruction_mem(char* path, size_t size);
-
-// /*
-//  * Writes all the words contained in a binary file in the data memory if the machine is
-//  * OFF, doesn't do anything if it is ON.
-//  * @param path the path to the binary file
-//  * @return 1 if data memory write succesful,
-//  *         0 if machine is ON and so memory write not succesful,
-//  *        -1 if any error occured and so memory write not succesful
-//  */
-// int write_data_mem(char* path);
-
-// /*
-//  * Writes all the words contained in a binary file in the register file memory if the machine is
-//  * OFF, doesn't do anything if it is ON.
-//  * @param path the path to the binary file
-//  * @return 1 if register file memory write succesful,
-//  *         0 if machine is ON and so memory write not succesful,
-//  *        -1 if any error occured and so memory write not succesful
-//  */
-// int write_reg_file(char* path);
-
-// /*
-//  * Writes all the words contained in a binary file in the io memory if the machine is
-//  * OFF, doesn't do anything if it is ON.
-//  * @param path the path to the binary file
-//  * @return 1 if io memory write succesful,
-//  *         0 if machine is ON and so memory write not succesful,
-//  *        -1 if any error occured and so memory write not succesful
-//  */
-// int write_io_mem(char* path);
+int write_at(off_t offset, size_t word_size, size_t word_cnt, char* path, size_t size);
 
 /*
- * Writes all the words contained in a binary file in the mask memory if the machine is
- * OFF, doesn't do anything if it is ON.
- * @param path the path to the binary file
- * @return 1 if mask memory write succesful,
- *         0 if machine is ON and so memory write not succesful,
- *        -1 if any error occured and so memory write not succesful
+ * Reads bytes from start to end in the specified memory if the machine is OFF, doesn't do
+ * anything if it is ON. start and end must satisfy 0 <= start <= end < word_size * word_cnt.
+ * @param offset the offset (in bytes) in the bus address space
+ * @param word_size the size (in bytes) of a word
+ * @param word_cnt the number of words present in the memory
+ * @param start offset (in bytes) in the memory address space of first byte to be read in 
+ *              instruction memory
+ * @param end offset (in bytes) in the memory address space of last byte to be read in instruction 
+ *            memory
+ * @return an array containing the bytes if read succesful,
+ *         NULL if any error occured or the machine was ON and so memory read not succesful. Unvalid 
+ *         inputs are considered as an error. 
  */
-int write_mask_mem(char* path);
-
-// /*
-//  * Reads bytes from start to end in the instruction memory if the machine is OFF, doesn't do
-//  * anything if it is ON. Note that start must be <= end and both start and end must be IM_WORD_SIZE
-//  * bytes aligned adresses contained in [0; (IM_SIZE * IM_WORD_SIZE - 1) * 4[.
-//  * @param start offset of first byte to be read in instruction memory
-//  * @param end offset of last byte to be read in instruction memory
-//  * @return an array containing the bytes if read succesful,
-//  *         NULL i any error occured and so memory read not succesful. Unvalid inputs are considered
-//  *         as an error. 
-//  */
-// uint8_t* read_instruction_mem(off_t start, off_t end);
-
-// /*
-//  * Reads bytes from start to end in the data memory if the machine is OFF, doesn't do
-//  * anything if it is ON. Note that start must be <= end and both start and end must be DM_WORD_SIZE
-//  * bytes aligned adresses contained in [0; (DM_SIZE * DM_WORD_SIZE - 1) * 4[.
-//  * @param start offset of first byte to be read in data memory
-//  * @param end offset of last byte to be read in data memory
-//  * @return an array containing the bytes if read succesful,
-//  *         NULL i any error occured and so memory read not succesful. Unvalid inputs are considered
-//  *         as an error. 
-//  */
-// uint8_t* read_data_mem(off_t start, off_t end);
-
-// /*
-//  * Reads bytes from start to end in the register file memory if the machine is OFF, doesn't do
-//  * anything if it is ON. Note that start must be <= end and both start and end must be RF_WORD_SIZE
-//  * bytes aligned adresses contained in [0; (RF_SIZE * RF_WORD_SIZE - 1) * 4[.
-//  * @param start offset of first byte to be read in register file memory
-//  * @param end offset of last byte to be read in register file memory
-//  * @return an array containing the bytes if read succesful,
-//  *         NULL i any error occured and so memory read not succesful. Unvalid inputs are considered
-//  *         as an error. 
-//  */
-// uint8_t* read_register file_mem(off_t start, off_t end);
-
-// /*
-//  * Reads bytes from start to end in the io memory if the machine is OFF, doesn't do
-//  * anything if it is ON. Note that start must be <= end and both start and end must be IO_WORD_SIZE
-//  * bytes aligned adresses contained in [0; (IO_SIZE * IO_WORD_SIZE - 1) * 4[.
-//  * @param start offset of first byte to be read in io memory
-//  * @param end offset of last byte to be read in io memory
-//  * @return an array containing the bytes if read succesful,
-//  *         NULL i any error occured and so memory read not succesful. Unvalid inputs are considered
-//  *         as an error. 
-//  */
-// uint8_t* read_io_mem(off_t start, off_t end);
-
-// /*
-//  * Reads bytes from start to end in the mask memory if the machine is OFF, doesn't do
-//  * anything if it is ON. Note that start must be <= end and both start and end must be MK_WORD_SIZE
-//  * bytes aligned adresses contained in [0; (MK_SIZE * MK_WORD_SIZE - 1) * 4[.
-//  * @param start offset of first byte to be read in mask memory
-//  * @param end offset of last byte to be read in mask memory
-//  * @return an array containing the bytes if read succesful,
-//  *         NULL i any error occured and so memory read not succesful. Unvalid inputs are considered
-//  *         as an error. 
-//  */
-// uint8_t* read_mask_mem(off_t start, off_t end);
+uint8_t* read_from(off_t offset, size_t word_size, size_t word_cnt, off_t start, off_t end);
