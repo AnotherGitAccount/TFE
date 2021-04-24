@@ -14,4 +14,5 @@
 4. On linux, copy the files from `/media` to `/home/Documents`
 5. Follow the steps in the readme of `software/beta_utils` to intall and use
 
-NOTE: steps 2 -> 4 can be done using ssh / scp
+NOTE: steps 2 -> 4 can be done using ssh / scp. These steps can also be used to transfer your binary files (to program
+the machine).
