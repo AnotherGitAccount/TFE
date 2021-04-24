@@ -14,11 +14,12 @@ static const char help[] =
     "-sd, --shutdown\n"
     "Stops the machine\n"
     "\n"
-    "-p, --program <memory_id> <file_path> <size>\n"
+    "-p, --program <memory_id> <file_path> <size> <offset>\n"
     "Programs a memory with a binary file - only works if machine is off, parameters are\n"
     "\t.memory_id: the id of the memory to be programmed.\n"
     "\t.file_path: path to the binary file\n"
     "\t.size: number of bytes in the binary file\n"
+    "\t.offset: offset in bytes in the memory\n"
     "\n"
     "-i, --information <memory_id>\n"
     "Gives information about the memory, parameters are\n"
@@ -106,7 +107,7 @@ int parse_stop(int argc) {
 
 int parse_program(int argc, char **argv);
 int parse_program(int argc, char **argv) {
-    if(argc < 5) {
+    if(argc < 6) {
         printf("Not enough arguments\n");
         printf(err_help);
         return -1;
@@ -114,9 +115,16 @@ int parse_program(int argc, char **argv) {
 
     char *path  = argv[3];
     int size    = atoi(argv[4]); 
+    int offset  = atoi(argv[5]);
 
     if(size < 0) {
         printf("Size must be positive\n");
+        printf(err_help);
+        return -1;
+    }
+
+    if(offset < 0) {
+        printf("Offset must be positive\n");
         printf(err_help);
         return -1;
     }
@@ -125,19 +133,19 @@ int parse_program(int argc, char **argv) {
 
     if(strcmp(argv[2], IM_ID) == 0) {
         printf("Programming instruction memory...\n");
-        res = write_at(IM_OFF, IM_WORD_SIZE, IM_SIZE, path, (size_t) size);
+        res = write_at(IM_OFF, IM_WORD_SIZE, IM_SIZE, path, (size_t) size, (off_t) offset);
     } else if(strcmp(argv[2], DM_ID) == 0) {
         printf("Programming data memory...\n");
-        res = write_at(DM_OFF, DM_WORD_SIZE, DM_SIZE, path, (size_t) size);
+        res = write_at(DM_OFF, DM_WORD_SIZE, DM_SIZE, path, (size_t) size, (off_t) offset);
     } else if(strcmp(argv[2], RF_ID) == 0) {
         printf("Programming register file...\n");
-        res = write_at(RF_OFF, RF_WORD_SIZE, RF_SIZE, path, (size_t) size);
+        res = write_at(RF_OFF, RF_WORD_SIZE, RF_SIZE, path, (size_t) size, (off_t) offset);
     } else if(strcmp(argv[2], IO_ID) == 0) {
         printf("Programming io memory...\n");
-        res = write_at(IO_OFF, IO_WORD_SIZE, IO_SIZE, path, (size_t) size);
+        res = write_at(IO_OFF, IO_WORD_SIZE, IO_SIZE, path, (size_t) size, (off_t) offset);
     } else if(strcmp(argv[2], MK_ID) == 0) {
         printf("Programming mask memory...\n");
-        res = write_at(MK_OFF, MK_WORD_SIZE, MK_SIZE, path, (size_t) size);
+        res = write_at(MK_OFF, MK_WORD_SIZE, MK_SIZE, path, (size_t) size, (off_t) offset);
     } else {
         printf("Unknown memory\n");
         printf(err_help);

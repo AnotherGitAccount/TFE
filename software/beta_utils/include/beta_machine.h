@@ -99,11 +99,13 @@ int stop_machine(void);
  * @param word_cnt the number of words present in the memory
  * @param path the path to the binary file
  * @param size size of the file in bytes
+ * @param in_mem_offset offset in the memory address space, must be such that the file can fit in
+ *                      the memory. Otherwise, it is considered as an error.
  * @return 1 if write succesful,
  *         0 if machine is ON and so write not succesful,
  *        -1 if any error occured and so write not succesful
  */
-int write_at(off_t offset, size_t word_size, size_t word_cnt, char* path, size_t size);
+int write_at(off_t offset, size_t word_size, size_t word_cnt, char* path, size_t size, off_t in_mem_offset);
 
 /*
  * Reads bytes from start to end in the specified memory if the machine is OFF, doesn't do

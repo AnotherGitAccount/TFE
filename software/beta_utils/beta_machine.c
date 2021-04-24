@@ -125,7 +125,11 @@ int stop_machine() {
     } 
 }
 
-int write_at(off_t offset, size_t word_size, size_t word_cnt, char* path, size_t size) {
+int write_at(off_t offset, size_t word_size, size_t word_cnt, char* path, size_t size, off_t in_mem_offset) {
+    if(in_mem_offset + (off_t) size >= (off_t) (word_cnt * word_size)) {
+        return -1;
+    }
+
     int is_on = is_machine_on();
 
     if(is_on == (int) -1) {
@@ -151,7 +155,7 @@ int write_at(off_t offset, size_t word_size, size_t word_cnt, char* path, size_t
             
             size_t i;
             for(i = 0; i < size; ++i) {
-                mapping[i] = bytes[i];
+                mapping[in_mem_offset + i] = bytes[i];
             }
 
             free(bytes);
@@ -168,6 +172,10 @@ int write_at(off_t offset, size_t word_size, size_t word_cnt, char* path, size_t
 }
 
 uint8_t* read_from(off_t offset, size_t word_size, size_t word_cnt, off_t start, off_t end) {
+    if(start > end || end >= (off_t) (word_cnt * word_size)) {
+        return NULL;
+    }
+
     int is_on = is_machine_on();
 
     if(is_on == (int) -1) {
@@ -183,12 +191,6 @@ uint8_t* read_from(off_t offset, size_t word_size, size_t word_cnt, off_t start,
 
         if(is_on == (int) 0) {
             // machine is OFF
-            if(start > end || end >= (off_t) (word_cnt * word_size)) {
-                _free_mapping(mapping, word_size, word_cnt);
-                _close_file_descriptor(fd);
-                return NULL;
-            }
-
             uint8_t* bytes = malloc((end - start + 1) * sizeof(uint8_t));
             
             size_t i;

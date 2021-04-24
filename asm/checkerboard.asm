@@ -27,12 +27,12 @@ loop_y:
 loop_x:
     SUBC(posx, 1, posx)
 draw:
-    CMOVE(0x0010, vaddr)    | adds 1 at the beginning of the word (graphical mode)
-    SHLC(vaddr, 15, vaddr)  | shifts posx 
-    OR(vaddr, posx, vaddr)  | adds posx 
-    SHLC(vaddr, 6, vaddr)   | shifts posx 
-    OR(vaddr, posy, vaddr)  | adds posy
-    SHLC(vaddr, 6, vaddr)   | puts block location in [18:6]
+    CMOVE(0x0010, vaddr)     | adds 1 at the beginning of the word (graphical mode)
+    SHLC(vaddr, 15, vaddr)   | shifts posx 
+    OR(vaddr, posx, vaddr)   | adds posx 
+    SHLC(vaddr, 6, vaddr)    | shifts posx 
+    OR(vaddr, posy, vaddr)   | adds posy
+    SHLC(vaddr, 6, vaddr)    | puts block location in [18:6]
     XOR(posx, posy, tmp1)    | xor to decide which tile it is
     ORC(zero, 0x0001, tmp2)  | creates the mask
     AND(tmp1, tmp2, tmp1)    | apply mask
@@ -51,3 +51,4 @@ end_draw:
     | END_CODE 
     BNE(posx, loop_x)
     BNE(posy, loop_y)
+    EXIT()

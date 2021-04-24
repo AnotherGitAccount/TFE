@@ -1,5 +1,5 @@
-class Controller:
-    def __init__(self, grid):
+class Mouse:
+    def __init__(self):
         self.right_clicked = False
         self.left_clicked  = False
 
