@@ -57,11 +57,11 @@
 | LD(CC, RC)		| RC <- <CC>
 | ST(RC, CC, RA)	| <RA>+CC <- <RC>
 | ST(RC, CC)		| CC <- <RC>
+| LDR(CC, RC)		| RC <- <CC> (PC-relative addressing)
 
 | MOVE(RA, RC)		| RC <- <RA>
 | CMOVE(CC, RC)		| RC <- CC
 | HALT()		| STOPS SIMULATOR.
-| EXIT()          | STOPS the beta machine (fpga)
 
 | PUSH(RA)		| (2) <SP> <- <RA>; SP <- <SP> - 4
 | POP(RA)		| (2) RA <- <<SP>+4>; SP <- <SP> + 4
@@ -250,18 +250,19 @@ SP = sp
 .macro BNE(RA, LABEL)		BETABR(0x1E,RA,r31,LABEL)
 .macro BT(RA,LABEL,RC)		BNE(RA,LABEL,RC)
 .macro BT(RA,LABEL)		BNE(RA,LABEL)
-.macro BR(LABEL,RC)		BEQ(r0, LABEL, RC)
+.macro BR(LABEL,RC)		BEQ(r31, LABEL, RC)
 .macro BR(LABEL)		BR(LABEL, r31)
 .macro JMP(RA, RC)		betaopc(0x1B,RA,0,RC)
 .macro JMP(RA)			betaopc(0x1B,RA,0,r31)
 
 .macro LD(RA, CC, RC)		betaopc(0x18,RA,CC,RC)
-.macro LD(CC, RC)		betaopc(0x18,R0,CC,RC)
+.macro LD(CC, RC)		betaopc(0x18,R31,CC,RC)
 .macro ST(RC, CC, RA)		betaopc(0x19,RA,CC,RC)
-.macro ST(RC, CC)		betaopc(0x19,R0,CC,RC)
+.macro ST(RC, CC)		betaopc(0x19,R31,CC,RC)
+.macro LDR(CC, RC)		BETABR(0x1F, R31, RC, CC)
 
-.macro MOVE(RA, RC)		ADD(RA, R0, RC)
-.macro CMOVE(CC, RC)		ADDC(R0, CC, RC)
+.macro MOVE(RA, RC)		ADD(RA, R31, RC)
+.macro CMOVE(CC, RC)		ADDC(R31, CC, RC)
 
 .macro PUSH(RA)		ADDC(SP,4,SP)  ST(RA,-4,SP)
 .macro POP(RA)		LD(SP,-4,RA)   ADDC(SP,-4,SP)
@@ -271,7 +272,7 @@ SP = sp
 .macro RTN()		JMP(LP)
 .macro XRTN()		JMP(XP)
 
-.macro EXIT()                 betaop(0x3f, R0, R0, R0)
+.macro EXIT()                 betaop(0x3f, R31, R31, R31)
 
 | Controversial Extras
 | Calling convention:
@@ -308,3 +309,33 @@ SP = sp
 
 .macro ALLOCATE(N) ADDC(sp, N*4, sp)
 .macro DEALLOCATE(N) SUBC(sp, N*4, sp)
+
+|--------------------------------------------------------
+| Privileged mode instructions
+|--------------------------------------------------------
+
+.macro PRIV_OP(FNCODE)		betaopc (0x00, 0, FNCODE, 0)
+.macro HALT() PRIV_OP (0)
+.macro RDCHAR() PRIV_OP (1)
+.macro WRCHAR() PRIV_OP (2)
+.macro CYCLE()	PRIV_OP (3)
+.macro TIME()	PRIV_OP (4)
+.macro CLICK()	PRIV_OP (5)
+.macro RANDOM()	PRIV_OP (6)
+.macro SEED()	PRIV_OP (7)
+.macro SERVER() PRIV_OP (8)
+
+| SVC calls; used for OS extensions
+
+.macro SVC(code)		betaopc (0x01, 0, code, 0)
+
+| Trap and interrupt vectors
+VEC_RESET	= 0		| Reset (powerup)
+VEC_II		= 4		| Illegal instruction (also SVC call)
+VEC_CLK		= 8		| Clock interrupt
+VEC_KBD		= 12		| Keyboard interrupt
+VEC_MOUSE	= 16		| Mouse interrupt
+
+| constant for the supervisor bit in the PC
+PC_SUPERVISOR	   = 0x80000000		| the bit itself
+PC_MASK            = 0x7fffffff		| a mask for the rest of the PC

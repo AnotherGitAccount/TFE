@@ -22,12 +22,11 @@ output a binary file named `out.bin` that you can use to program the machine.
 
 Some registers should be used with caution
 
-* R0, is the 0 register which means that it should always contain `0x00000000` to make sure that all the shortcut 
-operators will work properly. To know which operators are concerned, you can `CTRL + F` "r0" and "R0" in `beta.uasm`
+* R0, is the return register (contains function's results)
 (the version of this repo -> `asm/beta.uasm`).
 * R28, is the Linkage register, it holds the return adr
 * R29, is the Frame pointer, itpoints to the base of the frame
-* R31, is used to store `PC + 4` during branch and jump operations
+* R31, is the 0 register (it always contain 0)
 
 ## Credits
 
