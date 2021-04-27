@@ -15,15 +15,18 @@ module mlu_unit(
 		for (i = 0; i < 64; i = i + 1) begin : mlu_unit_loop
 			assign next_reds[(i + 1) * 4 - 1 : i * 4] = mask[(i + 1) * 2 - 1 : i * 2] == 2'b00 ? reds[(i + 1) * 4 - 1 : i * 4] :
 															        mask[(i + 1) * 2 - 1 : i * 2] == 2'b01 ? primary[11:8]                 :
-															        secondary[11:8];
+															        mask[(i + 1) * 2 - 1 : i * 2] == 2'b10 ? secondary[11:8]               :
+																	  4'b0;
 																									 
 			assign next_greens[(i + 1) * 4 - 1 : i * 4] = mask[(i + 1) * 2 - 1 : i * 2] == 2'b00 ? greens[(i + 1) * 4 - 1 : i * 4] :
 																       mask[(i + 1) * 2 - 1 : i * 2] == 2'b01 ? primary[7:4]                    :
-																       secondary[7:4];
+																       mask[(i + 1) * 2 - 1 : i * 2] == 2'b10 ? secondary[7:4]                  :
+																		 4'b0;
 																										
 			assign next_blues[(i + 1) * 4 - 1 : i * 4] = mask[(i + 1) * 2 - 1 : i * 2] == 2'b00 ? blues[(i + 1) * 4 - 1 : i * 4] :
 																	   mask[(i + 1) * 2 - 1 : i * 2] == 2'b01 ? primary[3:0]                   :
-																      secondary[3:0];
+																      mask[(i + 1) * 2 - 1 : i * 2] == 2'b10 ? secondary[3:0]                 :
+																		4'b0;
 		end
 	endgenerate
 

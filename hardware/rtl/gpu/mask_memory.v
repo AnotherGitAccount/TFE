@@ -28,11 +28,14 @@ module mask_memory(
 	wire [127:0] ram_data_write;
 	wire 			 ram_wren;
 	wire			 ram_clk_en;
+	wire [127:0] ram_data_read;
 
 	assign ram_address    = (alive == 1'b0) ? mau_address : cpu_address;
 	assign ram_data_write = (alive == 1'b0) ? mau_data_write : cpu_data_write;
 	assign ram_wren       = (alive == 1'b0) ? mau_wren : cpu_wren;
 	assign ram_clk_en     = (alive == 1'b0) ? mau_clk_en : cpu_clk_en;
+	
+	assign data_read = (ram_address == 8'hff) ? 128'hffffffffffffffffffffffffffffffff : ram_data_read;
 		
 	ram_256x128 mask_memory_ram(
 		.clock(clk),
@@ -40,6 +43,6 @@ module mask_memory(
 		.address(ram_address),
 		.data(ram_data_write),
 		.wren(ram_wren),
-		.q(data_read)
+		.q(ram_data_read)
 	);
 endmodule 

@@ -61,10 +61,11 @@ module gpu(
 	wire [12:0] address_b;
 	
 	memory mem(
+		.clr(1'b0),
 		.clk_a(cpu_clk),
 		.clk_en_a(clk_sequence[4] | clk_sequence[6]),
 		.clk_b(gpu_clk),
-		.wren(wren & address[31] & clk_sequence[6]),
+		.wren(wren & clk_sequence[6]),
 		.block_address_a(address[18:6]),
 		.block_address_b(address_b),
 		.reds0(reds0),
@@ -162,12 +163,13 @@ module gpu(
 	
 	// PORT B LOGIC (HDMI CONTROLLER)
 	
-	wire [9:0] cnt_h;
+	wire [10:0] cnt_h;
 	wire [9:0] cnt_v;
 	wire [6:0] blk_x;
 	wire [5:0] blk_y;
 	wire [2:0] off_x;
 	wire [2:0] off_y;
+	wire in_mem;
 	
 	graphic_counter gc(                                    
 	  .clk(gpu_clk),
@@ -175,6 +177,7 @@ module gpu(
 	  .cnt_v(cnt_v),
 	  .blk_x(blk_x),
 	  .blk_y(blk_y),
+	  .in_mem(in_mem),
 	  .off_x(off_x),
 	  .off_y(off_y)
 	);
@@ -196,23 +199,23 @@ module gpu(
 		.HDMI_TX_INT(hdmi_tx_int)
 	);
 	
-	wire in_mem;
 	reg [5:0] location;
+	reg 		 in_mem_reg;
 	
-	assign in_mem    = (blk_x < 7'd72) & (blk_y < 6'd54);
 	assign address_b = {blk_x, blk_y};
 	
 	always @(posedge gpu_clk) begin
-		location  <= {2'b0, off_x} + {2'b0, off_y} * 5'b01000;
+		location   <= {2'b0, off_x} + {2'b0, off_y} * 5'b01000;
+		in_mem_reg <= in_mem;
 	end 
 	
 	wire [3:0] red;
 	wire [3:0] green;
 	wire [3:0] blue;
 		
-	assign red   = (in_mem == 1'b1) ? next_redsb[{2'b0, location}   << 2 +: 4] : 4'b0000;
-	assign green = (in_mem == 1'b1) ? next_greensb[{2'b0, location} << 2 +: 4] : 4'b0000;
-	assign blue  = (in_mem == 1'b1) ? next_bluesb[{2'b0, location}  << 2 +: 4] : 4'b0000;
+	assign red   = (in_mem_reg == 1'b1) ? next_redsb[{2'b0, location}   << 2 +: 4] : 4'b0000;
+	assign green = (in_mem_reg == 1'b1) ? next_greensb[{2'b0, location} << 2 +: 4] : 4'b0000;
+	assign blue  = (in_mem_reg == 1'b1) ? next_bluesb[{2'b0, location}  << 2 +: 4] : 4'b0000;
 	
 	assign hdmi_tx_d[23:16] = {red, 4'b0};
 	assign hdmi_tx_d[15:8]  = {green, 4'b0};

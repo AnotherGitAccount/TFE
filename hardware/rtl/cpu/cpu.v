@@ -17,7 +17,8 @@ module cpu(
 	clk_sequence,
 	exported_wren,
 	exported_data,
-	exported_address
+	exported_address,
+	io_data
 );
 
 	input  wire        clk;
@@ -39,6 +40,7 @@ module cpu(
 	output wire 		 exported_wren;
 	output wire [31:0] exported_data;
 	output wire [31:0] exported_address;
+	input  wire [31:0] io_data;
 
 	clock_controller cc(
 		.clk(clk),
@@ -128,6 +130,8 @@ module cpu(
 	assign rc      = im_data[25:21];
 	assign opcode  = im_data[31:26];
 	assign cl_addr = opcode;
+	assign halt    = opcode[5] & opcode[4] & opcode[3] 
+						& opcode[2] & opcode[1] & opcode[0];
 
 	// REGISTER FILE
 	
@@ -195,7 +199,7 @@ module cpu(
 		.cpu_clk_en(clk_sequence[4]),
 		.cpu_address(alu_res),
 		.cpu_data_write(rf_data_r2),
-		.cpu_wren(wr),
+		.cpu_wren(wr & (alu_res[31:30] == 2'b00)),
 		.mau_clk_en(~alive),
 		.mau_address(mau_address_dm),
 		.mau_data_write(mau_write_data_dm),
@@ -203,8 +207,11 @@ module cpu(
 		.data_read(dm_data_r),
 		.alive(alive)
    );
+	
+	wire [31:0] st_data;
+	assign st_data = (alu_res[31:30] == 2'b00) ? dm_data_r : (alu_res[31:30] == 2'b01) ? io_data : 32'b0;
 
-	assign rf_data_w = (wdsel[1] == 1'b0) ? ((wdsel[0] == 1'b0) ? pc_next : alu_res) : dm_data_r;
+	assign rf_data_w = (wdsel[1] == 1'b0) ? ((wdsel[0] == 1'b0) ? pc_next : alu_res) : st_data;
 
 
 endmodule 

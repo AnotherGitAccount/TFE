@@ -4,122 +4,119 @@
 
 `timescale 1 ps / 1 ps
 module soc_system (
-		input  wire [1:0]   button_pio_external_connection_export, // button_pio_external_connection.export
-		input  wire         clk_clk,                               //                            clk.clk
-		input  wire [3:0]   dipsw_pio_external_connection_export,  //  dipsw_pio_external_connection.export
-		input  wire         dm_bus_acknowledge,                    //                         dm_bus.acknowledge
-		input  wire         dm_bus_irq,                            //                               .irq
-		output wire [17:0]  dm_bus_address,                        //                               .address
-		output wire         dm_bus_bus_enable,                     //                               .bus_enable
-		output wire [3:0]   dm_bus_byte_enable,                    //                               .byte_enable
-		output wire         dm_bus_rw,                             //                               .rw
-		output wire [31:0]  dm_bus_write_data,                     //                               .write_data
-		input  wire [31:0]  dm_bus_read_data,                      //                               .read_data
-		input  wire         hps_0_f2h_cold_reset_req_reset_n,      //       hps_0_f2h_cold_reset_req.reset_n
-		input  wire         hps_0_f2h_debug_reset_req_reset_n,     //      hps_0_f2h_debug_reset_req.reset_n
-		input  wire [27:0]  hps_0_f2h_stm_hw_events_stm_hwevents,  //        hps_0_f2h_stm_hw_events.stm_hwevents
-		input  wire         hps_0_f2h_warm_reset_req_reset_n,      //       hps_0_f2h_warm_reset_req.reset_n
-		output wire         hps_0_h2f_reset_reset_n,               //                hps_0_h2f_reset.reset_n
-		output wire         hps_0_hps_io_hps_io_emac1_inst_TX_CLK, //                   hps_0_hps_io.hps_io_emac1_inst_TX_CLK
-		output wire         hps_0_hps_io_hps_io_emac1_inst_TXD0,   //                               .hps_io_emac1_inst_TXD0
-		output wire         hps_0_hps_io_hps_io_emac1_inst_TXD1,   //                               .hps_io_emac1_inst_TXD1
-		output wire         hps_0_hps_io_hps_io_emac1_inst_TXD2,   //                               .hps_io_emac1_inst_TXD2
-		output wire         hps_0_hps_io_hps_io_emac1_inst_TXD3,   //                               .hps_io_emac1_inst_TXD3
-		input  wire         hps_0_hps_io_hps_io_emac1_inst_RXD0,   //                               .hps_io_emac1_inst_RXD0
-		inout  wire         hps_0_hps_io_hps_io_emac1_inst_MDIO,   //                               .hps_io_emac1_inst_MDIO
-		output wire         hps_0_hps_io_hps_io_emac1_inst_MDC,    //                               .hps_io_emac1_inst_MDC
-		input  wire         hps_0_hps_io_hps_io_emac1_inst_RX_CTL, //                               .hps_io_emac1_inst_RX_CTL
-		output wire         hps_0_hps_io_hps_io_emac1_inst_TX_CTL, //                               .hps_io_emac1_inst_TX_CTL
-		input  wire         hps_0_hps_io_hps_io_emac1_inst_RX_CLK, //                               .hps_io_emac1_inst_RX_CLK
-		input  wire         hps_0_hps_io_hps_io_emac1_inst_RXD1,   //                               .hps_io_emac1_inst_RXD1
-		input  wire         hps_0_hps_io_hps_io_emac1_inst_RXD2,   //                               .hps_io_emac1_inst_RXD2
-		input  wire         hps_0_hps_io_hps_io_emac1_inst_RXD3,   //                               .hps_io_emac1_inst_RXD3
-		inout  wire         hps_0_hps_io_hps_io_sdio_inst_CMD,     //                               .hps_io_sdio_inst_CMD
-		inout  wire         hps_0_hps_io_hps_io_sdio_inst_D0,      //                               .hps_io_sdio_inst_D0
-		inout  wire         hps_0_hps_io_hps_io_sdio_inst_D1,      //                               .hps_io_sdio_inst_D1
-		output wire         hps_0_hps_io_hps_io_sdio_inst_CLK,     //                               .hps_io_sdio_inst_CLK
-		inout  wire         hps_0_hps_io_hps_io_sdio_inst_D2,      //                               .hps_io_sdio_inst_D2
-		inout  wire         hps_0_hps_io_hps_io_sdio_inst_D3,      //                               .hps_io_sdio_inst_D3
-		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D0,      //                               .hps_io_usb1_inst_D0
-		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D1,      //                               .hps_io_usb1_inst_D1
-		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D2,      //                               .hps_io_usb1_inst_D2
-		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D3,      //                               .hps_io_usb1_inst_D3
-		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D4,      //                               .hps_io_usb1_inst_D4
-		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D5,      //                               .hps_io_usb1_inst_D5
-		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D6,      //                               .hps_io_usb1_inst_D6
-		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D7,      //                               .hps_io_usb1_inst_D7
-		input  wire         hps_0_hps_io_hps_io_usb1_inst_CLK,     //                               .hps_io_usb1_inst_CLK
-		output wire         hps_0_hps_io_hps_io_usb1_inst_STP,     //                               .hps_io_usb1_inst_STP
-		input  wire         hps_0_hps_io_hps_io_usb1_inst_DIR,     //                               .hps_io_usb1_inst_DIR
-		input  wire         hps_0_hps_io_hps_io_usb1_inst_NXT,     //                               .hps_io_usb1_inst_NXT
-		output wire         hps_0_hps_io_hps_io_spim1_inst_CLK,    //                               .hps_io_spim1_inst_CLK
-		output wire         hps_0_hps_io_hps_io_spim1_inst_MOSI,   //                               .hps_io_spim1_inst_MOSI
-		input  wire         hps_0_hps_io_hps_io_spim1_inst_MISO,   //                               .hps_io_spim1_inst_MISO
-		output wire         hps_0_hps_io_hps_io_spim1_inst_SS0,    //                               .hps_io_spim1_inst_SS0
-		input  wire         hps_0_hps_io_hps_io_uart0_inst_RX,     //                               .hps_io_uart0_inst_RX
-		output wire         hps_0_hps_io_hps_io_uart0_inst_TX,     //                               .hps_io_uart0_inst_TX
-		inout  wire         hps_0_hps_io_hps_io_i2c0_inst_SDA,     //                               .hps_io_i2c0_inst_SDA
-		inout  wire         hps_0_hps_io_hps_io_i2c0_inst_SCL,     //                               .hps_io_i2c0_inst_SCL
-		inout  wire         hps_0_hps_io_hps_io_i2c1_inst_SDA,     //                               .hps_io_i2c1_inst_SDA
-		inout  wire         hps_0_hps_io_hps_io_i2c1_inst_SCL,     //                               .hps_io_i2c1_inst_SCL
-		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO09,  //                               .hps_io_gpio_inst_GPIO09
-		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO35,  //                               .hps_io_gpio_inst_GPIO35
-		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO40,  //                               .hps_io_gpio_inst_GPIO40
-		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO53,  //                               .hps_io_gpio_inst_GPIO53
-		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO54,  //                               .hps_io_gpio_inst_GPIO54
-		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO61,  //                               .hps_io_gpio_inst_GPIO61
-		input  wire         im_bus_acknowledge,                    //                         im_bus.acknowledge
-		input  wire         im_bus_irq,                            //                               .irq
-		output wire [17:0]  im_bus_address,                        //                               .address
-		output wire         im_bus_bus_enable,                     //                               .bus_enable
-		output wire [3:0]   im_bus_byte_enable,                    //                               .byte_enable
-		output wire         im_bus_rw,                             //                               .rw
-		output wire [31:0]  im_bus_write_data,                     //                               .write_data
-		input  wire [31:0]  im_bus_read_data,                      //                               .read_data
-		input  wire         io_bus_acknowledge,                    //                         io_bus.acknowledge
-		input  wire         io_bus_irq,                            //                               .irq
-		output wire [17:0]  io_bus_address,                        //                               .address
-		output wire         io_bus_bus_enable,                     //                               .bus_enable
-		output wire [3:0]   io_bus_byte_enable,                    //                               .byte_enable
-		output wire         io_bus_rw,                             //                               .rw
-		output wire [31:0]  io_bus_write_data,                     //                               .write_data
-		input  wire [31:0]  io_bus_read_data,                      //                               .read_data
-		output wire [6:0]   led_pio_external_connection_export,    //    led_pio_external_connection.export
-		input  wire         mask_bus_acknowledge,                  //                       mask_bus.acknowledge
-		input  wire         mask_bus_irq,                          //                               .irq
-		output wire [11:0]  mask_bus_address,                      //                               .address
-		output wire         mask_bus_bus_enable,                   //                               .bus_enable
-		output wire [15:0]  mask_bus_byte_enable,                  //                               .byte_enable
-		output wire         mask_bus_rw,                           //                               .rw
-		output wire [127:0] mask_bus_write_data,                   //                               .write_data
-		input  wire [127:0] mask_bus_read_data,                    //                               .read_data
-		output wire [14:0]  memory_mem_a,                          //                         memory.mem_a
-		output wire [2:0]   memory_mem_ba,                         //                               .mem_ba
-		output wire         memory_mem_ck,                         //                               .mem_ck
-		output wire         memory_mem_ck_n,                       //                               .mem_ck_n
-		output wire         memory_mem_cke,                        //                               .mem_cke
-		output wire         memory_mem_cs_n,                       //                               .mem_cs_n
-		output wire         memory_mem_ras_n,                      //                               .mem_ras_n
-		output wire         memory_mem_cas_n,                      //                               .mem_cas_n
-		output wire         memory_mem_we_n,                       //                               .mem_we_n
-		output wire         memory_mem_reset_n,                    //                               .mem_reset_n
-		inout  wire [31:0]  memory_mem_dq,                         //                               .mem_dq
-		inout  wire [3:0]   memory_mem_dqs,                        //                               .mem_dqs
-		inout  wire [3:0]   memory_mem_dqs_n,                      //                               .mem_dqs_n
-		output wire         memory_mem_odt,                        //                               .mem_odt
-		output wire [3:0]   memory_mem_dm,                         //                               .mem_dm
-		input  wire         memory_oct_rzqin,                      //                               .oct_rzqin
-		input  wire         power_in_port,                         //                          power.in_port
-		output wire         power_out_port,                        //                               .out_port
-		input  wire         reset_reset_n,                         //                          reset.reset_n
-		input  wire         rf_bus_acknowledge,                    //                         rf_bus.acknowledge
-		input  wire         rf_bus_irq,                            //                               .irq
-		output wire [17:0]  rf_bus_address,                        //                               .address
-		output wire         rf_bus_bus_enable,                     //                               .bus_enable
-		output wire [3:0]   rf_bus_byte_enable,                    //                               .byte_enable
-		output wire         rf_bus_rw,                             //                               .rw
-		output wire [31:0]  rf_bus_write_data,                     //                               .write_data
-		input  wire [31:0]  rf_bus_read_data                       //                               .read_data
+		input  wire         clk_clk,                               //                       clk.clk
+		input  wire         dm_bus_acknowledge,                    //                    dm_bus.acknowledge
+		input  wire         dm_bus_irq,                            //                          .irq
+		output wire [17:0]  dm_bus_address,                        //                          .address
+		output wire         dm_bus_bus_enable,                     //                          .bus_enable
+		output wire [3:0]   dm_bus_byte_enable,                    //                          .byte_enable
+		output wire         dm_bus_rw,                             //                          .rw
+		output wire [31:0]  dm_bus_write_data,                     //                          .write_data
+		input  wire [31:0]  dm_bus_read_data,                      //                          .read_data
+		input  wire         hps_0_f2h_cold_reset_req_reset_n,      //  hps_0_f2h_cold_reset_req.reset_n
+		input  wire         hps_0_f2h_debug_reset_req_reset_n,     // hps_0_f2h_debug_reset_req.reset_n
+		input  wire [27:0]  hps_0_f2h_stm_hw_events_stm_hwevents,  //   hps_0_f2h_stm_hw_events.stm_hwevents
+		input  wire         hps_0_f2h_warm_reset_req_reset_n,      //  hps_0_f2h_warm_reset_req.reset_n
+		output wire         hps_0_h2f_reset_reset_n,               //           hps_0_h2f_reset.reset_n
+		output wire         hps_0_hps_io_hps_io_emac1_inst_TX_CLK, //              hps_0_hps_io.hps_io_emac1_inst_TX_CLK
+		output wire         hps_0_hps_io_hps_io_emac1_inst_TXD0,   //                          .hps_io_emac1_inst_TXD0
+		output wire         hps_0_hps_io_hps_io_emac1_inst_TXD1,   //                          .hps_io_emac1_inst_TXD1
+		output wire         hps_0_hps_io_hps_io_emac1_inst_TXD2,   //                          .hps_io_emac1_inst_TXD2
+		output wire         hps_0_hps_io_hps_io_emac1_inst_TXD3,   //                          .hps_io_emac1_inst_TXD3
+		input  wire         hps_0_hps_io_hps_io_emac1_inst_RXD0,   //                          .hps_io_emac1_inst_RXD0
+		inout  wire         hps_0_hps_io_hps_io_emac1_inst_MDIO,   //                          .hps_io_emac1_inst_MDIO
+		output wire         hps_0_hps_io_hps_io_emac1_inst_MDC,    //                          .hps_io_emac1_inst_MDC
+		input  wire         hps_0_hps_io_hps_io_emac1_inst_RX_CTL, //                          .hps_io_emac1_inst_RX_CTL
+		output wire         hps_0_hps_io_hps_io_emac1_inst_TX_CTL, //                          .hps_io_emac1_inst_TX_CTL
+		input  wire         hps_0_hps_io_hps_io_emac1_inst_RX_CLK, //                          .hps_io_emac1_inst_RX_CLK
+		input  wire         hps_0_hps_io_hps_io_emac1_inst_RXD1,   //                          .hps_io_emac1_inst_RXD1
+		input  wire         hps_0_hps_io_hps_io_emac1_inst_RXD2,   //                          .hps_io_emac1_inst_RXD2
+		input  wire         hps_0_hps_io_hps_io_emac1_inst_RXD3,   //                          .hps_io_emac1_inst_RXD3
+		inout  wire         hps_0_hps_io_hps_io_sdio_inst_CMD,     //                          .hps_io_sdio_inst_CMD
+		inout  wire         hps_0_hps_io_hps_io_sdio_inst_D0,      //                          .hps_io_sdio_inst_D0
+		inout  wire         hps_0_hps_io_hps_io_sdio_inst_D1,      //                          .hps_io_sdio_inst_D1
+		output wire         hps_0_hps_io_hps_io_sdio_inst_CLK,     //                          .hps_io_sdio_inst_CLK
+		inout  wire         hps_0_hps_io_hps_io_sdio_inst_D2,      //                          .hps_io_sdio_inst_D2
+		inout  wire         hps_0_hps_io_hps_io_sdio_inst_D3,      //                          .hps_io_sdio_inst_D3
+		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D0,      //                          .hps_io_usb1_inst_D0
+		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D1,      //                          .hps_io_usb1_inst_D1
+		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D2,      //                          .hps_io_usb1_inst_D2
+		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D3,      //                          .hps_io_usb1_inst_D3
+		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D4,      //                          .hps_io_usb1_inst_D4
+		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D5,      //                          .hps_io_usb1_inst_D5
+		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D6,      //                          .hps_io_usb1_inst_D6
+		inout  wire         hps_0_hps_io_hps_io_usb1_inst_D7,      //                          .hps_io_usb1_inst_D7
+		input  wire         hps_0_hps_io_hps_io_usb1_inst_CLK,     //                          .hps_io_usb1_inst_CLK
+		output wire         hps_0_hps_io_hps_io_usb1_inst_STP,     //                          .hps_io_usb1_inst_STP
+		input  wire         hps_0_hps_io_hps_io_usb1_inst_DIR,     //                          .hps_io_usb1_inst_DIR
+		input  wire         hps_0_hps_io_hps_io_usb1_inst_NXT,     //                          .hps_io_usb1_inst_NXT
+		output wire         hps_0_hps_io_hps_io_spim1_inst_CLK,    //                          .hps_io_spim1_inst_CLK
+		output wire         hps_0_hps_io_hps_io_spim1_inst_MOSI,   //                          .hps_io_spim1_inst_MOSI
+		input  wire         hps_0_hps_io_hps_io_spim1_inst_MISO,   //                          .hps_io_spim1_inst_MISO
+		output wire         hps_0_hps_io_hps_io_spim1_inst_SS0,    //                          .hps_io_spim1_inst_SS0
+		input  wire         hps_0_hps_io_hps_io_uart0_inst_RX,     //                          .hps_io_uart0_inst_RX
+		output wire         hps_0_hps_io_hps_io_uart0_inst_TX,     //                          .hps_io_uart0_inst_TX
+		inout  wire         hps_0_hps_io_hps_io_i2c0_inst_SDA,     //                          .hps_io_i2c0_inst_SDA
+		inout  wire         hps_0_hps_io_hps_io_i2c0_inst_SCL,     //                          .hps_io_i2c0_inst_SCL
+		inout  wire         hps_0_hps_io_hps_io_i2c1_inst_SDA,     //                          .hps_io_i2c1_inst_SDA
+		inout  wire         hps_0_hps_io_hps_io_i2c1_inst_SCL,     //                          .hps_io_i2c1_inst_SCL
+		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO09,  //                          .hps_io_gpio_inst_GPIO09
+		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO35,  //                          .hps_io_gpio_inst_GPIO35
+		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO40,  //                          .hps_io_gpio_inst_GPIO40
+		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO53,  //                          .hps_io_gpio_inst_GPIO53
+		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO54,  //                          .hps_io_gpio_inst_GPIO54
+		inout  wire         hps_0_hps_io_hps_io_gpio_inst_GPIO61,  //                          .hps_io_gpio_inst_GPIO61
+		input  wire         im_bus_acknowledge,                    //                    im_bus.acknowledge
+		input  wire         im_bus_irq,                            //                          .irq
+		output wire [17:0]  im_bus_address,                        //                          .address
+		output wire         im_bus_bus_enable,                     //                          .bus_enable
+		output wire [3:0]   im_bus_byte_enable,                    //                          .byte_enable
+		output wire         im_bus_rw,                             //                          .rw
+		output wire [31:0]  im_bus_write_data,                     //                          .write_data
+		input  wire [31:0]  im_bus_read_data,                      //                          .read_data
+		input  wire         io_bus_acknowledge,                    //                    io_bus.acknowledge
+		input  wire         io_bus_irq,                            //                          .irq
+		output wire [17:0]  io_bus_address,                        //                          .address
+		output wire         io_bus_bus_enable,                     //                          .bus_enable
+		output wire [3:0]   io_bus_byte_enable,                    //                          .byte_enable
+		output wire         io_bus_rw,                             //                          .rw
+		output wire [31:0]  io_bus_write_data,                     //                          .write_data
+		input  wire [31:0]  io_bus_read_data,                      //                          .read_data
+		input  wire         mask_bus_acknowledge,                  //                  mask_bus.acknowledge
+		input  wire         mask_bus_irq,                          //                          .irq
+		output wire [11:0]  mask_bus_address,                      //                          .address
+		output wire         mask_bus_bus_enable,                   //                          .bus_enable
+		output wire [15:0]  mask_bus_byte_enable,                  //                          .byte_enable
+		output wire         mask_bus_rw,                           //                          .rw
+		output wire [127:0] mask_bus_write_data,                   //                          .write_data
+		input  wire [127:0] mask_bus_read_data,                    //                          .read_data
+		output wire [14:0]  memory_mem_a,                          //                    memory.mem_a
+		output wire [2:0]   memory_mem_ba,                         //                          .mem_ba
+		output wire         memory_mem_ck,                         //                          .mem_ck
+		output wire         memory_mem_ck_n,                       //                          .mem_ck_n
+		output wire         memory_mem_cke,                        //                          .mem_cke
+		output wire         memory_mem_cs_n,                       //                          .mem_cs_n
+		output wire         memory_mem_ras_n,                      //                          .mem_ras_n
+		output wire         memory_mem_cas_n,                      //                          .mem_cas_n
+		output wire         memory_mem_we_n,                       //                          .mem_we_n
+		output wire         memory_mem_reset_n,                    //                          .mem_reset_n
+		inout  wire [31:0]  memory_mem_dq,                         //                          .mem_dq
+		inout  wire [3:0]   memory_mem_dqs,                        //                          .mem_dqs
+		inout  wire [3:0]   memory_mem_dqs_n,                      //                          .mem_dqs_n
+		output wire         memory_mem_odt,                        //                          .mem_odt
+		output wire [3:0]   memory_mem_dm,                         //                          .mem_dm
+		input  wire         memory_oct_rzqin,                      //                          .oct_rzqin
+		input  wire         power_in_port,                         //                     power.in_port
+		output wire         power_out_port,                        //                          .out_port
+		input  wire         reset_reset_n,                         //                     reset.reset_n
+		input  wire         rf_bus_acknowledge,                    //                    rf_bus.acknowledge
+		input  wire         rf_bus_irq,                            //                          .irq
+		output wire [17:0]  rf_bus_address,                        //                          .address
+		output wire         rf_bus_bus_enable,                     //                          .bus_enable
+		output wire [3:0]   rf_bus_byte_enable,                    //                          .byte_enable
+		output wire         rf_bus_rw,                             //                          .rw
+		output wire [31:0]  rf_bus_write_data,                     //                          .write_data
+		input  wire [31:0]  rf_bus_read_data                       //                          .read_data
 	);
 
 	wire    [1:0] hps_0_h2f_axi_master_awburst;                              // hps_0:h2f_AWBURST -> mm_interconnect_0:hps_0_h2f_axi_master_awburst
@@ -281,21 +278,6 @@ module soc_system (
 	wire   [31:0] mm_interconnect_2_ilc_avalon_slave_writedata;              // mm_interconnect_2:ILC_avalon_slave_writedata -> ILC:avmm_wrdata
 	wire   [31:0] mm_interconnect_2_sysid_qsys_control_slave_readdata;       // sysid_qsys:readdata -> mm_interconnect_2:sysid_qsys_control_slave_readdata
 	wire    [0:0] mm_interconnect_2_sysid_qsys_control_slave_address;        // mm_interconnect_2:sysid_qsys_control_slave_address -> sysid_qsys:address
-	wire          mm_interconnect_2_led_pio_s1_chipselect;                   // mm_interconnect_2:led_pio_s1_chipselect -> led_pio:chipselect
-	wire   [31:0] mm_interconnect_2_led_pio_s1_readdata;                     // led_pio:readdata -> mm_interconnect_2:led_pio_s1_readdata
-	wire    [1:0] mm_interconnect_2_led_pio_s1_address;                      // mm_interconnect_2:led_pio_s1_address -> led_pio:address
-	wire          mm_interconnect_2_led_pio_s1_write;                        // mm_interconnect_2:led_pio_s1_write -> led_pio:write_n
-	wire   [31:0] mm_interconnect_2_led_pio_s1_writedata;                    // mm_interconnect_2:led_pio_s1_writedata -> led_pio:writedata
-	wire          mm_interconnect_2_dipsw_pio_s1_chipselect;                 // mm_interconnect_2:dipsw_pio_s1_chipselect -> dipsw_pio:chipselect
-	wire   [31:0] mm_interconnect_2_dipsw_pio_s1_readdata;                   // dipsw_pio:readdata -> mm_interconnect_2:dipsw_pio_s1_readdata
-	wire    [1:0] mm_interconnect_2_dipsw_pio_s1_address;                    // mm_interconnect_2:dipsw_pio_s1_address -> dipsw_pio:address
-	wire          mm_interconnect_2_dipsw_pio_s1_write;                      // mm_interconnect_2:dipsw_pio_s1_write -> dipsw_pio:write_n
-	wire   [31:0] mm_interconnect_2_dipsw_pio_s1_writedata;                  // mm_interconnect_2:dipsw_pio_s1_writedata -> dipsw_pio:writedata
-	wire          mm_interconnect_2_button_pio_s1_chipselect;                // mm_interconnect_2:button_pio_s1_chipselect -> button_pio:chipselect
-	wire   [31:0] mm_interconnect_2_button_pio_s1_readdata;                  // button_pio:readdata -> mm_interconnect_2:button_pio_s1_readdata
-	wire    [1:0] mm_interconnect_2_button_pio_s1_address;                   // mm_interconnect_2:button_pio_s1_address -> button_pio:address
-	wire          mm_interconnect_2_button_pio_s1_write;                     // mm_interconnect_2:button_pio_s1_write -> button_pio:write_n
-	wire   [31:0] mm_interconnect_2_button_pio_s1_writedata;                 // mm_interconnect_2:button_pio_s1_writedata -> button_pio:writedata
 	wire   [31:0] hps_only_master_master_readdata;                           // mm_interconnect_3:hps_only_master_master_readdata -> hps_only_master:master_readdata
 	wire          hps_only_master_master_waitrequest;                        // mm_interconnect_3:hps_only_master_master_waitrequest -> hps_only_master:master_waitrequest
 	wire   [31:0] hps_only_master_master_address;                            // hps_only_master:master_address -> mm_interconnect_3:hps_only_master_master_address
@@ -365,13 +347,11 @@ module soc_system (
 	wire          irq_mapper_001_receiver2_irq;                              // rf_bus:avalon_irq -> irq_mapper_001:receiver2_irq
 	wire          irq_mapper_001_receiver3_irq;                              // io_bus:avalon_irq -> irq_mapper_001:receiver3_irq
 	wire          irq_mapper_001_receiver4_irq;                              // mask_bus:avalon_irq -> irq_mapper_001:receiver4_irq
-	wire          irq_mapper_001_receiver8_irq;                              // power:irq -> irq_mapper_001:receiver8_irq
+	wire          irq_mapper_001_receiver6_irq;                              // power:irq -> irq_mapper_001:receiver6_irq
 	wire   [31:0] hps_0_f2h_irq0_irq;                                        // irq_mapper_001:sender_irq -> hps_0:f2h_irq_p0
 	wire   [31:0] hps_0_f2h_irq1_irq;                                        // irq_mapper_002:sender_irq -> hps_0:f2h_irq_p1
-	wire          irq_mapper_receiver1_irq;                                  // button_pio:irq -> [irq_mapper:receiver1_irq, irq_mapper_001:receiver6_irq]
-	wire          irq_mapper_receiver2_irq;                                  // dipsw_pio:irq -> [irq_mapper:receiver2_irq, irq_mapper_001:receiver7_irq]
 	wire          irq_mapper_receiver0_irq;                                  // jtag_uart:av_irq -> [irq_mapper:receiver0_irq, irq_mapper_001:receiver5_irq]
-	wire          rst_controller_reset_out_reset;                            // rst_controller:reset_out -> [ILC:reset_n, button_pio:reset_n, dipsw_pio:reset_n, dm_bus:reset, im_bus:reset, io_bus:reset, irq_mapper:reset, jtag_uart:rst_n, led_pio:reset_n, mask_bus:reset, mm_bridge_0:reset, mm_interconnect_0:mask_bus_reset_reset_bridge_in_reset_reset, mm_interconnect_1:mm_bridge_0_reset_reset_bridge_in_reset_reset, mm_interconnect_2:fpga_only_master_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_2:mm_bridge_0_reset_reset_bridge_in_reset_reset, mm_interconnect_3:hps_only_master_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_3:hps_only_master_master_translator_reset_reset_bridge_in_reset_reset, mm_interconnect_4:f2sdram_only_master_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_4:f2sdram_only_master_master_translator_reset_reset_bridge_in_reset_reset, power:reset_n, rf_bus:reset, sysid_qsys:reset_n]
+	wire          rst_controller_reset_out_reset;                            // rst_controller:reset_out -> [ILC:reset_n, dm_bus:reset, im_bus:reset, io_bus:reset, irq_mapper:reset, jtag_uart:rst_n, mask_bus:reset, mm_bridge_0:reset, mm_interconnect_0:mask_bus_reset_reset_bridge_in_reset_reset, mm_interconnect_1:mm_bridge_0_reset_reset_bridge_in_reset_reset, mm_interconnect_2:fpga_only_master_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_2:mm_bridge_0_reset_reset_bridge_in_reset_reset, mm_interconnect_3:hps_only_master_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_3:hps_only_master_master_translator_reset_reset_bridge_in_reset_reset, mm_interconnect_4:f2sdram_only_master_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_4:f2sdram_only_master_master_translator_reset_reset_bridge_in_reset_reset, power:reset_n, rf_bus:reset, sysid_qsys:reset_n]
 	wire          rst_controller_001_reset_out_reset;                        // rst_controller_001:reset_out -> [mm_interconnect_0:hps_0_h2f_axi_master_agent_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_1:hps_0_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_3:hps_0_f2h_axi_slave_agent_reset_sink_reset_bridge_in_reset_reset, mm_interconnect_4:hps_0_f2h_sdram0_data_translator_reset_reset_bridge_in_reset_reset]
 
 	interrupt_latency_counter #(
@@ -387,30 +367,6 @@ module soc_system (
 		.avmm_write  (mm_interconnect_2_ilc_avalon_slave_write),     //             .write
 		.avmm_read   (mm_interconnect_2_ilc_avalon_slave_read),      //             .read
 		.avmm_rddata (mm_interconnect_2_ilc_avalon_slave_readdata)   //             .readdata
-	);
-
-	soc_system_button_pio button_pio (
-		.clk        (clk_clk),                                    //                 clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),            //               reset.reset_n
-		.address    (mm_interconnect_2_button_pio_s1_address),    //                  s1.address
-		.write_n    (~mm_interconnect_2_button_pio_s1_write),     //                    .write_n
-		.writedata  (mm_interconnect_2_button_pio_s1_writedata),  //                    .writedata
-		.chipselect (mm_interconnect_2_button_pio_s1_chipselect), //                    .chipselect
-		.readdata   (mm_interconnect_2_button_pio_s1_readdata),   //                    .readdata
-		.in_port    (button_pio_external_connection_export),      // external_connection.export
-		.irq        (irq_mapper_receiver1_irq)                    //                 irq.irq
-	);
-
-	soc_system_dipsw_pio dipsw_pio (
-		.clk        (clk_clk),                                   //                 clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),           //               reset.reset_n
-		.address    (mm_interconnect_2_dipsw_pio_s1_address),    //                  s1.address
-		.write_n    (~mm_interconnect_2_dipsw_pio_s1_write),     //                    .write_n
-		.writedata  (mm_interconnect_2_dipsw_pio_s1_writedata),  //                    .writedata
-		.chipselect (mm_interconnect_2_dipsw_pio_s1_chipselect), //                    .chipselect
-		.readdata   (mm_interconnect_2_dipsw_pio_s1_readdata),   //                    .readdata
-		.in_port    (dipsw_pio_external_connection_export),      // external_connection.export
-		.irq        (irq_mapper_receiver2_irq)                   //                 irq.irq
 	);
 
 	soc_system_dm_bus dm_bus (
@@ -746,17 +702,6 @@ module soc_system (
 		.av_irq         (irq_mapper_receiver0_irq)                                   //               irq.irq
 	);
 
-	soc_system_led_pio led_pio (
-		.clk        (clk_clk),                                 //                 clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),         //               reset.reset_n
-		.address    (mm_interconnect_2_led_pio_s1_address),    //                  s1.address
-		.write_n    (~mm_interconnect_2_led_pio_s1_write),     //                    .write_n
-		.writedata  (mm_interconnect_2_led_pio_s1_writedata),  //                    .writedata
-		.chipselect (mm_interconnect_2_led_pio_s1_chipselect), //                    .chipselect
-		.readdata   (mm_interconnect_2_led_pio_s1_readdata),   //                    .readdata
-		.out_port   (led_pio_external_connection_export)       // external_connection.export
-	);
-
 	soc_system_mask_bus mask_bus (
 		.clk                (clk_clk),                                             //                clk.clk
 		.reset              (rst_controller_reset_out_reset),                      //              reset.reset
@@ -823,7 +768,7 @@ module soc_system (
 		.readdata   (mm_interconnect_1_power_s1_readdata),   //                    .readdata
 		.in_port    (power_in_port),                         // external_connection.export
 		.out_port   (power_out_port),                        //                    .export
-		.irq        (irq_mapper_001_receiver8_irq)           //                 irq.irq
+		.irq        (irq_mapper_001_receiver6_irq)           //                 irq.irq
 	);
 
 	soc_system_dm_bus rf_bus (
@@ -1016,16 +961,6 @@ module soc_system (
 		.mm_bridge_0_m0_write                                   (mm_bridge_0_m0_write),                                      //                                                 .write
 		.mm_bridge_0_m0_writedata                               (mm_bridge_0_m0_writedata),                                  //                                                 .writedata
 		.mm_bridge_0_m0_debugaccess                             (mm_bridge_0_m0_debugaccess),                                //                                                 .debugaccess
-		.button_pio_s1_address                                  (mm_interconnect_2_button_pio_s1_address),                   //                                    button_pio_s1.address
-		.button_pio_s1_write                                    (mm_interconnect_2_button_pio_s1_write),                     //                                                 .write
-		.button_pio_s1_readdata                                 (mm_interconnect_2_button_pio_s1_readdata),                  //                                                 .readdata
-		.button_pio_s1_writedata                                (mm_interconnect_2_button_pio_s1_writedata),                 //                                                 .writedata
-		.button_pio_s1_chipselect                               (mm_interconnect_2_button_pio_s1_chipselect),                //                                                 .chipselect
-		.dipsw_pio_s1_address                                   (mm_interconnect_2_dipsw_pio_s1_address),                    //                                     dipsw_pio_s1.address
-		.dipsw_pio_s1_write                                     (mm_interconnect_2_dipsw_pio_s1_write),                      //                                                 .write
-		.dipsw_pio_s1_readdata                                  (mm_interconnect_2_dipsw_pio_s1_readdata),                   //                                                 .readdata
-		.dipsw_pio_s1_writedata                                 (mm_interconnect_2_dipsw_pio_s1_writedata),                  //                                                 .writedata
-		.dipsw_pio_s1_chipselect                                (mm_interconnect_2_dipsw_pio_s1_chipselect),                 //                                                 .chipselect
 		.ILC_avalon_slave_address                               (mm_interconnect_2_ilc_avalon_slave_address),                //                                 ILC_avalon_slave.address
 		.ILC_avalon_slave_write                                 (mm_interconnect_2_ilc_avalon_slave_write),                  //                                                 .write
 		.ILC_avalon_slave_read                                  (mm_interconnect_2_ilc_avalon_slave_read),                   //                                                 .read
@@ -1038,11 +973,6 @@ module soc_system (
 		.jtag_uart_avalon_jtag_slave_writedata                  (mm_interconnect_2_jtag_uart_avalon_jtag_slave_writedata),   //                                                 .writedata
 		.jtag_uart_avalon_jtag_slave_waitrequest                (mm_interconnect_2_jtag_uart_avalon_jtag_slave_waitrequest), //                                                 .waitrequest
 		.jtag_uart_avalon_jtag_slave_chipselect                 (mm_interconnect_2_jtag_uart_avalon_jtag_slave_chipselect),  //                                                 .chipselect
-		.led_pio_s1_address                                     (mm_interconnect_2_led_pio_s1_address),                      //                                       led_pio_s1.address
-		.led_pio_s1_write                                       (mm_interconnect_2_led_pio_s1_write),                        //                                                 .write
-		.led_pio_s1_readdata                                    (mm_interconnect_2_led_pio_s1_readdata),                     //                                                 .readdata
-		.led_pio_s1_writedata                                   (mm_interconnect_2_led_pio_s1_writedata),                    //                                                 .writedata
-		.led_pio_s1_chipselect                                  (mm_interconnect_2_led_pio_s1_chipselect),                   //                                                 .chipselect
 		.sysid_qsys_control_slave_address                       (mm_interconnect_2_sysid_qsys_control_slave_address),        //                         sysid_qsys_control_slave.address
 		.sysid_qsys_control_slave_readdata                      (mm_interconnect_2_sysid_qsys_control_slave_readdata)        //                                                 .readdata
 	);
@@ -1128,8 +1058,6 @@ module soc_system (
 		.clk           (clk_clk),                        //       clk.clk
 		.reset         (rst_controller_reset_out_reset), // clk_reset.reset
 		.receiver0_irq (irq_mapper_receiver0_irq),       // receiver0.irq
-		.receiver1_irq (irq_mapper_receiver1_irq),       // receiver1.irq
-		.receiver2_irq (irq_mapper_receiver2_irq),       // receiver2.irq
 		.sender_irq    (ilc_irq_irq)                     //    sender.irq
 	);
 
@@ -1142,9 +1070,7 @@ module soc_system (
 		.receiver3_irq (irq_mapper_001_receiver3_irq), // receiver3.irq
 		.receiver4_irq (irq_mapper_001_receiver4_irq), // receiver4.irq
 		.receiver5_irq (irq_mapper_receiver0_irq),     // receiver5.irq
-		.receiver6_irq (irq_mapper_receiver1_irq),     // receiver6.irq
-		.receiver7_irq (irq_mapper_receiver2_irq),     // receiver7.irq
-		.receiver8_irq (irq_mapper_001_receiver8_irq), // receiver8.irq
+		.receiver6_irq (irq_mapper_001_receiver6_irq), // receiver6.irq
 		.sender_irq    (hps_0_f2h_irq0_irq)            //    sender.irq
 	);
 

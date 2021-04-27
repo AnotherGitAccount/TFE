@@ -8,8 +8,7 @@ module ctrlu(
 	hps_cmd,
 	cpu_halt,
 	state,
-	alive,
-	halt_clr
+	alive
 );
 
 	input  wire       clk;
@@ -17,7 +16,6 @@ module ctrlu(
 	input  wire 		cpu_halt;
 	output reg  [1:0] state;
 	output reg        alive;
-	output reg        halt_clr;
 
 	always @(posedge(clk)) begin 
 		case(state)
@@ -29,7 +27,6 @@ module ctrlu(
 			
 			`ST_STARTING: begin
 				if(hps_cmd == 1'b0) begin
-					halt_clr <= 1'b1;
 					state    <= `ST_STARTED;
 					alive		<= 1'b1;
 				end
@@ -42,7 +39,6 @@ module ctrlu(
 			end
 			
 			`ST_STARTED: begin
-				halt_clr <= 1'b0;
 				if(hps_cmd == 1'b1) begin
 					state   <= `ST_STOPPING;
 					alive   <= 1'b0;

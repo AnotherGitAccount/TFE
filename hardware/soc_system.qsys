@@ -13,7 +13,7 @@
    {
       datum _sortIndex
       {
-         value = "10";
+         value = "7";
          type = "int";
       }
    }
@@ -30,46 +30,7 @@
          type = "String";
       }
    }
-   element button_pio
-   {
-      datum _sortIndex
-      {
-         value = "7";
-         type = "int";
-      }
-      datum sopceditor_expanded
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element button_pio.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "20480";
-         type = "String";
-      }
-   }
    element clk_0
-   {
-      datum _sortIndex
-      {
-         value = "11";
-         type = "int";
-      }
-      datum sopceditor_expanded
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element dipsw_pio
    {
       datum _sortIndex
       {
@@ -82,32 +43,11 @@
          type = "boolean";
       }
    }
-   element dipsw_pio.external_connection
-   {
-      datum _tags
-      {
-         value = "";
-         type = "String";
-      }
-   }
-   element dipsw_pio.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "16384";
-         type = "String";
-      }
-   }
    element dm_bus
    {
       datum _sortIndex
       {
-         value = "13";
+         value = "10";
          type = "int";
       }
    }
@@ -178,7 +118,7 @@
    {
       datum _sortIndex
       {
-         value = "12";
+         value = "9";
          type = "int";
       }
    }
@@ -194,7 +134,7 @@
    {
       datum _sortIndex
       {
-         value = "15";
+         value = "12";
          type = "int";
       }
    }
@@ -232,37 +172,11 @@
          type = "String";
       }
    }
-   element led_pio
-   {
-      datum _sortIndex
-      {
-         value = "9";
-         type = "int";
-      }
-      datum sopceditor_expanded
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element led_pio.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "12288";
-         type = "String";
-      }
-   }
    element mask_bus
    {
       datum _sortIndex
       {
-         value = "16";
+         value = "13";
          type = "int";
       }
    }
@@ -294,7 +208,7 @@
    {
       datum _sortIndex
       {
-         value = "17";
+         value = "14";
          type = "int";
       }
    }
@@ -310,7 +224,7 @@
    {
       datum _sortIndex
       {
-         value = "14";
+         value = "11";
          type = "int";
       }
    }
@@ -369,17 +283,7 @@
  <parameter name="timeStamp" value="0" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
- <interface
-   name="button_pio_external_connection"
-   internal="button_pio.external_connection"
-   type="conduit"
-   dir="end" />
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
- <interface
-   name="dipsw_pio_external_connection"
-   internal="dipsw_pio.external_connection"
-   type="conduit"
-   dir="end" />
  <interface
    name="dm_bus"
    internal="dm_bus.external_interface"
@@ -423,11 +327,6 @@
    type="conduit"
    dir="end" />
  <interface
-   name="led_pio_external_connection"
-   internal="led_pio.external_connection"
-   type="conduit"
-   dir="end" />
- <interface
    name="mask_bus"
    internal="mask_bus.external_interface"
    type="conduit"
@@ -453,39 +352,11 @@
   <parameter name="INTR_TYPE" value="0" />
   <parameter name="IRQ_PORT_CNT" value="3" />
  </module>
- <module name="button_pio" kind="altera_avalon_pio" version="16.0" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="true" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="true" />
-  <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Input" />
-  <parameter name="edgeType" value="FALLING" />
-  <parameter name="generateIRQ" value="true" />
-  <parameter name="irqType" value="EDGE" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="2" />
- </module>
  <module name="clk_0" kind="clock_source" version="16.0" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
- </module>
- <module name="dipsw_pio" kind="altera_avalon_pio" version="16.0" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="true" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="true" />
-  <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Input" />
-  <parameter name="edgeType" value="ANY" />
-  <parameter name="generateIRQ" value="true" />
-  <parameter name="irqType" value="EDGE" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="4" />
  </module>
  <module
    name="dm_bus"
@@ -1112,20 +983,6 @@
   <parameter name="writeBufferDepth" value="64" />
   <parameter name="writeIRQThreshold" value="8" />
  </module>
- <module name="led_pio" kind="altera_avalon_pio" version="16.0" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Output" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="127" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="7" />
- </module>
  <module
    name="mask_bus"
    kind="altera_up_avalon_to_external_bus_bridge"
@@ -1277,29 +1134,6 @@
   <parameter name="baseAddress" value="0x1000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
- <connection kind="avalon" version="16.0" start="mm_bridge_0.m0" end="led_pio.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x3000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.0"
-   start="mm_bridge_0.m0"
-   end="dipsw_pio.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x4000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.0"
-   start="mm_bridge_0.m0"
-   end="button_pio.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x5000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
  <connection
    kind="avalon"
    version="16.0"
@@ -1346,46 +1180,16 @@
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
-   kind="avalon"
-   version="16.0"
-   start="fpga_only_master.master"
-   end="button_pio.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x5000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.0"
-   start="fpga_only_master.master"
-   end="led_pio.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x3000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.0"
-   start="fpga_only_master.master"
-   end="dipsw_pio.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x4000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
    kind="clock"
    version="16.0"
    start="clk_0.clk"
    end="hps_only_master.clk" />
  <connection kind="clock" version="16.0" start="clk_0.clk" end="sysid_qsys.clk" />
- <connection kind="clock" version="16.0" start="clk_0.clk" end="led_pio.clk" />
  <connection
    kind="clock"
    version="16.0"
    start="clk_0.clk"
    end="fpga_only_master.clk" />
- <connection kind="clock" version="16.0" start="clk_0.clk" end="dipsw_pio.clk" />
- <connection kind="clock" version="16.0" start="clk_0.clk" end="button_pio.clk" />
  <connection kind="clock" version="16.0" start="clk_0.clk" end="jtag_uart.clk" />
  <connection
    kind="clock"
@@ -1466,31 +1270,11 @@
    kind="interrupt"
    version="16.0"
    start="hps_0.f2h_irq0"
-   end="button_pio.irq">
-  <parameter name="irqNumber" value="1" />
- </connection>
- <connection
-   kind="interrupt"
-   version="16.0"
-   start="hps_0.f2h_irq0"
-   end="dipsw_pio.irq">
-  <parameter name="irqNumber" value="0" />
- </connection>
- <connection
-   kind="interrupt"
-   version="16.0"
-   start="hps_0.f2h_irq0"
    end="power.irq">
   <parameter name="irqNumber" value="8" />
  </connection>
  <connection kind="interrupt" version="16.0" start="ILC.irq" end="jtag_uart.irq">
   <parameter name="irqNumber" value="2" />
- </connection>
- <connection kind="interrupt" version="16.0" start="ILC.irq" end="button_pio.irq">
-  <parameter name="irqNumber" value="1" />
- </connection>
- <connection kind="interrupt" version="16.0" start="ILC.irq" end="dipsw_pio.irq">
-  <parameter name="irqNumber" value="0" />
  </connection>
  <connection
    kind="reset"
@@ -1512,21 +1296,6 @@
    version="16.0"
    start="clk_0.clk_reset"
    end="sysid_qsys.reset" />
- <connection
-   kind="reset"
-   version="16.0"
-   start="clk_0.clk_reset"
-   end="led_pio.reset" />
- <connection
-   kind="reset"
-   version="16.0"
-   start="clk_0.clk_reset"
-   end="dipsw_pio.reset" />
- <connection
-   kind="reset"
-   version="16.0"
-   start="clk_0.clk_reset"
-   end="button_pio.reset" />
  <connection
    kind="reset"
    version="16.0"

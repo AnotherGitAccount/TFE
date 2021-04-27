@@ -1,4 +1,5 @@
 module memory_unit(
+	input  wire          clr,
 	input	 wire 			clock_a,
 	input  wire				clk_en_a,
 	input	 wire 			clock_b,
@@ -17,6 +18,8 @@ module memory_unit(
 );
 
 	memory_color_unit red(
+		.aclr_a(clr),
+		.aclr_b(clr),
 		.address_a(address_a),
 		.address_b(address_b),
 		.clock_a(clock_a),
@@ -29,8 +32,10 @@ module memory_unit(
 		.q_a(qreds),
 		.q_b(sreds)
 	);
-
+	
 	memory_color_unit green(
+		.aclr_a(clr),
+		.aclr_b(clr),
 		.address_a(address_a),
 		.address_b(address_b),
 		.clock_a(clock_a),
@@ -45,6 +50,8 @@ module memory_unit(
 	);
 
 	memory_color_unit blue(
+		.aclr_a(clr),
+		.aclr_b(clr),
 		.address_a(address_a),
 		.address_b(address_b),
 		.clock_a(clock_a),

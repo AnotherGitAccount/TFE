@@ -1,4 +1,5 @@
 module memory(
+	input  wire clr,
 	input  wire clk_a,
 	input  wire clk_b,
 	input  wire clk_en_a,
@@ -123,10 +124,11 @@ module memory(
 							                  blues3;
 	
 	memory_unit mem0(
+		.clr(clr),
 		.clock_a(clk_a),
 		.clock_b(clk_b),
 		.clk_en_a(clk_en_a),
-		.wren(wren),
+		.wren(wren & (xb0 != 6'b100100) & (yb0 != 5'b11011)),
 		.address_a(blk0_addr),
 		.address_b(blkb_addr),
 		.reds(blk0_red),
@@ -171,10 +173,11 @@ module memory(
 							                  blues3;
 	
 	memory_unit mem1(
+		.clr(clr),
 		.clock_a(clk_a),
 		.clock_b(clk_b),
 		.clk_en_a(clk_en_a),
-		.wren(wren),
+		.wren(wren & (xb1 != 6'b100100) & (yb1 != 5'b11011)),
 		.address_a(blk1_addr),
 		.address_b(blkb_addr),
 		.reds(blk1_red),
@@ -218,10 +221,11 @@ module memory(
 							                  blues3;
 	
 	memory_unit mem2(
+		.clr(clr),
 		.clock_a(clk_a),
 		.clock_b(clk_b),
 		.clk_en_a(clk_en_a),
-		.wren(wren),
+		.wren(wren & (xb2 != 6'b100100) & (yb2 != 5'b11011)),
 		.address_a(blk2_addr),
 		.address_b(blkb_addr),
 		.reds(blk2_red),
@@ -265,10 +269,11 @@ module memory(
 							                  blues3;
 	
 	memory_unit mem3(
+		.clr(clr),
 		.clock_a(clk_a),
 		.clock_b(clk_b),
 		.clk_en_a(clk_en_a),
-		.wren(wren),
+		.wren(wren & (xb3 != 6'b100100) & (yb3 != 5'b11011)),
 		.address_a(blk3_addr),
 		.address_b(blkb_addr),
 		.reds(blk3_red),

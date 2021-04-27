@@ -91,17 +91,13 @@ module DE10_NANO_SoC_GHRD(
 //=======================================================
 wire hps_fpga_reset_n;
 wire     [1: 0]     fpga_debounced_buttons;
-wire     [6: 0]     fpga_led_internal;
 wire     [2: 0]     hps_reset_req;
 wire                hps_cold_reset;
 wire                hps_warm_reset;
 wire                hps_debug_reset;
-wire     [27: 0]    stm_hw_events;
 wire                fpga_clk_50;
 // connection of internal logics
-assign LED[7: 1] = fpga_led_internal;
 assign fpga_clk_50 = FPGA_CLK1_50;
-assign stm_hw_events = {{15{1'b0}}, SW, fpga_led_internal, fpga_debounced_buttons};
 
 
 
@@ -185,10 +181,6 @@ soc_system u0(
                .hps_0_hps_io_hps_io_gpio_inst_GPIO53(HPS_LED),              //                               .hps_io_gpio_inst_GPIO53
                .hps_0_hps_io_hps_io_gpio_inst_GPIO54(HPS_KEY),              //                               .hps_io_gpio_inst_GPIO54
                .hps_0_hps_io_hps_io_gpio_inst_GPIO61(HPS_GSENSOR_INT),      //                               .hps_io_gpio_inst_GPIO61
-               //FPGA Partion
-               .led_pio_external_connection_export(fpga_led_internal),      //    led_pio_external_connection.export
-               .dipsw_pio_external_connection_export(SW),                   //  dipsw_pio_external_connection.export
-               .button_pio_external_connection_export(fpga_debounced_buttons),
                                                                             // button_pio_external_connection.export
                .hps_0_h2f_reset_reset_n(hps_fpga_reset_n),                  //                hps_0_h2f_reset.reset_n
                .hps_0_f2h_cold_reset_req_reset_n(~hps_cold_reset),          //       hps_0_f2h_cold_reset_req.reset_n
@@ -436,6 +428,7 @@ mau beta_mau(
 wire halt;
 wire alive;
 wire [1:0] state;
+wire halt_clr;
 assign power_in_port = ~state[0] & ~state[1]; // 1 if stopped
  
 ctrlu ctrlu_beta(
@@ -443,8 +436,7 @@ ctrlu ctrlu_beta(
 	.hps_cmd(power_out_port),
 	.cpu_halt(halt),
 	.state(state),
-	.alive(alive),
-	.halt_clr(/* unused for now */)
+	.alive(alive)
 );
 
 // CPU
@@ -472,7 +464,8 @@ cpu beta_cpu(
 	.clk_sequence(clk_sequence),
 	.exported_wren(exported_wren),
 	.exported_data(exported_data),
-	.exported_address(exported_address)
+	.exported_address(exported_address),
+	.io_data(io_read_data)
 );
 
 // GPU
@@ -482,7 +475,7 @@ gpu beta_gpu(
 	.cpu_clk(cpu_clk),
 	.gpu_clk(gpu_clk),
 	.clk_sequence(clk_sequence),
-	.wren(exported_wren),
+	.wren(exported_wren & (exported_address[31:30] == 2'b10)),
 	.data(exported_data),
 	.address(exported_address),
 	.mau_address_mask(mask_address),
@@ -499,6 +492,22 @@ gpu beta_gpu(
 	.hdmi_tx_int(HDMI_TX_INT)
 );
 
-assign LED[0] = alive;
+// IOU
+iou beta_iou(
+	.clk(cpu_clk),
+	.cpu_clk_en(clk_sequence[4]),
+	.cpu_address(exported_address),
+	.cpu_data_write(exported_data),
+	.cpu_wren(exported_wren & (exported_address[31:30] == 2'b01)),
+	.mau_clk_en(~alive),
+	.mau_address(io_address),
+	.mau_data_write(io_write_data),
+	.mau_wren(io_wren),
+	.data_read(io_read_data),
+	.alive(alive),
+	.buttons(fpga_debounced_buttons),
+	.leds(LED),
+	.switches(SW)
+);
 
 endmodule
