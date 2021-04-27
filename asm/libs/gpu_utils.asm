@@ -46,8 +46,7 @@ gpu_draw:
         OR(R9, R3, R9)          | adds color2
         SHLC(R9, 12, R9)        | shifts for color1
         OR(R9, R2, R9)          | adds color1
-        | Draw
-        ST(R9, 0, R8)
+        ST(R9, 0, R8)           | Draw
     exit_gpu_draw:
         POP(R9) POP(R8) POP(R7) POP(R6)
         POP(R5) POP(R4) POP(R3) POP(R2)
@@ -70,8 +69,10 @@ gpu_clear:
     init_gpu_clear:
         PUSH(LP) PUSH(BP)
         MOVE(SP, BP)
-        PUSH(R1) PUSH(R2) PUSH(R3) PUSH(R4) PUSH(R5) PUSH(R6)
-        LD(BP, -12, R1) LD(BP, -16, R2) LD(BP, -20, R3) LD(BP, -24, R4)
+        PUSH(R1) PUSH(R2) PUSH(R3) PUSH(R4) 
+        PUSH(R5) PUSH(R6)
+        LD(BP, -12, R1) LD(BP, -16, R2) 
+        LD(BP, -20, R3) LD(BP, -24, R4)
     func_gpu_clear:
         | Setting R5 = address
         CMOVE(0x0010, R5)       | adds b10 at the beginning of the word (gpu address space)

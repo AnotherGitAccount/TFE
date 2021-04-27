@@ -17,8 +17,6 @@
 | ANDC(RA, C, RC)	| RC <- <RA> & C
 | MUL(RA, RB, RC)	| RC <- <RA> * <RB>
 | MULC(RA, C, RC)	| RC <- <RA> * C
-| DIV(RA, RB, RC)	| RC <- <RA> / <RB>
-| DIVC(RA, C, RC)	| RC <- <RA> / C
 | OR( RA, RB, RC)	| RC <- <RA> | <RB>
 | ORC(RA,  C, RC)	| RC <- <RA> | C
 | SHL(RA, RB, RC)	| RC <- <RA> << <RB>
@@ -219,8 +217,6 @@ SP = sp
 .macro ANDC(RA, C, RC)		betaopc(0x38,RA,C,RC)
 .macro MUL(RA, RB, RC)		betaop(0x22,RA,RB,RC)
 .macro MULC(RA, C, RC)		betaopc(0x32,RA,C,RC)
-.macro DIV(RA, RB, RC)		betaop(0x23,RA,RB,RC)
-.macro DIVC(RA, C, RC)		betaopc(0x33,RA,C,RC)
 .macro OR( RA, RB, RC)		betaop(0x29,RA,RB,RC)
 .macro ORC(RA,  C, RC)		betaopc(0x39,RA,C,RC)
 .macro SHL(RA, RB, RC)		betaop(0x2C,RA,RB,RC)
