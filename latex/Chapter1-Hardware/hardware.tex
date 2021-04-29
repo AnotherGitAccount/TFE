@@ -1,4 +1,26 @@
-\chapter{FPGA}
+\chapter{Overview of the hardware}
+
+\section{Features of the DE10-Nano development board}
+
+On the board, numerous devices are made available to the user. Some of them will be very 
+interesting for this work: the Cyclone V FPGA (A in Figure \ref{fig:de10/de10_features}) that is
+basically the main component of the system as almost everything on the board is driven by it. It is
+also where all the hardware designed in the work resides. The 1GB DDR3 RAM (B) which is used 
+by the ARM side of the FPGA. An ethernet port (C) which can be
+useful to connect to the ARM processor from any external environment. For instance, SSH can be used
+to connect to it if the installed system can handle it. Then there are the SD card reader and the SD 
+card (D, on the other side of the PCB). The SD card consists in the mass storage of this board. The
+one used offers 8GB of memory. Another important component is the HDMI output (E) that can be used
+from the programmable logic. Other less important devices, mainly IOs are avaible: General Purpose 
+Input / Output pins (GPIOs), LEDs, buttons and switches. All of these devices are discussed at some
+point in this report. The ones that are not listed (such as the IMU system) haven't been used.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.6]{Chapter1-Hardware/res/de10_nano.png}
+    \caption{DE10 Nano development board main features}
+    \label{fig:de10/de10_features}
+\end{figure}
 
 \section{Programmable logic devices}
 
@@ -21,7 +43,7 @@ simply contains the truth table of the logic circuit to be implemented.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[scale=1.2]{Chapter2-FPGA/res/pld_rom_external}
+    \includegraphics[scale=1.2]{Chapter1-Hardware/res/pld_rom_external}
     \caption{An external view of ROM based PLDs}
     \label{fig:fpga/pld_rom_external}
 \end{figure}
@@ -52,7 +74,7 @@ or feedback loop in the circuits that are described with this technology.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[scale=0.8]{Chapter2-FPGA/res/pld_rom_internal}
+    \includegraphics[scale=0.8]{Chapter1-Hardware/res/pld_rom_internal}
     \caption{An internal view of ROM based PLDs}
     \label{fig:fpga/pld_rom_internal}
 \end{figure}
@@ -70,7 +92,7 @@ of such devices as programmable logic wont be used for that purpose.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[scale=0.8]{Chapter2-FPGA/res/pld_pla}
+    \includegraphics[scale=0.8]{Chapter1-Hardware/res/pld_pla}
     \caption{An internal view of PLAs}
     \label{fig:fpga/pld_pla_internal}
 \end{figure}
@@ -117,7 +139,7 @@ and sequential circuits to be implemented.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[scale=0.8]{Chapter2-FPGA/res/fpga_block}
+    \includegraphics[scale=0.8]{Chapter1-Hardware/res/fpga_block}
     \caption{An FPGA programmable logic block}
     \label{fig:fpga/fpga_block}
 \end{figure}
@@ -164,7 +186,7 @@ positioned on a grid and the interconnection passes around them.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[scale=0.6]{Chapter2-FPGA/res/fpga_interconnect}
+    \includegraphics[scale=0.6]{Chapter1-Hardware/res/fpga_interconnect}
     \caption{High level view of an FPGA}
     \label{fig:fpga/fpga_interconnect}
 \end{figure}
@@ -179,9 +201,9 @@ latency to the signal, so the interconnection is optimised to limit the number o
 blocks. 
 
 In addition to this configurable interconnection, there are also tracks to bring global signals 
-everywhere. Among these signals are the clock, the resets, ... On a more local level, signals are 
-also shared between the blocks. These include, for example, the carry signals of the arithmetic 
-sub-blocks. All these signals were shown in dashed lines in Figure \ref{fig:fpga/fpga_block}.
+everywhere. Among these signals are the clock, the resets, ... On a more local level, some signals 
+are also shared between the blocks. These include, for example, the carry signals of the arithmetic 
+sub-blocks.
 
 \subsection{Programmable I/Os}
 
@@ -219,8 +241,10 @@ FPGAs.
 
 \section{Inside Cyclone V}
 
-\section{On-chip memory in Cyclone V}
+\subsection{Programmable logic side}
 
-\section{Hardware description languages}
+\subsection{ARM processor side}
 
-\section{Hardware implementation work flow}
+\subsection{Cyclone V interconnect}
+
+\section{Board memories comparison}

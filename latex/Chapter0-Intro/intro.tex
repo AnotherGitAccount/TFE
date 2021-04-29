@@ -1,7 +1,52 @@
-\chapter{Introduction}
+\chapter*{Introduction}
 
-TODO:
-\begin{enumerate}
-    \item Object of the thesis
-    \item Summary of the work
-\end{enumerate}
+Although some liberties have been taken on the end of the work, the main objective of this thesis
+is to provide a laboratory tool for the computation structures course. Indeed, the professors of 
+the course needed a replica of the beta machine, an Harvard architecture based CPU that is learned
+throughout the course. This machine had to be physically implemented so that the students could 
+really take it in hand rather than using simulations. In order to design it in hardware, it was 
+decided to work on an FPGA, a Cyclone V from Altera to be precise. In fact, everything was done on a 
+development board, the DE10-Nano from Terasic. This allows to focus almost only on the logic and 
+structural implementation rather than on all the electrical details intrinsic to such 
+implementations.
+
+This document therefore starts with a first chapter containing an enumeration of the different 
+functionalities of this board as well as a description of the generalities concerning FPGAs. A quick 
+comparison with other similar technologies is also made. Then, an overview of the two parts of the 
+FPGA, starting with the programmable logic followed by the ARM processor part is done. The existing 
+interconnection between these two parts is also described afterward. The last part of this chapter 
+is a comparison between the different memories available on the board and on the FPGA.
+
+After introducing the hardware, an introduction to the FPGA development flow is 
+given. In this chapter, a brief discussion on the different specific tools used throughout this work 
+is made. The specificities of the programming language used, Verilog, are also presented. The
+chapter finally closes with a discussion on the compilation flow.
+
+Now that the groundwork has been laid, the heart of the matter can be addressed. This is why the 
+third chapter contains a description of the beta machine. In this description, the reader is 
+made aware of the dimensioning of the machine: the word size, the endianness of the machine, its 
+instruction set, etc. Following this, the implementation of the CPU on FPGA is presented in detail. 
+An informal verification by simulation of the program counter and the alu is finally conducted.
+
+Chapter 4 covers the design of the Memory Access Unit (MAU) which gives access to the memories of 
+the beta machine from the ARM processor. The description of the Control Unit (CTRLU) allowing the 
+startup and shutdown of the machine from the ARM processor is conducted here. The communication 
+protocol common to both units is first presented before detailing the implementations. 
+
+At this stage, the specifications are fulfilled for the hardware part of this master thesis. That
+said, it would have been a shame to deliver this machine without any interface other than what is 
+possible from the ARM processor. This is why the following chapter details the implementation of a 
+graphics accelerator which will be abusively called GPU. The HDMI controller and the protocols 
+allowing its use are introduced beforehand. The Clock unit (CLKU) is also presented just after a 
+brief introduction to PLLs.
+
+In order to provide easy access to the machine, an operating system must be installed on the ARM 
+part of the FPGA. Chapter 6 discusses the choices made at this level and what has been tried 
+for this project. A brief discussion of the booting process and the creation of images are included.
+
+Then, a chapter is dedicated to the different tools developed to facilitate the access and the 
+programming of the machine by the users.
+
+Finally, the last chapter of this document lists different demonstrations programmed in assembler
+that serve as proof of concept. The assembler libraries written for this work are also briefly 
+presented.
