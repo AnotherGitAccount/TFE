@@ -15,9 +15,9 @@ from the programmable logic. Other less important devices, mainly IOs are avaibl
 Input / Output pins (GPIOs), LEDs, buttons and switches. All of these devices are discussed at some
 point in this report. The ones that are not listed (such as the IMU system) haven't been used.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
-    \includegraphics[scale=0.6]{Chapter1-Hardware/res/de10_nano.png}
+    \includegraphics[scale=0.5]{Chapter1-Hardware/res/de10_nano.png}
     \caption{DE10 Nano development board main features}
     \label{fig:de10/de10_features}
 \end{figure}
@@ -41,7 +41,7 @@ circuit, which can only be combinatorial, will be simulated by a ROM. Each addre
 an input of the circuit and each word in memory to an output of the circuit. The ROM therefore 
 simply contains the truth table of the logic circuit to be implemented.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=1.2]{Chapter1-Hardware/res/pld_rom_external}
     \caption{An external view of ROM based PLDs}
@@ -72,7 +72,7 @@ Obviously, real devices contain a lot more signals and gates to be cost effectiv
 As stated previously, the ROM PLDs can only represent combinatorial circuits. There is no register
 or feedback loop in the circuits that are described with this technology.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter1-Hardware/res/pld_rom_internal}
     \caption{An internal view of ROM based PLDs}
@@ -90,7 +90,7 @@ that both the inputs and the inverted inputs are directly available in the array
 in Figure \ref{fig:fpga/pld_pla_internal}. These small additions greatly increase the possibilities
 of such devices as programmable logic wont be used for that purpose.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter1-Hardware/res/pld_pla}
     \caption{An internal view of PLAs}
@@ -137,7 +137,7 @@ thousands). They are the basic elements of the circuits implemented on FPGAs. Du
 architecture, which can be seen in Figure \ref{fig:fpga/fpga_block}, they allow both combinational 
 and sequential circuits to be implemented. 
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter1-Hardware/res/fpga_block}
     \caption{An FPGA programmable logic block}
@@ -184,7 +184,7 @@ Programmable blocks are very versatile and efficient, but they need to be connec
 make large circuits. As can be seen in Figure \ref{fig:fpga/fpga_interconnect}, the blocks are 
 positioned on a grid and the interconnection passes around them. 
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{Chapter1-Hardware/res/fpga_interconnect}
     \caption{High level view of an FPGA}
@@ -243,8 +243,193 @@ FPGAs.
 
 \subsection{Programmable logic side}
 
+In the Cyclone V, things are a little more complicated than previously explained but are still quite 
+accessible. In fact, the programmable logic blocks will be replaced here by Logic Array Blocks (LAB) 
+which will themselves be made up of ten Adaptive Logic Modules (ALMs) which are the equivalent of 
+the programmable logic blocks studied previously. A high level view of the LAB units is given in
+Figure \ref{fig:cyc5/lab}. In the LAB, the different ALMs, the inputs and outputs of the LAB, can be 
+interconnected at the user's convenience.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter1-Hardware/res/lab_block.eps}
+    \caption{High level view of a LAB unit}
+    \label{fig:cyc5/lab}
+\end{figure}
+
+There is also another type of LAB, the Memory LAB (MLAB) which allows to describe SRAM. They can 
+store up to 640 bits and represent 25\% of all the LABs present on the Cyclone V. These MLABs do not 
+have memory instead of the ten ALMs, they also have the ten ALMs and all the logic necessary 
+to use them. They are a superset of LAB somehow.
+
+These LABs (and MLABs) are placed in the FPGA fabric in an array as explained in the previous 
+section. However, it should be noted that the array is not symmetrical with respect 
+to the vertical and horizontal connections at the local level (this part was not detailed 
+previously). Indeed, the horizontal connections aim to connect the blocks close to each other by 
+ensuring a high speed of operation. These are the inputs and outputs that are mainly linked to it. 
+The columns, although they are also fast, are mainly used for carry signals. At the local level, a 
+LAB can have control over 30 ALMs: its own ten, and the ten of its two horizontal neighbors. This
+allows to build very complex logic in a restricted space. Of course, a more global interconnection 
+allows all LABs to be connected together. There are many more details about the internal 
+connections of the LABs that could be discussed, but these are not explained in this report.
+
+Concerning the ALMs, as just said, they are very similar to the Logic Array Blocks of 
+the previous section. The main differences are that they accept more inputs, up to eight. The 
+internal arithmetic block is in fact two separate adders and four registers are provided in each ALM. 
+Depending on their configuration (done during the programming process), ALMs will be adapted to 
+specialize in a functionality to make the circuits more efficient (for example more entries, an 
+optimization for arithmetic, shared arithmetic with an entry of the adder that comes from an entry 
+of the ALM, ...). 
+
+\subsubsection*{Other blocks}
+
+The LAB blocks are very customizable and extremely numerous on the Cyclone 5. However, there are 
+several other types of blocks that are worth listing and briefly explaining. The overall structure 
+of the Cyclone V FPGA is shown in Figure \ref{fig:cyc5/structure}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{Chapter1-Hardware/res/cycv_structure.PNG}
+    \caption{Overall structure 
+    of the Cyclone V FPGA}
+    \label{fig:cyc5/structure}
+\end{figure}
+
+The largest block visible on the diagram is the one at the top right which represents the entire ARM
+system, this block will be discussed in the section just after this one. Then one can see many dark 
+green columns that designate the M10K memories. These memories are the main source of on-chip 
+storage, a sub-section of this chapter being dedicated to the memories, they will be studied in more 
+detail at this time. The PLLs are also visible in the light gray band on the left. PLLs allow to 
+generate clocks at a given frequency from a reference clock. Again, this unit will be studied later. 
+Another element present in large quantities is represented by the dark blue columns. It is the 
+Digital Signal Processing (DSP) Hard IP Blocks. These blocks have a multitude of functions. Indeed, 
+they provide arithmetic units of addition, subtraction and multiplication, allow the implementation 
+of filters, ... In this work, they will only be used to perform operations such as addition, 
+subtraction and multiplication in the Arithmetic Logic Unit (ALU). It should be noted that using 
+these DSPs is much more advantageous than using ALMs. Indeed, the arithmetic circuits of the DSPs 
+are "hard-made" which means that they have no programmable interconnection logic in their internal 
+circuits, so the delays are much lower and their architecture is totally optimized. For the user, 
+this allows him to use higher clock frequencies than he would have been able with circuits designed
+with ALMs. Other units are available but wont be discussed.
+
 \subsection{ARM processor side}
+
+Inside the FPGA, a 32bits ARM processor is integrated. It is a Cortex A9. No bare-metal programming 
+will be done on this processor. It will be used as an interface to access the beta machine. Indeed, 
+an operating system has been installed on it and utilities have been developed so that the use of 
+the architecture developed in this work is easily accessible. Discussions about the operating system 
+and the tools will be done at the end of this document. For the moment no description is made. That 
+said, it was important to mention it in this part of the report as it constitutes a large part of 
+the Cyclone V hardware. Furthermore, it was necessary to introduce it before starting the next two 
+sections.
 
 \subsection{Cyclone V interconnect}
 
-\section{Board memories comparison}
+As just mentioned in the previous section, the processor will serve as the user interface. 
+Therefore, one needs a way to communicate between the ARM processor and the programmable logic of the 
+FPGA (which will now be refered to as FPGA although the ARM processor is also part of the FPGA). 
+
+In fact, there are bridges between the two sides. These bridges are the link between the two parts 
+and can be used for communication. Each of these bridges has a specific purpose, it is not just the 
+same one put several times in parallel. The first and most basic bridge is the Lightweight HPS-to-FPGA 
+bridge. This one is designed for small transactions that are ponctual, the user will avoid for example 
+streaming data on this channel (even if nothing prevents it). The limitation in size comes from the 
+fact that the data bus of this bridge is only 32 bits wide. As the name of the bridge indicates, it 
+is unidirectional and goes from the HPS to the FPGA. Then come two more interesting bridges: the 
+FPGA-to-HPS Bridge and the HPS-to-FPGA Bridge. The directions of these two buses are obvious. What 
+is less obvious is their size. On the HPS side, their dimension is fixed at 64bits, but on the FPGA 
+side, they have the great advantage of being able to be configured from 32 to 128bits via 64 bits. 
+These bridges are ideal for large data transfers. Finally, there are the FPGA-to-SDRAM bridges which 
+allow six masters on the FPGA side to have a non cached and non coherent access to the RAM memory. 
+This will be discussed in the next section in more detail. These different bridges all allow several
+masters on one side to be connected to multiple slaves on the other. The selection of the 
+slaves is done by byte aligned addresses. The address space is therefore the only thing limiting the 
+number of slaves on a bridge. In order to better visualize the interconnection, a diagram is provided 
+in Figure \ref{fig:cyc5/interconnect}. In this work, only the HPS-to-FPGA bridges have been used. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{Chapter1-Hardware/res/cycv_interconnect}
+    \caption{Interconnect bridges}
+    \label{fig:cyc5/interconnect}
+\end{figure}
+
+In Figure \ref{fig:cyc5/address_space} the address mappings from different viewpoints are shown. For 
+the two buses going from the HPS to the FPGA, it is the MPU column (Memory Protection Unit, the unit 
+that protects memory accesses on ARM architectures) that will interest us. We see that the address 
+space is much larger for the hps-fpga bridge than for its lightweight equivalent. These addresses 
+are those to which the slaves on the fpga side will be associated and therefore those to which one
+will have to send the transactions from the ARM processor in order to communicate with these slaves. 
+The protocol will of course be studied in this document but this will be done when the transactions 
+between the two parties will be discussed.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{Chapter1-Hardware/res/hps_address_space.PNG}
+    \caption{Address maps for system interconnect masters}
+    \label{fig:cyc5/address_space}
+\end{figure}
+
+\section{On-board and on-chip memories comparison}
+
+As seen in the previous sections, several types of memories are available. Directly on the card 
+there is the SD card storage and DDR3 RAM memory. On the Cyclone V there are also two types of memory 
+which are MLAB units and M10K blocks. Each memory has its own specificities. Since both the beta 
+machine and the ARM system require memory, it is interesting to consider the use of these different 
+memories, compare them and finally make a choice.
+
+Let's start with the simplest, the ARM processor. In fact, on this side no choice is left to the 
+user. The DDR3 memory will serve as the main memory and the SD card as the secondary memory for 
+non-volatile storage. 
+
+\subsection{DDR3 memory}
+
+Concerning the Beta machine, things are getting tougher.  Which memory to choose to store 
+instructions and data, as main memory? Given the nature of SD card memory, it can immediately be 
+taken out of the possible choices. Let's start with a comparison. The DDR3 memory offers 1GB 
+shareable between the ARM processor and the beta machine, which is really huge. However, an almost 
+direct access to this memory is only possible if the access is done in a non-caching and 
+non-coherent way with respect to the ARM processor caches. Another possibility is to use the ACP 
+ID mapper which will ensure a cached and coherent access (using the L2 cache). The two access paths 
+are identified in Figure \ref{fig:de10/ddr3}. The problem with these two accesses is that they are 
+not instantaneous, the writes and reads do not take the same number of cycles and the number of 
+cycles is not unitary. To use these memories, it is therefore necessary to either slow down the 
+whole beta machine or to have a cache memory on the beta machine with faster memory next to it. In 
+addition to this, in the first case (direct access) it will be necessary to configure the operating 
+system on the ARM processor to ensure that it never accesses the part of memory reserved for the
+beta machine and in the second case (with the ACP) it will be necessary to configure the ACP 
+correctly so that its operation is as expected. In both cases this means modifying the kernel of the 
+operating system, which is not necessarily simple. For these two reasons: the delays and the 
+necessary modifications at the kernel level, this memory has not been chosen. However, it could be 
+a very interesting modification of the machine to provide more memory to the system.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{Chapter1-Hardware/res/de10_DDR3.PNG}
+    \caption{DDR3 accesses from the FPGA. Red path uses the ACP and blue path is a direct access
+    to the memory controler.}
+    \label{fig:de10/ddr3}
+\end{figure}
+
+\subsection{M10K and MLAB memories}
+
+What about the M10K and MLAB memories? These two memories are directly present on the FPGA, which
+ means that they can be read and written in one clock cycle. Moreover, they will not be used by the 
+ ARM processor, which avoids having to take care of the coherence of the caches. How to choose 
+ between these two memories? The first difference is the amount of memory available. Indeed, the 
+ M10K are present in the number of 553 on the Cyclone V SE A6 used in this work. As a M10K memory 
+ contains 10Kb, the whole of these blocks represents a little more than 5Mb which is already very 
+ important for a machine like the beta machine. The MLABs on their side are present in the number of 
+ 994 with 640 bits per block as seen previously. This makes a total of a little more than 600kb. 
+ However, there are three reasons why the choice will be made for the M10K rather than the MLABs. 
+ The first reason is that MLABs consume programmable logic, the more MLAB memory is used the less 
+ custom logic can be added to the FPGA, up to a loss of 25\% if all memory is used. The second is 
+ that the datasheet advises to use these memories in cases where shallow and large memories are 
+ needed. This is because it will be complicated to create large memories locally with MLABs. Last 
+ but not least, MLABs do not provide dual-port access, which is a great handicap because it is 
+ necessary to duplicate the memories if the user wants this kind of access. As the choice of M10Ks 
+ seems to be the most suitable for this work, it is decided to use only this source of memory and 
+ not a hybrid system which keeps things simple. Another difference between MLABs and M10Ks is that 
+ MLABs have no problem running at frequencies up to 420MHz while M10Ks do not go beyond 315MHz. 
+ However, the beta machine will not exceed a clock limitation of 50MHz which puts this feature out 
+ of consideration.

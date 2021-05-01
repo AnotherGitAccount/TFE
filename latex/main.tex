@@ -1,10 +1,19 @@
 \documentclass[12pt]{report}
 
 \usepackage[margin=2.0cm]{geometry}
-\usepackage[defaultlines=4,all]{nowidow}
+\usepackage[defaultlines=3,all]{nowidow}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{epstopdf}
+\usepackage{float}
+
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\linewidth}{#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 
 \setlength\parskip{0.5em}
 \newtheorem{theorem}{Theorem}
