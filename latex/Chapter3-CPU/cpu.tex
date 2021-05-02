@@ -1,11 +1,164 @@
 \chapter{Beta machine and CPU design}
 
-\section{Instruction Set Architecture}
+In this chapter the design of the cpu will be explained but before that the set instruction will be 
+detailed first.
 
+\section{Beta machine components}
+
+\subsection{Program counter}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/pc_internal}
+    \caption{Program Counter internal circuit}
+    \label{fig:components/pc_in}
+\end{figure}
+
+\subsection{Instruction memory}
+
+\subsection{Register file}
+
+\subsection{ALU}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_internal}
+    \caption{Arithmetic Logic Unit (ALU) internal circuit}
+    \label{fig:components/alu_in}
+\end{figure}
+
+\subsection{Data memory}
+
+\subsection{Control logic}
+
+\section{Instruction Set Architecture}
 \subsection{Instructions formats}
+
+Two instruction formats are used in the instruction set, the first one is used for all instructions 
+requiring two operands ($R_a$ and $R_b$ in Figure \ref{fig:instructions/format}) which will be for example 
+the case for simple arithmetic instructions. The second format is used for all instructions 
+requiring a single operand and a constant. This will be the case for example for conditional jump 
+operations. As can be seen in Figure \ref{fig:instructions/format}, the $R_x$ contain register 
+addresses. As they are on 5 bits and no bank change operation exists, 32 registers are addressable. 
+$R_c$ stores the result of the instruction when a result exists. It should be noted that the 
+constants are on 16 bits and signed.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{Chapter3-CPU/res/instruction}
+    \caption{Instructions format}
+    \label{fig:instructions/format}
+\end{figure}
 
 \subsection{Instruction set}
 
+\subsubsection*{Arithmetic and logic instructions}
+
+The different arithmetic and logic instructions are managed by the Arithmetic Logic Unit (ALU). The 
+different instructions listed in Table \ref{tab:instruction/alu} are supported.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Name}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Operation}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Opcode}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Const Operation}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Const Opcode}} \\ \hline
+    Addition                                                    & ADD                                                             & 0x20                                                         & ADDC                                                                  & 0x30                                                               \\ \hline
+    Substraction                                                & SUB                                                             & 0x21                                                         & SUBC                                                                  & 0x31                                                               \\ \hline
+    Multiplication                                              & MUL                                                             & 0x22                                                         & MULC                                                                  & 0x32                                                               \\ \hline
+    Bitwise and                                                 & AND                                                             & 0x28                                                         & ANDC                                                                  & 0x38                                                               \\ \hline
+    Bitwise or                                                  & OR                                                              & 0x29                                                         & ORC                                                                   & 0x39                                                               \\ \hline
+    Bitwise xor                                                 & XOR                                                             & 0x2A                                                         & XORC                                                                  & 0x3A                                                               \\ \hline
+    Compare equal                                               & CMPEQ                                                           & 0x24                                                         & CMPEQC                                                                & 0x3A                                                               \\ \hline
+    Compare less                                                & CMPLT                                                           & 0x25                                                         & CMPLTC                                                                & 0x35                                                               \\ \hline
+    Compare less or equal                                       & CMPLE                                                           & 0x26                                                         & CMPLEC                                                                & 0x36                                                               \\ \hline
+    Logical left shift                                          & SHL                                                             & 0x2C                                                         & SHLC                                                                  & 0x3C                                                               \\ \hline
+    Logical right shift                                         & SHR                                                             & 0x2D                                                         & SHRC                                                                  & 0x3D                                                               \\ \hline
+    Arithmetic rifht shift                                      & SRA                                                             & 0x2E                                                         & SRAC                                                                  & 0x3E                                                               \\ \hline
+    \end{tabular}
+    \caption{Arithmetic and logic instructions}
+    \label{tab:instruction/alu}
+\end{table}
+
+All these instructions simply perform the operation associated with them on the operands $R_a$ and 
+$R_b$ in the normal case and on the operands $R_a$ and the constant in the case of instructions 
+with constants. $R_a$ will always be used as the first operand. For example, the instruction given 
+in Figure \ref{fig:instructions/subc} will result in $[R_{10}] = [R_{14}] - 17$. The notation 
+$[R_x]$ means the content of register $R_x$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{Chapter3-CPU/res/instruction_subc}
+    \caption{SUBC instruction example}
+    \label{fig:instructions/subc}
+\end{figure}
+
+Concerning the comparison operations, they will simply put a $0$ in $R_c$ when the comparison is 
+false, a $1$ otherwise.
+
+\subsubsection*{Program counter instructions}
+
+The purpose of these instructions is to modify the value of the program counter conditionally or 
+not. The different instructions are listed in Table \ref{tab:instruction/pc}. The values of 
+column Next PC will be writen to PC and the address of the next instruction before the jump is
+stored in Rc. Note that [Ra] should be byte aligned for JMP but the constant should be 32bits 
+aligned for BEQ and BNE (as they already multiply the constant by 4).
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Name}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Operation}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Opcode}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Condition}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Next PC}} \\ \hline
+    Jump                                                        & JMP                                                             & 0x1B                                                         & None                                                                 & {[}Ra{]} \& 0xFFFFFFC                                         \\ \hline
+    Branch Equal                                                & BEQ                                                             & 0x1D                                                         & {[}Ra{]} == 0                                                        & PC + 4 $\times$ (Constant + 1)             \\ \hline
+    Branch Not Equal                                            & BNE                                                             & 0x1E                                                         & {[}Ra{]} != 0                                                        & PC + 4 $\times$ (Constant + 1)                \\ \hline
+    \end{tabular}
+    \caption{Program counter instructions}
+    \label{tab:instruction/pc}
+\end{table}
+
+\subsubsection*{Memory instructions}
+
+Here, only two instructions are present. One is to load a value from the data memory and the other 
+is to store a value in it. The notation $<x>$ means at address $x$ in memory. Note that here $R_c$
+doesn't necessarily contains a result at the end of an operation and is used as an operand for ST.
+Also, addresses must be byte aligned here and offsets contained in Constant must also be byte
+aligned. Both instructions are detailed in Table \ref{tab:instruction/dm}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Name}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Operation}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Opcode}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Action}} \\ \hline
+    Load                                                        & LD                                                              & 0x18                                                         & {[}Rc{]} = $<${[}Ra{]} + Constant$>$      \\ \hline
+    Store                                                       & ST                                                              & 0x19                                                         & $<${[}Ra{]} + Constant$>$ = {[}Rc{]}        \\ \hline
+    \end{tabular}
+    \caption{Memory instructions}
+    \label{tab:instruction/dm}
+\end{table}
+
+\subsubsection*{Control instructions}
+
+Only one control instruction exists. This instruction bascally stops the machine and has no operand
+or result. The instruction is detailed in Table \ref{tab:instruction/ctrl}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Name}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Operation}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Opcode}} \\ \hline
+    Exit                                                        & EXIT                                                            & 0x3F                                                         \\ \hline
+    \end{tabular}
+    \caption{Exit instruction}
+    \label{tab:instruction/ctrl}
+\end{table}
+
 \section{Beta machine}
 
+
+
 \section{CPU design}
+
