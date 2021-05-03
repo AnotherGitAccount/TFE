@@ -10,7 +10,7 @@ io_write_leds:
         LD(BP, -12, R1)
     func_io_write_leds:
         | Setting R2 = address
-        CMOVE(0x0001, R2)       | adds b01 at the beginning of the word (io address space)
+        CMOVE(0x0001, R2)       | adds b01 at the begining of the word (io address space)
         SHLC(R2, 30, R2)        | shifts b01 to the begining of the word
         ORC(R2, 0x0004, R2)     | sets leds address
         | Setting R3 = data
@@ -32,7 +32,7 @@ io_read_buttons:
         PUSH(R1)
     func_io_read_buttons:
         | Setting R1 = address
-        CMOVE(0x0001, R1)       | adds b01 at the beginning of the word (io address space)
+        CMOVE(0x0001, R1)       | adds b01 at the begining of the word (io address space)
         SHLC(R1, 30, R1)        | shifts b01 to the begining of the word
         LD(R1, 0, R0)           | reads
     exit_io_read_buttons:
@@ -51,7 +51,7 @@ io_read_switches:
         PUSH(R1)
     func_io_read_switches:
         | Setting R1 = address
-        CMOVE(0x0001, R1)       | adds b01 at the beginning of the word (io address space)
+        CMOVE(0x0001, R1)       | adds b01 at the begining of the word (io address space)
         SHLC(R1, 30, R1)        | shifts b01 to the begining of the word
         ORC(R1, 0x0008, R1)     | sets switches address
         LD(R1, 0, R0)           | reads

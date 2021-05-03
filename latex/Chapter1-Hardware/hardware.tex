@@ -3,7 +3,8 @@
 \section{Features of the DE10-Nano development board}
 
 On the board, numerous devices are made available to the user. Some of them will be very 
-interesting for this work: the Cyclone V FPGA (A in Figure \ref{fig:de10/de10_features}) that is
+interesting for this work: the Cyclone V FPGA that includes a programmable part (the programmable 
+logic) and an ARM processor (A in Figure \ref{fig:de10/de10_features}) that is
 basically the main component of the system as almost everything on the board is driven by it. It is
 also where all the hardware designed in the work resides. The 1GB DDR3 RAM (B) which is used 
 by the ARM side of the FPGA. An ethernet port (C) which can be
@@ -11,9 +12,10 @@ useful to connect to the ARM processor from any external environment. For instan
 to connect to it if the installed system can handle it. Then there are the SD card reader and the SD 
 card (D, on the other side of the PCB). The SD card consists in the mass storage of this board. The
 one used offers 8GB of memory. Another important component is the HDMI output (E) that can be used
-from the programmable logic. Other less important devices, mainly IOs are avaible: General Purpose 
-Input / Output pins (GPIOs), LEDs, buttons and switches. All of these devices are discussed at some
-point in this report. The ones that are not listed (such as the IMU system) haven't been used.
+from the programmable logic side of the Cyclone V. Other less important devices, mainly IOs are 
+avaible: General Purpose Input / Output pins (GPIOs), LEDs, buttons and switches. All of these 
+devices are discussed at some point in this report. The ones that are not listed (such as the Inertial
+Measurement Unit, IMU) haven't been used.
 
 \begin{figure}[H]
     \centering
@@ -49,12 +51,11 @@ simply contains the truth table of the logic circuit to be implemented.
 \end{figure}
 
 The inside of a $2^2 \times 4$ ROM can be seen as a 2-to-4 decoder followed with a 4-by-4 OR gates 
-array where the connections in the array are configurable. They can be opened or closed during the
+array, as shown in Figure \ref{fig:fpga/pld_rom_internal}, where the connections in the array are configurable. They can be opened or closed during the
 programmation of the device. The decoder can be interpreted as the AND gates array here. Thus, the
 AND gates array is fixed and the OR gates array is programmable for this kind of devices.
 
-An example corresponding to the $2^2 \times 4$ ROM is given in Figure \ref{fig:fpga/pld_rom_internal}.
-In this example, the array is represented by a grid. All horizontal lines represent a 1-bit signal
+In the example of Figure \ref{fig:fpga/pld_rom_internal}, the array is represented by a grid. All horizontal lines represent a 1-bit signal
 that can be connected to an OR gate. The signal is connected if a red x is present at the connection
 point. As can be seen, the OR gates array is here programmed to describe the truth tables of these 
 boolean equations
@@ -82,8 +83,9 @@ or feedback loop in the circuits that are described with this technology.
 \subsection{PAL and PLA}
 
 The Programmable Array Logic (PAL) and Programmable Logic Array (PLA) devices differ from the ROM 
-based PLDs as they both have a programmable AND gates array. However, only the PLAs have bot AND and
-OR gates arrays that are programmable. The PLAs are thus the most flexible devices of the three.
+based PLDs as they both have a programmable AND gates array. However, only the PLAs have both AND and
+OR gates arrays that are programmable, the OR array is not programmable for PALs. The PLAs are thus 
+the most flexible devices of the three.
 As expected, this flexibility makes them also more complex and complicated to program. The outputs
 of these devices can often be complemented through programmation too. It should also be notticed
 that both the inputs and the inverted inputs are directly available in the arrays here, as visible
@@ -106,10 +108,12 @@ Initially, these devices were mainly programmable in two ways. The first was to 
 anti-fuses at each interconnection. The user then had to apply destructive currents to the right 
 places for the fuses to open the connections and the anti-fuses to close them. The second method was 
 to leave it to the user to complete the IC design. One would then make a mask to select which 
-interconnects to open and close. To provide some examples, the fuse methods are used in PROMs and 
+interconnects to open and close during a litography process. To provide some examples, the fuse 
+methods are used in PROMs and 
 masks for ROM based PLDs. Both of these programming methods make the devices non-erasable, which at 
 the same time makes them non-reprogrammable. However, they are both non-volatile which can be an 
-advantage when the user don't want any boot latency at startup.
+advantage when the user don't want any boot latency at startup, as no programmation is done at boot
+time.
 
 Later, other programming techniques were developed following the emergence of transistors. Indeed, 
 these transistors are placed at the interconnections and controlled by their gate with the help of 
@@ -124,7 +128,7 @@ interconnections are usually configured by applying a high current to set or res
 Now that an introduction to PLDs and programming methods has been made, it is time to get to the 
 heart of the matter with a description of FPGAs. In this section, it will be tried to be general 
 enough to cover the operation of a large number of FPGAs. More details will be given in the next 
-section when it will be about the FPGA used for the realization of this thesis.
+section that will be about the FPGA used for the realization of this master thesis.
 
 FPGAs are fascinating yet complex devices. Indeed, they have three main programmable levels. These 
 three levels will be discussed in turn, starting with the programmable logic blocks, then the 
@@ -160,7 +164,7 @@ expansion theorem.
 
 As shown in Figure \ref{fig:fpga/fpga_block}, the blocks also have an arithmetic sub-block and a 
 register. Having this arithmetic block in each single programmable block greatly increases the 
-efficiency of the FPGAs and reduces the latency of the blocks, even if sometimes these circuits are 
+efficiency of the FPGAs and reduces the latency of the blocks, even if most of the time these circuits are 
 simple carry adders. Fixed hardware is always faster than programmable one as they are better 
 optimized. In addition to the programmable LUTs, other configuration bits are available to control
 the behaviour of the multiplexers: $C_1$, $C_2$ and $C_3$ allowing respectively to add a feedback 
@@ -219,7 +223,7 @@ circuit can be adapted and coupled with a maximum of other circuits.
 
 Due to their complexity, the configuration circuitry of the FPGA is just as complex. For this 
 reason, few details will be provided in this section. That said, it should be noted that part of 
-the FPGA is assigned to this function. This block will then take care of configuring all the 
+the FPGA is assigned to this function. This block takes care of configuring all the 
 configuration bits in the relevant memories. However, since the memories holding the configuration 
 within the FPGA are volatile, it will often be necessary to couple a non-volatile memory to the 
 FPGA to retain its configuration. The configuration will therefore have to be re-configured each 
@@ -231,7 +235,7 @@ later section.
 This closes the theoretical discussion on FPGAs. As repeated several times, FPGAs are extremely 
 powerful and configurable. This allows them to describe a large number of circuits and to adapt to
 many existing circuits. Another advantage is that they are massively parallel due to their 
-structure. A user can implement twenty different circuits running in parallel. Despite all these 
+structure. Despite all these 
 advantages, FPGAs still have some drawbacks. One of them is cost. Some FPGAs can cost several 
 thousand euros. The complexity and difficulty of access is another problem for designers, the 
 datasheets are numerous and extremely long, the tools are also numerous and not always easy to use. 
@@ -278,7 +282,7 @@ the previous section. The main differences are that they accept more inputs, up 
 internal arithmetic block is in fact two separate adders and four registers are provided in each ALM. 
 Depending on their configuration (done during the programming process), ALMs will be adapted to 
 specialize in a functionality to make the circuits more efficient (for example more entries, an 
-optimization for arithmetic, shared arithmetic with an entry of the adder that comes from an entry 
+optimization for arithmetic, shared arithmetic with an input of the adder that is fed by an input 
 of the ALM, ...). 
 
 \subsubsection*{Other blocks}
@@ -299,7 +303,7 @@ The largest block visible on the diagram is the one at the top right which repre
 system, this block will be discussed in the section just after this one. Then one can see many dark 
 green columns that designate the M10K memories. These memories are the main source of on-chip 
 storage, a sub-section of this chapter being dedicated to the memories, they will be studied in more 
-detail at this time. The PLLs are also visible in the light gray band on the left. PLLs allow to 
+detail there. The PLLs are also visible in the light gray band on the left. PLLs allow to 
 generate clocks at a given frequency from a reference clock. Again, this unit will be studied later. 
 Another element present in large quantities is represented by the dark blue columns. It is the 
 Digital Signal Processing (DSP) Hard IP Blocks. These blocks have a multitude of functions. Indeed, 
@@ -314,7 +318,7 @@ with ALMs. Other units are available but wont be discussed.
 
 \subsection{ARM processor side}
 
-Inside the FPGA, a 32bits ARM processor is integrated. It is a Cortex A9. No bare-metal programming 
+Inside the FPGA, a 32bits ARM processor, often named Hard Processor System (HPS), is integrated. It is a Cortex A9. No bare-metal programming 
 will be done on this processor. It will be used as an interface to access the beta machine. Indeed, 
 an operating system has been installed on it and utilities have been developed so that the use of 
 the architecture developed in this work is easily accessible. Discussions about the operating system 
@@ -338,7 +342,7 @@ fact that the data bus of this bridge is only 32 bits wide. As the name of the b
 is unidirectional and goes from the HPS to the FPGA. Then come two more interesting bridges: the 
 FPGA-to-HPS Bridge and the HPS-to-FPGA Bridge. The directions of these two buses are obvious. What 
 is less obvious is their size. On the HPS side, their dimension is fixed at 64bits, but on the FPGA 
-side, they have the great advantage of being able to be configured from 32 to 128bits via 64 bits. 
+side, they have the great advantage of being able to be configured to 32, 64 or 128 bits. 
 These bridges are ideal for large data transfers. Finally, there are the FPGA-to-SDRAM bridges which 
 allow six masters on the FPGA side to have a non cached and non coherent access to the RAM memory. 
 This will be discussed in the next section in more detail. These different bridges all allow several
@@ -356,12 +360,12 @@ in Figure \ref{fig:cyc5/interconnect}. In this work, only the HPS-to-FPGA bridge
 
 In Figure \ref{fig:cyc5/address_space} the address mappings from different viewpoints are shown. For 
 the two buses going from the HPS to the FPGA, it is the MPU column (Memory Protection Unit, the unit 
-that protects memory accesses on ARM architectures) that will interest us. We see that the address 
+that protects memory accesses on ARM architectures) that will be of interest. We see that the address 
 space is much larger for the hps-fpga bridge than for its lightweight equivalent. These addresses 
 are those to which the slaves on the fpga side will be associated and therefore those to which one
 will have to send the transactions from the ARM processor in order to communicate with these slaves. 
 The protocol will of course be studied in this document but this will be done when the transactions 
-between the two parties will be discussed.
+between the two parts will be discussed.
 
 \begin{figure}[H]
     \centering
@@ -372,7 +376,7 @@ between the two parties will be discussed.
 
 \section{On-board and on-chip memories comparison}
 
-As seen in the previous sections, several types of memories are available. Directly on the card 
+As seen in the previous sections, several types of memories are available. Directly on the board 
 there is the SD card storage and DDR3 RAM memory. On the Cyclone V there are also two types of memory 
 which are MLAB units and M10K blocks. Each memory has its own specificities. Since both the beta 
 machine and the ARM system require memory, it is interesting to consider the use of these different 
@@ -382,11 +386,13 @@ Let's start with the simplest, the ARM processor. In fact, on this side no choic
 user. The DDR3 memory will serve as the main memory and the SD card as the secondary memory for 
 non-volatile storage. 
 
-\subsection{DDR3 memory}
-
 Concerning the Beta machine, things are getting tougher.  Which memory to choose to store 
 instructions and data, as main memory? Given the nature of SD card memory, it can immediately be 
-taken out of the possible choices. Let's start with a comparison. The DDR3 memory offers 1GB 
+taken out of the possible choices. What about the other memories?
+
+\subsection{DDR3 memory}
+
+The DDR3 memory offers 1GB 
 shareable between the ARM processor and the beta machine, which is really huge. However, an almost 
 direct access to this memory is only possible if the access is done in a non-caching and 
 non-coherent way with respect to the ARM processor caches. Another possibility is to use the ACP 
@@ -396,7 +402,7 @@ not instantaneous, the writes and reads do not take the same number of cycles an
 cycles is not unitary. To use these memories, it is therefore necessary to either slow down the 
 whole beta machine or to have a cache memory on the beta machine with faster memory next to it. In 
 addition to this, in the first case (direct access) it will be necessary to configure the operating 
-system on the ARM processor to ensure that it never accesses the part of memory reserved for the
+system on the ARM processor to ensure that it will never accesses the part of memory reserved for the
 beta machine and in the second case (with the ACP) it will be necessary to configure the ACP 
 correctly so that its operation is as expected. In both cases this means modifying the kernel of the 
 operating system, which is not necessarily simple. For these two reasons: the delays and the 
@@ -426,10 +432,10 @@ What about the M10K and MLAB memories? These two memories are directly present o
  custom logic can be added to the FPGA, up to a loss of 25\% if all memory is used. The second is 
  that the datasheet advises to use these memories in cases where shallow and large memories are 
  needed. This is because it will be complicated to create large memories locally with MLABs. Last 
- but not least, MLABs do not provide dual-port access, which is a great handicap because it is 
+ but not least, MLABs do not provide dual-port access, which is a huge handicap because it is 
  necessary to duplicate the memories if the user wants this kind of access. As the choice of M10Ks 
  seems to be the most suitable for this work, it is decided to use only this source of memory and 
  not a hybrid system which keeps things simple. Another difference between MLABs and M10Ks is that 
  MLABs have no problem running at frequencies up to 420MHz while M10Ks do not go beyond 315MHz. 
- However, the beta machine will not exceed a clock limitation of 50MHz which puts this feature out 
+ However, the beta machine will not exceed a clock frequency of 50MHz which puts this feature out 
  of consideration.
