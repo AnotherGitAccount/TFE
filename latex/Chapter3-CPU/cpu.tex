@@ -1,7 +1,10 @@
 \chapter{Beta machine and CPU design}
 
-In this chapter the design of the cpu will be explained but before that the set instruction will be 
-detailed first.
+In this section the different modules making up the beta machine will be studied one by one, from 
+their functionality to their design. Simulation results are even provided for some of them. Once the 
+different elements are explained, the instruction set desired for the beta machine will be 
+described. And finally, the different modules will be connected to each other to form the beta
+machine with the desired instruction set.
 
 \section{Beta machine components}
 
@@ -29,9 +32,9 @@ is set to 0b00, the program counter acts like a simple 32bits counter.
     \rowcolor[HTML]{DAE8FC} 
     \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Mode}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{pcsel}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Details}}                                                                                                                                                                       \\ \hline
     NORMAL                                                      & 0b00                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes \\ the value taken from the input pc\_in.\end{tabular}                                                                                          \\ \hline
-    BEQ                                                         & 0b01                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes \\ the value taken on the input pc\_in if the value on data is not 0. \\ Otherwise, the current value becomes pc\_in + 4 * offset.\end{tabular} \\ \hline
+    BEQ                                                         & 0b01                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes \\ the value taken on the input pc\_in if the value on data is not 0. \\ Otherwise, the current value becomes pc\_in + 4 $\times$ offset.\end{tabular} \\ \hline
     JMP                                                         & 0b10                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes the \\ value on data.\end{tabular}                                                                                                              \\ \hline
-    BNE                                                         & 0b11                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes\\  the value taken on the input pc\_in if the value on data is 0. \\ Otherwise, the current value becomes pc\_in + 4 * offset.\end{tabular}     \\ \hline
+    BNE                                                         & 0b11                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes\\  the value taken on the input pc\_in if the value on data is 0. \\ Otherwise, the current value becomes pc\_in + 4 $\times$ offset.\end{tabular}     \\ \hline
     \end{tabular}
     \caption{Program counter modes}
     \label{tab:pc/modes}
@@ -57,6 +60,54 @@ the reset (rst) is high, the register is synchronously reset to 0.
     \caption{Program Counter internal circuit}
     \label{fig:components/pc_in}
 \end{figure}
+
+\subsubsection*{Program counter simulations}
+
+The different modes of the program counter have been verified by simulation. In the first mode 
+(NORMAL mode, pcsel = 0b00), it was checked that with a pc\_in at 4 294 967 292 (the maximum value with 
+the last two bits at 0 that helds on 32 bits), the program counter returned 0 for pc\_next and did not 
+give a random value. Other random values for pc\_in were checked to be sure that it worked 
+correctly. Results of this first simulation are shown in Figure \ref{fig:sim/pc_00}. Note that the
+input values are changed only once per two clock cycles but the module is totally able to manage
+input changes once per cycle.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter3-CPU/res/pc_simu_00.PNG}
+    \caption{Program Counter in normal mode simulations for various pc\_in values}
+    \label{fig:sim/pc_00}
+\end{figure}
+
+To test the JMP mode (pcsel = 0b10), it was simply tried to set data to several values to check if 
+pc\_out became this value. Results are provided in Figure \ref{fig:sim/pc_10}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter3-CPU/res/pc_simu_10.PNG}
+    \caption{Program Counter in jmp mode simulations for various data values}
+    \label{fig:sim/pc_10}
+\end{figure}
+
+The last simulation was for the BEQ (pcsel = 01) and BNE (pcsel = 11) modes in order to check 
+different offsets (positive and negative) with data fixed at a certain value and then at 0.
+Results are given in Figure \ref{fig:sim/pc_01} for BEQ and \ref{fig:sim/pc_11} for BNE.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter3-CPU/res/pc_simu_01.PNG}
+    \caption{Program Counter in BEQ mode simulations for various data and offset values}
+    \label{fig:sim/pc_01}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter3-CPU/res/pc_simu_11.PNG}
+    \caption{Program Counter in BNE mode simulations for various data and offset values}
+    \label{fig:sim/pc_11}
+\end{figure}
+
+In the different simulations the results are all valid, which adds confidence to this design before 
+moving on to the practical implementation that will come later.
 
 \subsection{Instruction memory}
 
