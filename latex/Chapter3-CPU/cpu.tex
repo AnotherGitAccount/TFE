@@ -7,6 +7,50 @@ detailed first.
 
 \subsection{Program counter}
 
+The program counter is a module with seven inputs (clk, clk\_en, rst, pcsel, offset, data, pc\_in) 
+and two outputs (pc\_out and pc\_next), as shown in Figure \ref{fig:components/pc}. 
+Its functions are to provide the current counter on pc\_out ($PC$) and its 
+next value ($PC + 4$) on pc\_next, and to react to a control signal named pcsel. This control 
+will allow to choose the program counter's operating mode. The different modes and their functions
+are listed in Table \ref{tab:pc/modes}. Note that if one connects pc\_new to pc\_in and that pcsel
+is set to 0b00, the program counter acts like a simple 32bits counter.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{Chapter3-CPU/res/pc}
+    \caption{Program Counter}
+    \label{fig:components/pc}
+\end{figure}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Mode}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{pcsel}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Details}}                                                                                                                                                                       \\ \hline
+    NORMAL                                                      & 0b00                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes \\ the value taken from the input pc\_in.\end{tabular}                                                                                          \\ \hline
+    BEQ                                                         & 0b01                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes \\ the value taken on the input pc\_in if the value on data is not 0. \\ Otherwise, the current value becomes pc\_in + 4 * offset.\end{tabular} \\ \hline
+    JMP                                                         & 0b10                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes the \\ value on data.\end{tabular}                                                                                                              \\ \hline
+    BNE                                                         & 0b11                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes\\  the value taken on the input pc\_in if the value on data is 0. \\ Otherwise, the current value becomes pc\_in + 4 * offset.\end{tabular}     \\ \hline
+    \end{tabular}
+    \caption{Program counter modes}
+    \label{tab:pc/modes}
+\end{table}
+
+Concerning the internal circuit (that is shown in Figure \ref{fig:components/pc_in}), the pc\_out 
+values will be evaluated for the different modes and 
+will be put on a multiplexer which will choose the right output according to the pcsel value. For the BNE 
+and BEQ modes, another multiplexer is used to make the selection between the two possible results, 
+the control of these two multiplexers is naturally done by the result of $data == 0$. 
+
+For the offset, it should be noted that it first undergoes a conversion from 16bits signed to 32bits 
+signed before actually being used in the circuit.
+
+The result selected by the multiplexer controlled by pcsel then goes to the register where it is 
+stored at the next rising edge of the clock if the clk\_enable is high. The 
+pc\_out will thus have the desired value and the pc\_next simply corresponds to pc\_out + 4. When 
+the reset (rst) is high, the register is synchronously reset to 0.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/pc_internal}
