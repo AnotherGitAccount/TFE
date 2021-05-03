@@ -16,11 +16,11 @@ Its functions are to provide the current counter on pc\_out ($PC$) and its
 next value ($PC + 4$) on pc\_next, and to react to a control signal named pcsel. This control 
 will allow to choose the program counter's operating mode. The different modes and their functions
 are listed in Table \ref{tab:pc/modes}. Note that if one connects pc\_new to pc\_in and that pcsel
-is set to 0b00, the program counter acts like a simple 32bits counter.
+is set to 0b00, the program counter acts like a simple 32bits 4-by-4 counter.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.6]{Chapter3-CPU/res/pc}
+    \includegraphics[scale=0.8]{Chapter3-CPU/res/pc}
     \caption{Program Counter}
     \label{fig:components/pc}
 \end{figure}
@@ -61,6 +61,9 @@ the reset (rst) is high, the register is synchronously reset to 0.
     \label{fig:components/pc_in}
 \end{figure}
 
+The Verilog implementation of the program counter is not a problem. Everything is relatively 
+straight-forward for this module.
+
 \subsubsection*{Program counter simulations}
 
 The different modes of the program counter have been verified by simulation. In the first mode 
@@ -73,7 +76,7 @@ input changes once per cycle.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{Chapter3-CPU/res/pc_simu_00.PNG}
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/pc_simu_00.PNG}
     \caption{Program Counter in normal mode simulations for various pc\_in values}
     \label{fig:sim/pc_00}
 \end{figure}
@@ -83,7 +86,7 @@ pc\_out became this value. Results are provided in Figure \ref{fig:sim/pc_10}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{Chapter3-CPU/res/pc_simu_10.PNG}
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/pc_simu_10.PNG}
     \caption{Program Counter in jmp mode simulations for various data values}
     \label{fig:sim/pc_10}
 \end{figure}
@@ -94,14 +97,14 @@ Results are given in Figure \ref{fig:sim/pc_01} for BEQ and \ref{fig:sim/pc_11} 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{Chapter3-CPU/res/pc_simu_01.PNG}
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/pc_simu_01.PNG}
     \caption{Program Counter in BEQ mode simulations for various data and offset values}
     \label{fig:sim/pc_01}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{Chapter3-CPU/res/pc_simu_11.PNG}
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/pc_simu_11.PNG}
     \caption{Program Counter in BNE mode simulations for various data and offset values}
     \label{fig:sim/pc_11}
 \end{figure}
@@ -109,11 +112,54 @@ Results are given in Figure \ref{fig:sim/pc_01} for BEQ and \ref{fig:sim/pc_11} 
 In the different simulations the results are all valid, which adds confidence to this design before 
 moving on to the practical implementation that will come later.
 
-\subsection{Instruction memory}
-
-\subsection{Register file}
-
 \subsection{ALU}
+
+The Arithmetic Logic Unit (ALU) allows the resolution of arithmetic, logic and bit shifting 
+operations. These operations are selected using the alufn signal. The chosen operation is then 
+applied on the two operands data\_a and data\_b and sends the result on res. The different 
+operations are listed in Table \ref{tab:alu/alufn}\footnote{unsigned(data\_b[4:0]) in the table means 
+that only the five last bits of data\_b are used and that they are intepreted as an unsigned number
+}and a view of the module is shown in Figure \ref{fig:components/alu}. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.8]{Chapter3-CPU/res/alu}
+    \caption{Arithmetic Logic Unit (ALU)}
+    \label{fig:components/alu}
+\end{figure}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Operation}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{alufn}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Result}}   \\ \hline
+    No operation                                                     & 0b0000                                                      & res = 0                                                        \\ \hline
+    Addition                                                         & 0b0001                                                      & res = data\_a + data\_b                                        \\ \hline
+    Substraction                                                     & 0b0010                                                      & res = data\_a - data\_b                                        \\ \hline
+    Multiplication                                                   & 0b0011                                                      & res = data\_a $\times$ data\_b                    \\ \hline
+    No operation                                                     & 0b0100                                                      & res = 0                                                        \\ \hline
+    Bitwise-and                                                      & 0b0101                                                      & res = data\_a \& data\_b                                       \\ \hline
+    Bitwise-or                                                       & 0b0110                                                      & res = data\_a $|$ data\_b                                        \\ \hline
+    Bitwise-xor                                                      & 0b0111                                                      & res = data\_a $\oplus$ data\_b                         \\ \hline
+    Compare equal                                                    & 0b1000                                                      & res = (data\_a == data\_b) ? 1 : 0                             \\ \hline
+    Compare less                                                     & 0b1001                                                      & res = (data\_a \textless data\_b) ? 1 : 0                      \\ \hline
+    Compare less or equal                                            & 0b1010                                                      & res = (data\_a $\leq$ data\_b) ? 1 : 0                   \\ \hline
+    Logical left shift                                               & 0b1011                                                      & res = data\_a $<<$ unsigned(data\_b[4:0])                     \\ \hline
+    Logical right shift                                              & 0b1100                                                      & res = data\_a $>>$ unsigned(data\_b[4:0])               \\ \hline
+    Arithmetic right shift                                           & 0b1101                                                      & res = data\_a $>>>$ unsigned(data\_b[4:0]) \\ \hline
+    No operation                                                     & 0b1110                                                      & res = 0                                                        \\ \hline
+    No operation                                                     & 0b1111                                                      & res = 0                                                        \\ \hline
+    \end{tabular}
+    \caption{ALU operations}
+    \label{tab:alu/alufn}
+\end{table}
+
+Regarding the internal design of the ALU shown in Figure \ref{fig:components/alu_in}, it is very 
+simple. Indeed, all the operations are executed in parallel and a multiplexer is in charge of 
+selecting the result that will be transmitted to the output. This value is then recorded in the 
+register on the rising edge of the clock if the clk\_en is in the high state. For the ALU, there is 
+no reset, that's why the register reset is always 0.
 
 \begin{figure}[H]
     \centering
@@ -121,6 +167,136 @@ moving on to the practical implementation that will come later.
     \caption{Arithmetic Logic Unit (ALU) internal circuit}
     \label{fig:components/alu_in}
 \end{figure}
+
+
+For the implementation of the ALU in Verilog, the operators are directly used in the code and the 
+compiler selects the right circuits to perform them. The arithmetic operations are 
+performed by DSPs while the logic operations are performed directly by logic gates. Concerning the
+shifts, they are basically free on an FPGA. Indeed, shifting the 
+connections of the signals is enough to achieve it, that does not pose any concern.
+
+\subsubsection*{ALU simulations}
+
+In order to check the behavior of the ALU, all the operations have been tested with different 
+operands : the tested combinations data\_a, data\_b are listed in Table \ref{tab:alu/sim}. 
+All the results obtained are correct, which validates the ALU.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{data\_a}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{data\_b}} \\ \hline
+    800                                                            & 8                                                             \\ \hline
+    0                                                              & 0                                                             \\ \hline
+    0                                                              & 8                                                             \\ \hline
+    8                                                              & 0                                                             \\ \hline
+    -1                                                             & 8                                                             \\ \hline
+    8                                                              & -1                                                            \\ \hline
+    -8                                                             & 8                                                             \\ \hline
+    8                                                              & -8                                                            \\ \hline
+    \end{tabular}
+    \caption{Operand combinations used in the ALU simulations}
+    \label{tab:alu/sim}
+\end{table}
+
+The results of the simulations are shown in Figures \ref{fig:sim/alu_0} to \ref{fig:sim/alu_7}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_0.PNG}
+    \caption{ALU simulations for alufn = 0b0000 (No operation), 0b0001 (Addition), 0b0010 (Substraction) 
+    and 0b0011 (Multiplication). data\_a, data\_b and res values are shown in signed decimal 
+    representation}
+    \label{fig:sim/alu_0}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_1_0.PNG}
+    \caption{ALU simulations for alufn = 0b0100 (No op) and 0b0101 (Bitwise-and). data\_a, data\_b and
+    res values are shown in hexadecimal representation}
+    \label{fig:sim/alu_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_1_1.PNG}
+    \caption{ALU simulations for alufn = 0b0110 (Bitwise-or) and 0b0111 (Bitwise-xor). data\_a, data\_b and
+    res values are shown in hexadecimal representation}
+    \label{fig:sim/alu_2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_2.PNG}
+    \caption{ALU simulations for alufn = 0b1000 (Compare equal), 0b1001 (Compare less) and
+    0b1010 (Compare less equal). data\_a, data\_b and res values are shown in signed decimal 
+    representation}
+    \label{fig:sim/alu_3}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_3_0.PNG}
+    \caption{ALU simulations for alufn = 0b1011 (Logical left shift). data\_a and
+    res values are shown in hexadecimal representation. data\_b is shown in signed decimal 
+    representation}
+    \label{fig:sim/alu_4}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_3_1.PNG}
+    \caption{ALU simulations for alufn = 0b1100 (Logical right shift). data\_a and
+    res values are shown in hexadecimal representation. data\_b is shown in signed decimal 
+    representation}
+    \label{fig:sim/alu_5}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_3_2.PNG}
+    \caption{ALU simulations for alufn = 0b1101 (Arithmetic right shift). data\_a and
+    res values are shown in hexadecimal representation. data\_b is shown in signed decimal 
+    representation}
+    \label{fig:sim/alu_6}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_4.PNG}
+    \caption{ALU simulations for alufn = 0b1110 (No operation) and 0b1111 (No operation).
+     data\_a, data\_b and res values are shown in signed decimal 
+    representation}
+    \label{fig:sim/alu_7}
+\end{figure}
+
+\subsection{Memories, generalities}
+
+On the Cyclone V, all memory definitions are done through the same interface: the altsyncrams. 
+Whether it is for RAM, ROM, one port, two ports, two real ports (independent clocks), ... this 
+module will be used. Also, both MLAB and M10K are represented by this Verilog module. 
+Obviously, for all these different functions, the module must be configured. This will be done on 
+the one hand by a parameterization (for example to specify the size of the memory, the size of the 
+words, the choice of the type MLAB or M10K, the number of ports, of clocks, the inputs / outputs 
+which are registered, if there is a clock enable or not, ...) and on the other hand by the inputs 
+and outputs which are used or not (for example for the ROM all the ports linked to the writing will 
+not be used and the write enable will be put at the ground, in the low state). 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{Chapter3-CPU/res/altsyncram.PNG}
+    \caption{Altsyncram - True Dual-port mode}
+    \label{fig:memories/altsyncram}
+\end{figure}
+
+Fortunately for the user, all this can be done through a graphical interface: with the Megawizard, 
+seen earlier in this report.
+
+\subsection{Instruction memory}
+
+\subsection{Register file}
 
 \subsection{Data memory}
 
@@ -136,7 +312,8 @@ requiring a single operand and a constant. This will be the case for example for
 operations. As can be seen in Figure \ref{fig:instructions/format}, the $R_x$ contain register 
 addresses. As they are on 5 bits and no bank change operation exists, 32 registers are addressable. 
 $R_c$ stores the result of the instruction when a result exists. It should be noted that the 
-constants are on 16 bits and signed.
+constants are on 16 bits and signed. In Figure \ref{fig:memories/altsyncram} the most general interface 
+with two true ports is shown. 
 
 \begin{figure}[H]
     \centering
