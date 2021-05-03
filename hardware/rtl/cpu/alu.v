@@ -19,8 +19,8 @@
 module alu(
 	input  wire clk,
 	input  wire clk_en,
-	input  wire [31:0] data_a,
-	input  wire [31:0] data_b,
+	input  wire signed[31:0] data_a,
+	input  wire signed[31:0] data_b,
 	input  wire [3:0]  alufn,
 	output reg  [31:0] res
 );
@@ -38,9 +38,9 @@ module alu(
 				`CMPEQ  : res <= (data_a == data_b) ? `TRUE : `FALSE;
 				`CMPLT  : res <= (data_a < data_b) ? `TRUE : `FALSE;
 				`CMPLE  : res <= (data_a <= data_b) ? `TRUE : `FALSE;
-				`SHL    : res <= data_a << data_b;
-				`SHR    : res <= data_a >> data_b;
-				`SRA    : res <= data_a >>> data_b;
+				`SHL    : res <= data_a << data_b[4:0];
+				`SHR    : res <= data_a >> data_b[4:0];
+				`SRA    : res <= data_a >>> data_b[4:0];
 				default : res <= `FALSE;
 			endcase		
 		end
