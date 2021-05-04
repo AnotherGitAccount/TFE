@@ -308,7 +308,9 @@ and writes after one clock cycle (the inputs are obligatory registerd), only one
 clock enable signals are added. The only thing left to do is to choose the size of the memory. For 
 the instruction memory, it is set to 32 768 words (thus 32 768 operations coded on 32 bits), which 
 corresponds to an address aligned on words of 15 bits. This memory described with the Megawizard 
-is called ram\_32768 in the project, its ports are shown in Figure \ref{fig:components/im_in}.
+is called ram\_32768 in the project, its ports are shown in Figure \ref{fig:components/im_in}\footnote{
+The notation cpu\_address[16:2] in the figure means that bits 2 to 16 of cpu\_address are selected. 
+The other bits are unused.}.
 
 Now that the module based on the altsyncram is created, it is needed to create an interface allowing 
 access from the rest of the beta machine. One also needs to add the programming ports. The
@@ -326,8 +328,7 @@ In fact, a bit named alive allows the memory to choose between two buses, one th
 accesses from outside the CPU (from the Memory Access Unit, this will be discussed in another 
 section) and one for access from the CPU. There is therefore a multiplexer on each input which will 
 choose one of the two buses according to the value of alive. These signals are then redirected to 
-the ram\_32768 to access the memory. Note that the notation cpu\_address[16:2] in Figure \ref{fig:components/im_in}
-means that bits 2 to 16 of cpu\_address are selected. The other bits are unused.
+the ram\_32768 to access the memory.
 
 \begin{figure}[H]
     \centering
@@ -475,8 +476,3 @@ or result. The instruction is detailed in Table \ref{tab:instruction/ctrl}
 \end{table}
 
 \section{Beta machine}
-
-
-
-\section{CPU design}
-
