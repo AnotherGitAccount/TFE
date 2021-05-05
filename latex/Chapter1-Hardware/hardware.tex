@@ -2,7 +2,8 @@
 
 \section{Features of the DE10-Nano development board}
 
-On the board, numerous devices are made available to the user. Some of them will be very 
+% PF some are not grammatically correct sentences below
+Numerous devices are made available to the user on the DE10-Nano development board. Some of them will be very 
 interesting for this work: the Cyclone V FPGA that includes a programmable part (the programmable 
 logic) and an ARM processor (A in Figure \ref{fig:de10/de10_features}) that is
 basically the main component of the system as almost everything on the board is driven by it. It is
@@ -13,7 +14,7 @@ to connect to it if the installed system can handle it. Then there are the SD ca
 card (D, on the other side of the PCB). The SD card consists in the mass storage of this board. The
 one used offers 8GB of memory. Another important component is the HDMI output (E) that can be used
 from the programmable logic side of the Cyclone V. Other less important devices, mainly IOs are 
-avaible: General Purpose Input / Output pins (GPIOs), LEDs, buttons and switches. All of these 
+available: General Purpose Input / Output pins (GPIOs), LEDs, buttons and switches. All of these 
 devices are discussed at some point in this report. The ones that are not listed (such as the Inertial
 Measurement Unit, IMU) haven't been used.
 
@@ -28,13 +29,14 @@ Measurement Unit, IMU) haven't been used.
 
 Field Programmable Gate Arrays (FPGAs) are a type of Programmable Logic Device (PLD) which are, as 
 the name suggests, programmable logic circuits. Programmable means that the user can choose which 
-circuitry will be implemented in these devices and as it will be shown in this chapter, some of 
+circuitry will be implemented in these devices.  As we will see later in this chapter, some of 
 these devices are very versatile! They can implement almost any kind of digital circuit.
 
-PLDs come in different forms but follow a similar pattern for most types. In fact, they almost all 
+PLDs come in different flavors but follow a similar pattern for most types. In fact, they almost all 
 are composed of an AND array and an OR array that are both programmable or not. Here, a discussion 
 of these different types and their evolution will be made to arrive at FPGAs and show the advantages 
 and disadvantages compared to other technologies.
+% PF will be made to arrive at : this is heavy, try to rephrase the whole sentence (show the ... is not that nice either)
 
 \subsection{ROM based PLDs}
 
@@ -51,8 +53,8 @@ simply contains the truth table of the logic circuit to be implemented.
 \end{figure}
 
 The inside of a $2^2 \times 4$ ROM can be seen as a 2-to-4 decoder followed with a 4-by-4 OR gates 
-array, as shown in Figure \ref{fig:fpga/pld_rom_internal}, where the connections in the array are configurable. They can be opened or closed during the
-programmation of the device. The decoder can be interpreted as the AND gates array here. Thus, the
+array, as shown in Figure \ref{fig:fpga/pld_rom_internal}, where the connections in the array are configurable. They can be opened or closed while
+programming the device. The decoder can be interpreted as the AND gates array here. Thus, the
 AND gates array is fixed and the OR gates array is programmable for this kind of devices.
 
 In the example of Figure \ref{fig:fpga/pld_rom_internal}, the array is represented by a grid. All horizontal lines represent a 1-bit signal
@@ -69,6 +71,8 @@ boolean equations
     \end{cases}
 \end{equation*}
 
+% PF shouldn't you say also to what the horizontal lines correspond?
+
 Obviously, real devices contain a lot more signals and gates to be cost effective and useful. 
 As stated previously, the ROM PLDs can only represent combinatorial circuits. There is no register
 or feedback loop in the circuits that are described with this technology.
@@ -83,14 +87,15 @@ or feedback loop in the circuits that are described with this technology.
 \subsection{PAL and PLA}
 
 The Programmable Array Logic (PAL) and Programmable Logic Array (PLA) devices differ from the ROM 
-based PLDs as they both have a programmable AND gates array. However, only the PLAs have both AND and
+based PLDs since they both have a programmable AND gates array. However, only the PLAs have both AND and
 OR gates arrays that are programmable, the OR array is not programmable for PALs. The PLAs are thus 
 the most flexible devices of the three.
 As expected, this flexibility makes them also more complex and complicated to program. The outputs
-of these devices can often be complemented through programmation too. It should also be notticed
-that both the inputs and the inverted inputs are directly available in the arrays here, as visible
-in Figure \ref{fig:fpga/pld_pla_internal}. These small additions greatly increase the possibilities
+of these devices can often be complemented through programming too. It should also be noticed
+that both the inputs and the inverted inputs are directly available in the arrays here, as illustrated on
+Figure \ref{fig:fpga/pld_pla_internal}. These small additions greatly increase the possibilities
 of such devices as programmable logic wont be used for that purpose.
+% PF I do not understand the previous sentence
 
 \begin{figure}[H]
     \centering
@@ -102,17 +107,18 @@ of such devices as programmable logic wont be used for that purpose.
 \subsection{Programming methods}
 
 It is very interesting to have programmable devices but it is even better when one can program them 
-so this section contains a brief discussion of the common different programming techniques.
+so this section contains a brief discussion of the various usual programming techniques.
+% PF do not use a sarcastic tone as in the above sentence ;-).  Use short sentences, straight to the point.
  
 Initially, these devices were mainly programmable in two ways. The first was to use fuses and 
 anti-fuses at each interconnection. The user then had to apply destructive currents to the right 
 places for the fuses to open the connections and the anti-fuses to close them. The second method was 
 to leave it to the user to complete the IC design. One would then make a mask to select which 
-interconnects to open and close during a litography process. To provide some examples, the fuse 
+interconnects to open and close during a lithography process. To provide some examples, the fuse 
 methods are used in PROMs and 
 masks for ROM based PLDs. Both of these programming methods make the devices non-erasable, which at 
 the same time makes them non-reprogrammable. However, they are both non-volatile which can be an 
-advantage when the user don't want any boot latency at startup, as no programmation is done at boot
+advantage when the user don't want any boot latency at startup, as no programming phase is needed at boot
 time.
 
 Later, other programming techniques were developed following the emergence of transistors. Indeed, 
@@ -125,20 +131,21 @@ interconnections are usually configured by applying a high current to set or res
 
 \section{The case of FPGAs}
 
-Now that an introduction to PLDs and programming methods has been made, it is time to get to the 
-heart of the matter with a description of FPGAs. In this section, it will be tried to be general 
-enough to cover the operation of a large number of FPGAs. More details will be given in the next 
-section that will be about the FPGA used for the realization of this master thesis.
+Now that PLDs and programming methods are introduced, it is time to get to the 
+core of the matter with a description of FPGAs.  This section aims to be general 
+enough to cover the operation of a large number of FPGAs. More details specific to the FPGA actually used in this work will be given in the next 
+section.
 
-FPGAs are fascinating yet complex devices. Indeed, they have three main programmable levels. These 
+FPGAs are fascinating yet complex devices.  %PF fascinating yet complex devices: is that usually contradictory?  Try to improve
+Indeed, they have three main programmable levels. These 
 three levels will be discussed in turn, starting with the programmable logic blocks, then the 
 programmable interconnect and finally the programmable I/Os. 
 
 \subsection{Programmable logic blocks}
 
-Programmable blocks are present in very large numbers in modern FPGAs (commonly tens to hundreds of 
+Programmable blocks are present in very large numbers in modern FPGAs (usually tens to hundreds of 
 thousands). They are the basic elements of the circuits implemented on FPGAs. Due to their 
-architecture, which can be seen in Figure \ref{fig:fpga/fpga_block}, they allow both combinational 
+architecture, which can be seen in Figure \ref{fig:fpga/fpga_block}, they allow both combinatorial 
 and sequential circuits to be implemented. 
 
 \begin{figure}[H]
@@ -150,7 +157,7 @@ and sequential circuits to be implemented.
 
 The combinatorial part of the circuits is implemented using a LookUp Table (LUT). The truth table is 
 simply stored in this LUT as for the ROM PLDs but the bits are now stored in SRAM. If one LUT is 
-not sufficient, the logic function can be implemented on several LUTs connected at the output by a 
+not sufficient, the logic function can be implemented in several LUTs connected at the output by a 
 multiplexer that is controlled by the remaining inputs. This is made fully valid by Shannon's 
 expansion theorem. 
 
@@ -176,7 +183,7 @@ them to describe almost any kind of digital circuit in an efficient way.
 
 \subsection{Non-programmable blocks}
 
-Other non-programmable or less programmable blocks are also available on the FPGA. They are divided 
+Other non-programmable or less programmable blocks are also available within FPGAs. They are divided 
 into two main groups: memories and utilities. Memories are simply blocks that can store data. A 
 specific discussion of these memory blocks will be made in a later section. On the utility side, 
 there can be a wide variety of blocks: multipliers, PLLs, DSPs and even whole CPUs. In short, 
@@ -219,7 +226,9 @@ pins can be configured to the standard used. They can also be used as input, out
 differential pairs, ... In short, they allow a large number of configurations so that the designed 
 circuit can be adapted and coupled with a maximum of other circuits.
 
-\subsection{Programmation of the FPGA}
+\subsection{Programming the FPGA}
+
+%PF never use Programmation 
 
 Due to their complexity, the configuration circuitry of the FPGA is just as complex. For this 
 reason, few details will be provided in this section. That said, it should be noted that part of 
@@ -232,8 +241,8 @@ memory holding the configuration must be relatively large, as the number of conf
 very large. More details on compiling designs and configuring FPGAs in practice will be given in a 
 later section.
 
-This closes the theoretical discussion on FPGAs. As repeated several times, FPGAs are extremely 
-powerful and configurable. This allows them to describe a large number of circuits and to adapt to
+This closes the theoretical discussion on FPGAs. As already said, FPGAs are extremely 
+powerful and versatile. This enables them to describe a large number of circuits and to adapt to
 many existing circuits. Another advantage is that they are massively parallel due to their 
 structure. Despite all these 
 advantages, FPGAs still have some drawbacks. One of them is cost. Some FPGAs can cost several 
@@ -247,7 +256,7 @@ FPGAs.
 
 \subsection{Programmable logic side}
 
-In the Cyclone V, things are a little more complicated than previously explained but are still quite 
+In the Cyclone V, things are even a little more evolved than previously explained but it is still quite 
 accessible. In fact, the programmable logic blocks will be replaced here by Logic Array Blocks (LAB) 
 which will themselves be made up of ten Adaptive Logic Modules (ALMs) which are the equivalent of 
 the programmable logic blocks studied previously. A high level view of the LAB units is given in
@@ -263,7 +272,9 @@ interconnected at the user's convenience.
 
 There is also another type of LAB, the Memory LAB (MLAB) which allows to describe SRAM. They can 
 store up to 640 bits and represent 25\% of all the LABs present on the Cyclone V. These MLABs do not 
-have memory instead of the ten ALMs, they also have the ten ALMs and all the logic necessary 
+have memory instead of
+% do you mean besides the the ALMs?
+the ten ALMs, they also have the ten ALMs and all the logic necessary 
 to use them. They are a superset of LAB somehow.
 
 These LABs (and MLABs) are placed in the FPGA fabric in an array as explained in the previous 
@@ -279,8 +290,8 @@ connections of the LABs that could be discussed, but these are not explained in 
 
 Concerning the ALMs, as just said, they are very similar to the Logic Array Blocks of 
 the previous section. The main differences are that they accept more inputs, up to eight. The 
-internal arithmetic block is in fact two separate adders and four registers are provided in each ALM. 
-Depending on their configuration (done during the programming process), ALMs will be adapted to 
+internal arithmetic block is in fact two separate adders, and four registers are provided in each ALM. 
+Depending on their configuration (set during the programming phase), ALMs will be adapted to 
 specialize in a functionality to make the circuits more efficient (for example more entries, an 
 optimization for arithmetic, shared arithmetic with an input of the adder that is fed by an input 
 of the ALM, ...). 
@@ -300,9 +311,9 @@ of the Cyclone V FPGA is shown in Figure \ref{fig:cyc5/structure}.
 \end{figure}
 
 The largest block visible on the diagram is the one at the top right which represents the entire ARM
-system, this block will be discussed in the section just after this one. Then one can see many dark 
+system, this block will be discussed in the next section. Then one can see many dark 
 green columns that designate the M10K memories. These memories are the main source of on-chip 
-storage, a sub-section of this chapter being dedicated to the memories, they will be studied in more 
+storage.  A sub-section of this chapter is dedicated to the memories, and they will be studied in more 
 detail there. The PLLs are also visible in the light gray band on the left. PLLs allow to 
 generate clocks at a given frequency from a reference clock. Again, this unit will be studied later. 
 Another element present in large quantities is represented by the dark blue columns. It is the 
@@ -312,9 +323,9 @@ of filters, ... In this work, they will only be used to perform operations such 
 subtraction and multiplication in the Arithmetic Logic Unit (ALU). It should be noted that using 
 these DSPs is much more advantageous than using ALMs. Indeed, the arithmetic circuits of the DSPs 
 are "hard-made" which means that they have no programmable interconnection logic in their internal 
-circuits, so the delays are much lower and their architecture is totally optimized. For the user, 
+circuits, so the delays are much smaller and their architecture is totally optimized. For the user, 
 this allows him to use higher clock frequencies than he would have been able with circuits designed
-with ALMs. Other units are available but wont be discussed.
+with ALMs. Other units are available but will not be discussed.
 
 \subsection{ARM processor side}
 
@@ -341,7 +352,7 @@ streaming data on this channel (even if nothing prevents it). The limitation in 
 fact that the data bus of this bridge is only 32 bits wide. As the name of the bridge indicates, it 
 is unidirectional and goes from the HPS to the FPGA. Then come two more interesting bridges: the 
 FPGA-to-HPS Bridge and the HPS-to-FPGA Bridge. The directions of these two buses are obvious. What 
-is less obvious is their size. On the HPS side, their dimension is fixed at 64bits, but on the FPGA 
+is less obvious is their size. On the HPS side, their dimension is fixed at 64 bits, but on the FPGA 
 side, they have the great advantage of being able to be configured to 32, 64 or 128 bits. 
 These bridges are ideal for large data transfers. Finally, there are the FPGA-to-SDRAM bridges which 
 allow six masters on the FPGA side to have a non cached and non coherent access to the RAM memory. 
@@ -349,7 +360,8 @@ This will be discussed in the next section in more detail. These different bridg
 masters on one side to be connected to multiple slaves on the other. The selection of the 
 slaves is done by byte aligned addresses. The address space is therefore the only thing limiting the 
 number of slaves on a bridge. In order to better visualize the interconnection, a diagram is provided 
-in Figure \ref{fig:cyc5/interconnect}. In this work, only the HPS-to-FPGA bridges have been used. 
+in Figure \ref{fig:cyc5/interconnect}. In this work, only the HPS-to-FPGA bridges are used.
+% PF use present as long as it is possible: it makes things simpler
 
 \begin{figure}[H]
     \centering
@@ -361,7 +373,9 @@ in Figure \ref{fig:cyc5/interconnect}. In this work, only the HPS-to-FPGA bridge
 In Figure \ref{fig:cyc5/address_space} the address mappings from different viewpoints are shown. For 
 the two buses going from the HPS to the FPGA, it is the MPU column (Memory Protection Unit, the unit 
 that protects memory accesses on ARM architectures) that will be of interest. We see that the address 
-space is much larger for the hps-fpga bridge than for its lightweight equivalent. These addresses 
+space is much larger for the hps-fpga
+% PF is there a reason to use lower case here?
+bridge than for its lightweight equivalent. These addresses 
 are those to which the slaves on the fpga side will be associated and therefore those to which one
 will have to send the transactions from the ARM processor in order to communicate with these slaves. 
 The protocol will of course be studied in this document but this will be done when the transactions 
@@ -378,7 +392,7 @@ between the two parts will be discussed.
 
 As seen in the previous sections, several types of memories are available. Directly on the board 
 there is the SD card storage and DDR3 RAM memory. On the Cyclone V there are also two types of memory 
-which are MLAB units and M10K blocks. Each memory has its own specificities. Since both the beta 
+which are MLAB units and M10K blocks. Each memory has its own features. Since both the beta 
 machine and the ARM system require memory, it is interesting to consider the use of these different 
 memories, compare them and finally make a choice.
 
@@ -386,14 +400,17 @@ Let's start with the simplest, the ARM processor. In fact, on this side no choic
 user. The DDR3 memory will serve as the main memory and the SD card as the secondary memory for 
 non-volatile storage. 
 
-Concerning the Beta machine, things are getting tougher.  Which memory to choose to store 
-instructions and data, as main memory? Given the nature of SD card memory, it can immediately be 
-taken out of the possible choices. What about the other memories?
+Concerning the Beta machine, the choice is less obvious.  Which memory to choose to store 
+instructions and data, as main memory?  Given the nature of the SD card memory, it can immediately be 
+ruled out of the possible choices. What about the other memories?
+% PF I do not like much the questions in the text, but since you do not use them much, it is quite OK
 
 \subsection{DDR3 memory}
 
 The DDR3 memory offers 1GB 
-shareable between the ARM processor and the beta machine, which is really huge. However, an almost 
+shareable between the ARM processor and the beta machine,
+% PF maybe not already talk about the beta machine, but just FPGA
+which is really huge. However, an almost 
 direct access to this memory is only possible if the access is done in a non-caching and 
 non-coherent way with respect to the ARM processor caches. Another possibility is to use the ACP 
 ID mapper which will ensure a cached and coherent access (using the L2 cache). The two access paths 
@@ -423,19 +440,19 @@ What about the M10K and MLAB memories? These two memories are directly present o
  means that they can be read and written in one clock cycle. Moreover, they will not be used by the 
  ARM processor, which avoids having to take care of the coherence of the caches. How to choose 
  between these two memories? The first difference is the amount of memory available. Indeed, the 
- M10K are present in the number of 553 on the Cyclone V SE A6 used in this work. As a M10K memory 
+ M10K are present in the number of 553 on the Cyclone V SE A6
+% do you mean: there are 533 M10K modules in the Cylcone V SE A6 ?  See later for the same clumsy construction
+ used in this work. As a M10K memory 
  contains 10Kb, the whole of these blocks represents a little more than 5Mb which is already very 
- important for a machine like the beta machine. The MLABs on their side are present in the number of 
- 994 with 640 bits per block as seen previously. This makes a total of a little more than 600kb. 
+ large for a machine like the beta machine. The MLABs themselves represent  
+ 994 block with 640 bits each, as seen previously. This makes a total of a little more than 600kb. 
  However, there are three reasons why the choice will be made for the M10K rather than the MLABs. 
- The first reason is that MLABs consume programmable logic, the more MLAB memory is used the less 
+ The first reason is that MLABs use up programmable logic; the more MLAB memory is used the less 
  custom logic can be added to the FPGA, up to a loss of 25\% if all memory is used. The second is 
  that the datasheet advises to use these memories in cases where shallow and large memories are 
  needed. This is because it will be complicated to create large memories locally with MLABs. Last 
  but not least, MLABs do not provide dual-port access, which is a huge handicap because it is 
  necessary to duplicate the memories if the user wants this kind of access. As the choice of M10Ks 
- seems to be the most suitable for this work, it is decided to use only this source of memory and 
- not a hybrid system which keeps things simple. Another difference between MLABs and M10Ks is that 
- MLABs have no problem running at frequencies up to 420MHz while M10Ks do not go beyond 315MHz. 
- However, the beta machine will not exceed a clock frequency of 50MHz which puts this feature out 
- of consideration.
+ seems to be the most suitable for this work, it is decided to use this source of memory.  To keep things simple, we will not opt for a hybrid system.  Another difference between MLABs and M10Ks is that 
+ MLABs have no problem running at frequencies up to 420 MHz while M10Ks do not go beyond 315 MHz. 
+ However, the beta machine will not exceed a 50 MHz clock frequency, so frequencies are of little concern here.
