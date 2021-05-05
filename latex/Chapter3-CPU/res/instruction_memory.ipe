@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210504004501" modified="D:20210504004501"/>
+<info created="D:20210504004501" modified="D:20210506002223"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,27 +312,29 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<group layer="alpha" matrix="1 0 0 1 12.4709 -44.8953">
-<text matrix="1 0 0 1 -5.17426 -2.54656" transformations="translations" pos="243.437 749.56" stroke="black" type="label" width="122.981" height="9.803" depth="2.79" valign="baseline" size="Large">Instruction Memory</text>
-<path stroke="black">
+<text layer="alpha" matrix="1 0 0 1 7.29664 -47.4419" transformations="translations" pos="243.437 749.56" stroke="black" type="label" width="122.981" height="9.803" depth="2.79" valign="baseline" size="Large">Instruction Memory</text>
+<path matrix="1 0 0 1 12.4709 -44.8953" stroke="black">
 148.724 826.354 m
 148.724 674.685 l
 450.783 674.685 l
 450.783 826.354 l
 h
 </path>
-<group matrix="1 0 0 1 -0.389295 -1.53913">
-<text matrix="1 0 0 1 63.9957 0" transformations="translations" pos="90.4876 814.835" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
-<text matrix="1 0 0 1 62.0759 1.38262" transformations="translations" pos="92.4074 799.476" stroke="black" type="label" width="52.835" height="6.926" depth="1.93" valign="baseline">cpu\_clk\_en.1</text>
-<text matrix="1 0 0 1 60.7959 -7.4842" transformations="translations" pos="93.6873 792.437" stroke="black" type="label" width="64.054" height="6.926" depth="1.93" valign="baseline">cpu\_address.32</text>
-<text matrix="1 0 0 1 56.9562 1.56779" transformations="translations" pos="97.5271 767.478" stroke="black" type="label" width="76.939" height="6.926" depth="1.93" valign="baseline">cpu\_data\_write.32</text>
-<text matrix="1 0 0 1 54.3964 -3.60125" transformations="translations" pos="100.087 757.239" stroke="black" type="label" width="47.893" height="6.428" depth="1.93" valign="baseline">cpu\_wren.1</text>
-<text matrix="1 0 0 1 49.9167 -2.86071" transformations="translations" pos="104.567 740.6" stroke="black" type="label" width="56.156" height="6.918" depth="0" valign="baseline">mau\_clk\_en.1</text>
-<text matrix="1 0 0 1 48.6368 -5.30983" transformations="translations" pos="105.847 729.081" stroke="black" type="label" width="67.375" height="6.918" depth="0" valign="baseline">mau\_address.32</text>
-<text matrix="1 0 0 1 39.0374 -5.19912" transformations="translations" pos="115.446 715.002" stroke="black" type="label" width="80.26" height="6.918" depth="0" valign="baseline">mau\_data\_write.32</text>
-<text matrix="1 0 0 1 30.7179 -9.07011" transformations="translations" pos="123.765 705.403" stroke="black" type="label" width="51.214" height="6.42" depth="0" valign="baseline">mau\_wren.1</text>
-<text matrix="1 0 0 1 253.423 73.8728" transformations="translations" pos="137.844 693.243" stroke="black" type="label" width="54.535" height="6.918" depth="0" valign="baseline">data\_read.32</text>
-<text transformations="translations" pos="154.483 682.364" stroke="black" type="label" width="27.674" height="6.918" depth="0" valign="baseline">alive.1</text>
+<group matrix="1 0 0 1 0.474816 0.950787">
+<text matrix="1 0 0 1 147.113 -59.2147" transformations="translations" pos="137.844 693.243" stroke="black" type="label" width="54.535" height="6.918" depth="0" valign="baseline">data\_read.32</text>
+<group matrix="1 0 0 1 5.47283 2.30039">
+<text matrix="1 0 0 1 290.739 25.5002" transformations="translations" pos="104.567 740.6" stroke="black" type="label" width="56.156" height="6.918" depth="0" valign="baseline">mau\_clk\_en.1</text>
+<text matrix="1 0 0 1 278.24 23.0511" transformations="translations" pos="105.847 729.081" stroke="black" type="label" width="67.375" height="6.918" depth="0" valign="baseline">mau\_address.32</text>
+<text matrix="1 0 0 1 255.756 23.1618" transformations="translations" pos="115.446 715.002" stroke="black" type="label" width="80.26" height="6.918" depth="0" valign="baseline">mau\_data\_write.32</text>
+<text matrix="1 0 0 1 276.483 19.2908" transformations="translations" pos="123.765 705.403" stroke="black" type="label" width="51.214" height="6.42" depth="0" valign="baseline">mau\_wren.1</text>
+<text matrix="1 0 0 1 269.305 28.3609" transformations="translations" pos="154.483 682.364" stroke="black" type="label" width="27.674" height="6.918" depth="0" valign="baseline">alive.1</text>
+</group>
+<group>
+<text matrix="1 0 0 1 76.0773 -46.4344" transformations="translations" pos="90.4876 814.835" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
+<text matrix="1 0 0 1 74.1575 -45.0518" transformations="translations" pos="92.4074 799.476" stroke="black" type="label" width="52.835" height="6.926" depth="1.93" valign="baseline">cpu\_clk\_en.1</text>
+<text matrix="1 0 0 1 72.8775 -53.9186" transformations="translations" pos="93.6873 792.437" stroke="black" type="label" width="64.054" height="6.926" depth="1.93" valign="baseline">cpu\_address.32</text>
+<text matrix="1 0 0 1 69.0378 -44.8666" transformations="translations" pos="97.5271 767.478" stroke="black" type="label" width="76.939" height="6.926" depth="1.93" valign="baseline">cpu\_data\_write.32</text>
+<text matrix="1 0 0 1 66.478 -50.0357" transformations="translations" pos="100.087 757.239" stroke="black" type="label" width="47.893" height="6.428" depth="1.93" valign="baseline">cpu\_wren.1</text>
 </group>
 </group>
 </page>

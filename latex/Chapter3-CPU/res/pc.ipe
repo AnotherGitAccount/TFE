@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210502173036" modified="D:20210502173036"/>
+<info created="D:20210502173036" modified="D:20210506010528"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,28 +312,24 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<group layer="alpha">
-<text matrix="1 0 0 1 -100.791 3.073" transformations="translations" pos="224 544" stroke="black" type="label" width="89.581" height="8.174" depth="2.32" valign="baseline" size="large">Program Counter</text>
-<path stroke="black">
+<group layer="alpha" matrix="1 0 0 1 -54.246 -904.4">
+<text matrix="1 0 0 1 68.2436 953.097" transformations="translations" pos="224 544" stroke="black" type="label" width="89.581" height="8.174" depth="2.32" valign="baseline" size="large">Program Counter</text>
+<path matrix="1 0 0 1 169.035 950.024" stroke="black">
 60 612 m
 60 488 l
 276 488 l
 276 612 l
 h
 </path>
-<group matrix="1 0 0 1 -14.365 -0.1465">
-<text matrix="1 0 0 1 180.244 116.862" transformations="translations" pos="64 480" stroke="black" type="label" width="40.947" height="6.428" depth="1.93" valign="baseline">pc\_out.32</text>
-<text matrix="1 0 0 1 175.54 66.9325" transformations="translations" pos="64 464" stroke="black" type="label" width="45.651" height="6.428" depth="1.93" valign="baseline">pc\_next.32</text>
-</group>
-<group matrix="1 0 0 1 1.635 -0.1465">
-<text matrix="1 0 0 1 -0.4605 -12.494" transformations="translations" pos="64 608" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
-<text matrix="1 0 0 1 -0.4605 3.506" transformations="translations" pos="64 560" stroke="black" type="label" width="19.455" height="6.42" depth="0" valign="baseline">rst.1</text>
-<text matrix="1 0 0 1 -0.4605 -12.494" transformations="translations" pos="64 544" stroke="black" type="label" width="29.113" height="6.926" depth="1.93" valign="baseline">pcsel.2</text>
-<text matrix="1 0 0 1 -0.4605 -12.889" transformations="translations" pos="64 592" stroke="black" type="label" width="33.751" height="6.918" depth="0" valign="baseline">clk\_en.1</text>
-</group>
-<text matrix="1 0 0 1 140.273 -29.214" transformations="translations" pos="64 528" stroke="black" type="label" width="34.858" height="6.661" depth="1.93" valign="baseline">pc\_in.32</text>
-<text matrix="1 0 0 1 44.273 -13.214" transformations="translations" pos="64 512" stroke="black" type="label" width="35.755" height="6.918" depth="0" valign="baseline">offset.16</text>
-<text matrix="1 0 0 1 94.0995 2.786" transformations="translations" pos="64 496" stroke="black" type="label" width="32.102" height="6.918" depth="0" valign="baseline">data.32</text>
+<text matrix="1 0 0 1 309.308 920.81" transformations="translations" pos="64 528" stroke="black" type="label" width="34.858" height="6.661" depth="1.93" valign="baseline">pc\_in.32</text>
+<text matrix="1 0 0 1 340.106 981.434" transformations="translations" pos="64 512" stroke="black" type="label" width="35.755" height="6.918" depth="0" valign="baseline">offset.16</text>
+<text matrix="1 0 0 1 263.134 952.81" transformations="translations" pos="64 496" stroke="black" type="label" width="32.102" height="6.918" depth="0" valign="baseline">data.32</text>
+<text matrix="1 0 0 1 170.209 937.384" transformations="translations" pos="64 608" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
+<text matrix="1 0 0 1 170.209 953.384" transformations="translations" pos="64 560" stroke="black" type="label" width="19.455" height="6.42" depth="0" valign="baseline">rst.1</text>
+<text matrix="1 0 0 1 346.748 1002.24" transformations="translations" pos="64 544" stroke="black" type="label" width="29.113" height="6.926" depth="1.93" valign="baseline">pcsel.2</text>
+<text matrix="1 0 0 1 170.209 936.989" transformations="translations" pos="64 592" stroke="black" type="label" width="33.751" height="6.918" depth="0" valign="baseline">clk\_en.1</text>
+<text matrix="1 0 0 1 334.914 1050.26" transformations="translations" pos="64 480" stroke="black" type="label" width="40.947" height="6.428" depth="1.93" valign="baseline">pc\_out.32</text>
+<text matrix="1 0 0 1 330.21 1016.81" transformations="translations" pos="64 464" stroke="black" type="label" width="45.651" height="6.428" depth="1.93" valign="baseline">pc\_next.32</text>
 </group>
 </page>
 </ipe>
