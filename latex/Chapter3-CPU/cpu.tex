@@ -1,12 +1,15 @@
 \chapter{Beta machine and CPU design}
 
-In this section the different modules making up the beta machine will be studied one by one, from 
-their functionality to their design. Simulation results are even provided for some of them. Once the 
-different elements are explained, the instruction set desired for the beta machine will be 
-described. And finally, the different modules will be connected to each other to form the beta
-machine with the desired instruction set.
+As explained in the introduction, the goal of this work is to design a Beta machine. This machine is 
+in fact a minimalist CPU based on the Harvard architecture, i.e. data and intructions are stored in 
+two different memories. The machine uses words and addressing on 32 bits, represented in small endians, 
+and only implements operations of signed integers, in complement to 2. 
 
-TODO: introduire beta machine
+In this section the different modules making up the Beta machine are studied one by one, from 
+their functionality to their design. Simulation results are even provided for some of them. Once the 
+different elements are explained, the instruction set desired for the Beta machine is
+described. And finally, the different modules are connected to each other to form the Beta
+machine with the desired instruction set.
 
 \section{Beta machine components}
 
@@ -16,7 +19,7 @@ The program counter is a module with seven inputs (clk, clk\_en, rst, pcsel, off
 and two outputs (pc\_out and pc\_next), as shown in Figure \ref{fig:components/pc}. 
 Its functions are to provide the current counter on pc\_out ($PC$) and its 
 next value ($PC + 4$) on pc\_next, and to react to a control signal named pcsel. This control 
-will allow to choose the program counter's operating mode. The different modes and their functions
+allows to choose the program counter's operating mode. The different modes and their functions
 are listed in Table \ref{tab:pc/modes}. Note that if one connects pc\_new to pc\_in and that pcsel
 is set to 0b00, the program counter acts like a simple 32bits 4-by-4 counter.
 
@@ -43,8 +46,8 @@ is set to 0b00, the program counter acts like a simple 32bits 4-by-4 counter.
 \end{table}
 
 Concerning the internal circuit (that is shown in Figure \ref{fig:components/pc_in}), the pc\_out 
-values will be evaluated for the different modes and 
-will be put on a multiplexer which will choose the right output according to the pcsel value. For the BNE 
+values is evaluated for the different modes and 
+is put on a multiplexer which chooses the right output according to the pcsel value. For the BNE 
 and BEQ modes, another multiplexer is used to make the selection between the two possible results, 
 the control of these two multiplexers is naturally done by the result of $data == 0$. 
 
@@ -53,7 +56,7 @@ signed before actually being used in the circuit.
 
 The result selected by the multiplexer controlled by pcsel then goes to the register where it is 
 stored at the next rising edge of the clock if the clk\_enable is high. The 
-pc\_out will thus have the desired value and the pc\_next simply corresponds to pc\_out + 4. When 
+pc\_out thus has the desired value and the pc\_next simply corresponds to pc\_out + 4. When 
 the reset (rst) is high, the register is synchronously reset to 0.
 
 \begin{figure}[H]
@@ -112,7 +115,7 @@ Results are given in Figure \ref{fig:sim/pc_01} for BEQ and \ref{fig:sim/pc_11} 
 \end{figure}
 
 In the different simulations the results are all valid, which adds confidence to this design before 
-moving on to the practical implementation that will come later.
+moving on to the practical implementation that comes later.
 
 \subsection{ALU}
 
@@ -159,7 +162,7 @@ that only the five last bits of data\_b are used and that they are intepreted as
 
 Regarding the internal design of the ALU shown in Figure \ref{fig:components/alu_in}, it is very 
 simple. Indeed, all the operations are executed in parallel and a multiplexer is in charge of 
-selecting the result that will be transmitted to the output. This value is then recorded in the 
+selecting the result that is transmitted to the output. This value is then recorded in the 
 register on the rising edge of the clock if the clk\_en is in the high state. For the ALU, there is 
 no reset, that's why the register reset is always 0.
 
@@ -278,13 +281,13 @@ The results of the simulations are shown in Figures \ref{fig:sim/alu_0} to \ref{
 
 On the Cyclone V, all memory definitions are done through the same interface: the altsyncrams. 
 Whether it is for RAM, ROM, one port, two ports, two real ports (independent clocks), ... this 
-module will be used. Also, both MLAB and M10K are represented by this Verilog module. 
-Obviously, for all these different functions, the module must be configured. This will be done on 
+module is used. Also, both MLAB and M10K are represented by this Verilog module. 
+Obviously, for all these different functions, the module must be configured. This is done on 
 the one hand by a parameterization (for example to specify the size of the memory, the size of the 
 words, the choice of the type MLAB or M10K, the number of ports, of clocks, the inputs / outputs 
 which are registered, if there is a clock enable or not, ...) and on the other hand by the inputs 
-and outputs which are used or not (for example for the ROM all the ports linked to the writing will 
-not be used and the write enable will be put at the ground, in the low state). 
+and outputs which are used or not (for example for the ROM all the ports linked to the writing is not 
+used and the write enable is put at the ground, in the low state). 
 
 \begin{figure}[H]
     \centering
@@ -294,13 +297,13 @@ not be used and the write enable will be put at the ground, in the low state).
 \end{figure}
 
 Fortunately for the user, all this can be done through a graphical interface: with the Megawizard, 
-seen earlier in this report. This tool will therefore be used intensively for the generation of 
-different memories, which will be the subject of the following sections.
+seen earlier in this report. This tool is therefore used intensively for the generation of 
+different memories, which is the subject of the following sections.
 
 \subsection{Instruction memory}
 
 The purpose of the instruction memory is, as its name indicates, to contain instructions. These, as 
-will be detailed later, are coded on 32 bits. It will thus be necessary to have words of 32bits. The 
+detailed later, are coded on 32 bits. It is thus necessary to have words of 32bits. The 
 access to the memory only needs to be done in read mode, to read the instructions, so it would be tempting 
 to use a ROM. However, it is also necessary to have a write access in order to be able to modify the 
 program dynamically, without having to pass by a recompilation and reprogramming of the FPGA. 
@@ -326,10 +329,10 @@ are shown in Figure \ref{fig:components/im}.
     \label{fig:components/im}
 \end{figure}
 
-In fact, a bit named alive allows the memory to choose between two buses, one that will be used for 
-accesses from outside the CPU (from the Memory Access Unit, this will be discussed in another 
-section) and one for access from the CPU. There is therefore a multiplexer on each input which will 
-choose one of the two buses according to the value of alive. These signals are then redirected to 
+In fact, a bit named alive allows the memory to choose between two buses, one that is used for 
+accesses from outside the CPU (from the Memory Access Unit, this is discussed in another 
+section) and one for access from the CPU. There is therefore a multiplexer on each input which
+chooses one of the two buses according to the value of alive. These signals are then redirected to 
 the ram\_32768 to access the memory.
 
 \begin{figure}[H]
@@ -346,7 +349,7 @@ The data memory is used to store data from the CPU, it corresponds to the main m
 For this memory, everything happens exactly the same as for the instruction memory. The only 
 thing that changes is the size of the internal RAM. Indeed, this one is 16384 words of 32bits. This 
 value has been chosen to be twice as small as the instruction memory and to fit both together in 
-the FPGA (in addition to the other memories that will be seen later). The interface of this module
+the FPGA (in addition to the other memories that is seen later). The interface of this module
 is displayed in Figure \ref{fig:components/dm} and its internal circuits in Figure \ref{fig:components/dm_in}.
 
 \begin{figure}[H]
@@ -367,7 +370,7 @@ is displayed in Figure \ref{fig:components/dm} and its internal circuits in Figu
 
 The purpose of the register file is to give access to 32 registers to the CPU. Two reads and one 
 write operations must be able to be executed simultaneously by this module. A single register is not 
-accessible in read mode. This is register 31. A read to this register will always results in a 0
+accessible in read mode. This is register 31. A read to this register always results in a 0
 value writen on the data\_read output.
 
 In the register file, two memories of 32 words of 32 bits are used, this memory then represents 
@@ -392,7 +395,7 @@ is then totally controlled by the cpu\_wren signal. Finally, the alive signal al
 data memories, to make the register file listen to the CPU or MAU buses. The different ports of the register file 
 are shown in Figure \ref{fig:components/rf}.
 
-For access from the MAU, the register file exposes only one port which will be used either for 
+For access from the MAU, the register file exposes only one port which is used either for 
 reading or writing (depending on the state of mau\_wren). That is why the mau bus only hava one 
 address signal, a read signal and a write signal. When writing, the value is stored on 
 both memories, while reading only operates on one memory.
@@ -424,7 +427,7 @@ The control logic is the core element of the cpu. Its purpose is to convert the 
 instruction into a set of control signals that adequately configure the different modules of 
 the system so that the instruction executes properly. The control logic used in this work is simply a 
 ROM (thus an Altsyncram configured in read-only mode) whose address is the opcode. The read value 
-contains all control bits. As will be seen in the following section, the opcodes of the Beta 
+contains all control bits. As seen in the following section, the opcodes of the Beta 
 machine are represented on 6 bits. The addressing of the control logic is therefore done on 6 bits. 
 The words contained in the memory are represented on 12 bits.
 
@@ -446,9 +449,9 @@ module is given, in Figure \ref{fig:components/cl}.
 \subsection{Instructions formats}
 
 Two instruction formats are used in the instruction set, the first one is used for all instructions 
-requiring two operands ($R_a$ and $R_b$ in Figure \ref{fig:instructions/format}) which will be for example 
+requiring two operands ($R_a$ and $R_b$ in Figure \ref{fig:instructions/format}) which is for example 
 the case for simple arithmetic instructions. The second format is used for all instructions 
-requiring a single operand and a constant. This will be the case for example for conditional jump 
+requiring a single operand and a constant. This is the case for example for conditional jump 
 operations. As can be seen in Figure \ref{fig:instructions/format}, the $R_x$ contain register 
 addresses. As they are on 5 bits and no bank change operation exists, 32 registers are addressable. 
 $R_c$ stores the result of the instruction when a result exists. It should be noted that the 
@@ -494,8 +497,8 @@ different instructions listed in Table \ref{tab:instruction/alu} are supported.
 
 All these instructions simply perform the operation associated with them on the operands $R_a$ and 
 $R_b$ in the normal case and on the operands $R_a$ and the constant in the case of instructions 
-with constants. $R_a$ will always be used as the first operand. For example, the instruction given 
-in Figure \ref{fig:instructions/subc} will result in $[R_{10}] = [R_{14}] - 17$. The notation 
+with constants. $R_a$ is always used as the first operand. For example, the instruction given 
+in Figure \ref{fig:instructions/subc} results in $[R_{10}] = [R_{14}] - 17$. The notation 
 $[R_x]$ means the content of register $R_x$.
 
 \begin{figure}[H]
@@ -505,14 +508,14 @@ $[R_x]$ means the content of register $R_x$.
     \label{fig:instructions/subc}
 \end{figure}
 
-Concerning the comparison operations, they will simply put a $0$ in $R_c$ when the comparison is 
+Concerning the comparison operations, they are simply put a $0$ in $R_c$ when the comparison is 
 false, a $1$ otherwise.
 
 \subsubsection*{Program counter instructions}
 
 The purpose of these instructions is to modify the value of the program counter conditionally or 
 not. The different instructions are listed in Table \ref{tab:instruction/pc}. The values of 
-column Next PC will be writen to PC and the address of the next instruction before the jump is
+column Next PC is writen to PC and the address of the next instruction before the jump is
 stored in Rc. Note that [Ra] should be byte aligned for JMP but the constant should be 32bits 
 aligned for BEQ and BNE (as they already multiply the constant by 4).
 
