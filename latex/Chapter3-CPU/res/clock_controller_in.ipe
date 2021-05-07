@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210507011339" modified="D:20210507011339"/>
+<info created="D:20210506203347" modified="D:20210506203440"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,43 +312,107 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<text layer="alpha" matrix="1 0 0 1 31.6909 -23.5652" transformations="translations" pos="194.694 643.718" stroke="black" type="label" width="30.233" height="9.803" depth="0" valign="baseline" size="Large">CPU</text>
-<path stroke="black">
-78.5643 779.4 m
-78.5643 470.709 l
-404.438 470.709 l
-404.438 779.4 l
+<path layer="alpha" matrix="1 0 0 1 -68.3318 302.863" stroke="black">
+328 424 m
+328 364 l
+368 364 l
+368 424 l
 h
 </path>
-<group matrix="1 0 0 1 -0.958603 -1.04087">
-<group matrix="1 0 0 1 5.33248 0">
-<text matrix="1 0 0 1 199.014 42.6599" transformations="translations" pos="112.557 714.35" stroke="black" type="label" width="82.031" height="6.918" depth="0" valign="baseline">mau\_address\_im.32</text>
-<text matrix="1 0 0 1 192.449 37.2043" transformations="translations" pos="109.557 695.35" stroke="black" type="label" width="91.596" height="6.918" depth="0" valign="baseline">mau\_read\_data\_im.32</text>
-<text matrix="1 0 0 1 191.128 37.7486" transformations="translations" pos="107.557 670.35" stroke="black" type="label" width="94.917" height="6.918" depth="0" valign="baseline">mau\_write\_data\_im.32</text>
-<text matrix="1 0 0 1 209.175 44.557" transformations="translations" pos="118.557 639.35" stroke="black" type="label" width="65.87" height="6.654" depth="0" valign="baseline">mau\_wren\_im.1</text>
-<text matrix="1 0 0 1 196.246 -54.8981" transformations="translations" pos="112.557 714.35" stroke="black" type="label" width="84.799" height="6.918" depth="0" valign="baseline">mau\_address\_dm.32</text>
-<text matrix="1 0 0 1 189.682 -60.3537" transformations="translations" pos="109.557 695.35" stroke="black" type="label" width="94.363" height="6.918" depth="0" valign="baseline">mau\_read\_data\_dm.32</text>
-<text matrix="1 0 0 1 188.361 -59.8094" transformations="translations" pos="107.557 670.35" stroke="black" type="label" width="97.684" height="6.918" depth="0" valign="baseline">mau\_write\_data\_dm.32</text>
-<text matrix="1 0 0 1 206.408 -53.265" transformations="translations" pos="118.557 639.35" stroke="black" type="label" width="68.637" height="6.918" depth="0" valign="baseline">mau\_wren\_dm.1</text>
-<text matrix="1 0 0 1 203.137 -152.721" transformations="translations" pos="112.557 714.35" stroke="black" type="label" width="77.908" height="6.918" depth="0" valign="baseline">mau\_address\_rf.32</text>
-<text matrix="1 0 0 1 196.573 -158.176" transformations="translations" pos="109.557 695.35" stroke="black" type="label" width="87.472" height="6.918" depth="0" valign="baseline">mau\_read\_data\_rf.32</text>
-<text matrix="1 0 0 1 195.252 -157.632" transformations="translations" pos="107.557 670.35" stroke="black" type="label" width="90.793" height="6.918" depth="0" valign="baseline">mau\_write\_data\_rf.32</text>
-<text matrix="1 0 0 1 213.299 -151.087" transformations="translations" pos="118.557 639.35" stroke="black" type="label" width="61.746" height="6.918" depth="0" valign="baseline">mau\_wren\_rf.1</text>
+<text matrix="1 0 0 1 -70.1668 309.936" transformations="translations" pos="340 384" stroke="black" type="label" width="19.67" height="8.174" depth="2.32" valign="baseline" size="large">Reg</text>
+<path matrix="1 0 0 1 -68.3318 310.863" stroke="black" fill="darkgray">
+356 356 m
+360 360 l
+364 356 l
+</path>
+<text matrix="1 0 0 1 -77.429 298.178" transformations="translations" pos="362.871 347.966" stroke="black" type="label" width="12.453" height="6.918" depth="0" valign="baseline">clk</text>
+<text matrix="1 0 0 1 -68.2063 305.459" transformations="translations" pos="332 404" stroke="black" type="label" width="7.61" height="6.808" depth="0" valign="baseline">D</text>
+<text matrix="1 0 0 1 -64.2063 305.459" transformations="translations" pos="352 404" stroke="black" type="label" width="7.749" height="6.815" depth="1.93" valign="baseline">Q</text>
+<text matrix="1 0 0 1 -68.2063 349.459" transformations="translations" pos="332 368" stroke="black" type="label" width="14.252" height="6.808" depth="0" valign="baseline">EN</text>
+<text matrix="1 0 0 1 -68.2063 305.459" transformations="translations" pos="332 364" stroke="black" type="label" width="20.064" height="6.808" depth="0" valign="baseline">RST</text>
+<path matrix="-0.303025 0 0 2.04368 395.52 -60.8209" stroke="black" arrow="normal/normal">
+342.294 349.228 m
+342.294 355.946 l
+</path>
+<path matrix="1 0 0 1 -74.5366 62.6341" stroke="0" arrow="normal/normal">
+374.199 650.424 m
+396.603 650.424 l
+</path>
+<text matrix="1 0 0 1 -8.65218 -5.19131" transformations="translations" pos="332.967 715.569" stroke="black" type="label" width="54.009" height="6.926" depth="1.93" valign="baseline">clk\_sequence</text>
+<path stroke="black">
+243.374 734.093 m
+257.513 734.093 l
+</path>
+<path stroke="black">
+250.239 734.196 m
+250.239 720.774 l
+259.46 720.774 l
+</path>
+<path matrix="1 0 0 1 11.345 323.194" stroke="black">
+261.88 343.471 m
+261.88 335.512 l
+</path>
+<group matrix="1 0 0 1 10.5105 321.895">
+<path matrix="1 0 0 1 -0.349667 0" stroke="black">
+259.651 339.909 m
+266.478 339.909 l
+</path>
+<path matrix="1 0 0 1 -0.19981 0" stroke="black">
+260.617 338.876 m
+265.212 338.876 l
+</path>
+<path matrix="1 0 0 1 -0.116556 0.166508" stroke="black">
+261.516 337.677 m
+264.147 337.677 l
+</path>
+<path stroke="black">
+262.348 336.812 m
+263.081 336.812 l
+</path>
 </group>
-<group matrix="1 0 0 1 -6.51748 -70.1007">
-<text matrix="1 0 0 1 -197.894 -81.1723" transformations="translations" pos="290.397 697.008" stroke="black" type="label" width="70.613" height="6.926" depth="1.93" valign="baseline">exported\_wren.1</text>
-<text matrix="1 0 0 1 -196.709 -71.3" transformations="translations" pos="289.212 667.975" stroke="black" type="label" width="73.906" height="6.926" depth="1.93" valign="baseline">exported\_data.32</text>
-<text matrix="1 0 0 1 -190.784 -70.3151" transformations="translations" pos="283.287 647.83" stroke="black" type="label" width="86.775" height="6.926" depth="1.93" valign="baseline">exported\_address.32</text>
-<text matrix="1 0 0 1 -191.377 -67.5448" transformations="translations" pos="283.88 625.908" stroke="black" type="label" width="43.437" height="6.918" depth="0" valign="baseline">io\_data.32</text>
+<group matrix="2.74658 0 0 -2.80635 -702.425 1842.27">
+<path matrix="0 -0.11398 0.0777052 0 292.144 442.268" stroke="0" fill="white" pen="heavier">
+191.62 510.692 m
+257.048 640.008 l
+448.713 640.008 l
+511.832 510.692 l
+h
+</path>
+<path matrix="1 0 0 1 100.466 0" stroke="black" fill="black">
+0.528099 0 0 0.528099 232.719 415.21 e
+</path>
 </group>
-<group matrix="1 0 0 1 -6.51748 8.65987">
-<text matrix="1 0 0 1 -19.0546 0" transformations="translations" pos="111.557 748.35" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
-<text matrix="1 0 0 1 -193.747 26.0699" transformations="translations" pos="286.25 708.265" stroke="black" type="label" width="61.757" height="6.926" depth="1.93" valign="baseline">clk\_sequence.7</text>
+<text matrix="1 0 0 1 12.8919 12.8919" transformations="translations" pos="135.265 647.066" stroke="black" type="label" width="45.385" height="6.918" depth="0" valign="baseline">0b0000001</text>
+<path stroke="black">
+169.77 669.437 m
+169.77 682.329 l
+208.825 682.329 l
+</path>
+<path matrix="1.03756 0 8.17149 25.8191 -5839.05 -17705.24" stroke="black">
+259.563 713.371 m
+237.082 713.371 l
+</path>
+<text matrix="1 0 0 1 12.8056 32.8003" transformations="translations" pos="199.812 605.854" stroke="black" type="label" width="19.925" height="6.918" depth="0" valign="baseline">alive</text>
+<path stroke="black" arrow="normal/normal">
+222.053 647.192 m
+222.053 672.129 l
+</path>
+<path matrix="1 0 0 1 0 7.68452" stroke="black">
+12.5586 0 0 12.5586 107.652 736.819 e
+</path>
+<group matrix="1 0 0 1 -8.12767 -0.59198">
+<text transformations="translations" pos="108.031 739.094" stroke="black" type="label" width="15.497" height="5.37" depth="0.39" valign="baseline">$&lt;&lt;$</text>
+<text matrix="1 0 0 1 3.01323 -9.66036" transformations="translations" pos="106.388 755.019" stroke="black" type="label" width="12.758" height="6.128" depth="0" valign="baseline">rot</text>
 </group>
-<group matrix="1 0 0 1 -6.51748 -45.0427">
-<text matrix="1 0 0 1 -191.969 -72.8773" transformations="translations" pos="284.472 747.37" stroke="black" type="label" width="27.674" height="6.918" depth="0" valign="baseline">alive.1</text>
-<text matrix="1 0 0 1 -202.634 -72.8773" transformations="translations" pos="295.137 733.743" stroke="black" type="label" width="24.907" height="6.918" depth="0" valign="baseline">halt.1</text>
-</group>
-</group>
+<path stroke="black">
+208.727 744.406 m
+120.292 744.406 l
+</path>
+<path matrix="0.992277 0 0 1.00209 2.37007 -1.3085" stroke="black">
+306.899 713.017 m
+306.899 624.812 l
+106.359 624.812 l
+106.359 731.524 l
+</path>
 </page>
 </ipe>

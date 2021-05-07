@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210507011339" modified="D:20210507011339"/>
+<info created="D:20210506224644" modified="D:20210506224644"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,43 +312,42 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<text layer="alpha" matrix="1 0 0 1 31.6909 -23.5652" transformations="translations" pos="194.694 643.718" stroke="black" type="label" width="30.233" height="9.803" depth="0" valign="baseline" size="Large">CPU</text>
-<path stroke="black">
-78.5643 779.4 m
-78.5643 470.709 l
-404.438 470.709 l
-404.438 779.4 l
-h
+<path layer="alpha" matrix="1 0 0 1 0 -0.190045" stroke="black" arrow="normal/normal">
+109.24 692.563 m
+148.552 692.563 l
 </path>
-<group matrix="1 0 0 1 -0.958603 -1.04087">
-<group matrix="1 0 0 1 5.33248 0">
-<text matrix="1 0 0 1 199.014 42.6599" transformations="translations" pos="112.557 714.35" stroke="black" type="label" width="82.031" height="6.918" depth="0" valign="baseline">mau\_address\_im.32</text>
-<text matrix="1 0 0 1 192.449 37.2043" transformations="translations" pos="109.557 695.35" stroke="black" type="label" width="91.596" height="6.918" depth="0" valign="baseline">mau\_read\_data\_im.32</text>
-<text matrix="1 0 0 1 191.128 37.7486" transformations="translations" pos="107.557 670.35" stroke="black" type="label" width="94.917" height="6.918" depth="0" valign="baseline">mau\_write\_data\_im.32</text>
-<text matrix="1 0 0 1 209.175 44.557" transformations="translations" pos="118.557 639.35" stroke="black" type="label" width="65.87" height="6.654" depth="0" valign="baseline">mau\_wren\_im.1</text>
-<text matrix="1 0 0 1 196.246 -54.8981" transformations="translations" pos="112.557 714.35" stroke="black" type="label" width="84.799" height="6.918" depth="0" valign="baseline">mau\_address\_dm.32</text>
-<text matrix="1 0 0 1 189.682 -60.3537" transformations="translations" pos="109.557 695.35" stroke="black" type="label" width="94.363" height="6.918" depth="0" valign="baseline">mau\_read\_data\_dm.32</text>
-<text matrix="1 0 0 1 188.361 -59.8094" transformations="translations" pos="107.557 670.35" stroke="black" type="label" width="97.684" height="6.918" depth="0" valign="baseline">mau\_write\_data\_dm.32</text>
-<text matrix="1 0 0 1 206.408 -53.265" transformations="translations" pos="118.557 639.35" stroke="black" type="label" width="68.637" height="6.918" depth="0" valign="baseline">mau\_wren\_dm.1</text>
-<text matrix="1 0 0 1 203.137 -152.721" transformations="translations" pos="112.557 714.35" stroke="black" type="label" width="77.908" height="6.918" depth="0" valign="baseline">mau\_address\_rf.32</text>
-<text matrix="1 0 0 1 196.573 -158.176" transformations="translations" pos="109.557 695.35" stroke="black" type="label" width="87.472" height="6.918" depth="0" valign="baseline">mau\_read\_data\_rf.32</text>
-<text matrix="1 0 0 1 195.252 -157.632" transformations="translations" pos="107.557 670.35" stroke="black" type="label" width="90.793" height="6.918" depth="0" valign="baseline">mau\_write\_data\_rf.32</text>
-<text matrix="1 0 0 1 213.299 -151.087" transformations="translations" pos="118.557 639.35" stroke="black" type="label" width="61.746" height="6.918" depth="0" valign="baseline">mau\_wren\_rf.1</text>
+<path matrix="1 0 0 1 0 -0.795224" stroke="black" arrow="normal/normal">
+208.914 693.168 m
+248.018 693.168 l
+</path>
+<path matrix="1 0 0 1 0 -0.139783" stroke="black" arrow="normal/normal">
+334.201 692.512 m
+373.107 692.512 l
+</path>
+<group matrix="1 0 0 1 3.54294 0.0994932">
+<text matrix="1 0 0 1 250.336 -0" transformations="translations" pos="48 640" stroke="black" type="label" width="60.772" height="6.815" depth="1.93" valign="baseline">Data Memory</text>
+<text matrix="1 0 0 1 8.3214 -16.049" transformations="translations" pos="160 656" stroke="black" type="label" width="88.668" height="7.473" depth="2.49" valign="baseline">Register File (write)</text>
+<text matrix="1 0 0 1 -237.35 -0" transformations="translations" pos="288 640" stroke="black" type="label" width="76.325" height="6.815" depth="1.93" valign="baseline">Program Counter</text>
 </group>
-<group matrix="1 0 0 1 -6.51748 -70.1007">
-<text matrix="1 0 0 1 -197.894 -81.1723" transformations="translations" pos="290.397 697.008" stroke="black" type="label" width="70.613" height="6.926" depth="1.93" valign="baseline">exported\_wren.1</text>
-<text matrix="1 0 0 1 -196.709 -71.3" transformations="translations" pos="289.212 667.975" stroke="black" type="label" width="73.906" height="6.926" depth="1.93" valign="baseline">exported\_data.32</text>
-<text matrix="1 0 0 1 -190.784 -70.3151" transformations="translations" pos="283.287 647.83" stroke="black" type="label" width="86.775" height="6.926" depth="1.93" valign="baseline">exported\_address.32</text>
-<text matrix="1 0 0 1 -191.377 -67.5448" transformations="translations" pos="283.88 625.908" stroke="black" type="label" width="43.437" height="6.918" depth="0" valign="baseline">io\_data.32</text>
-</group>
-<group matrix="1 0 0 1 -6.51748 8.65987">
-<text matrix="1 0 0 1 -19.0546 0" transformations="translations" pos="111.557 748.35" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
-<text matrix="1 0 0 1 -193.747 26.0699" transformations="translations" pos="286.25 708.265" stroke="black" type="label" width="61.757" height="6.926" depth="1.93" valign="baseline">clk\_sequence.7</text>
-</group>
-<group matrix="1 0 0 1 -6.51748 -45.0427">
-<text matrix="1 0 0 1 -191.969 -72.8773" transformations="translations" pos="284.472 747.37" stroke="black" type="label" width="27.674" height="6.918" depth="0" valign="baseline">alive.1</text>
-<text matrix="1 0 0 1 -202.634 -72.8773" transformations="translations" pos="295.137 733.743" stroke="black" type="label" width="24.907" height="6.918" depth="0" valign="baseline">halt.1</text>
-</group>
-</group>
+<text matrix="1 0 0 1 -26.1637 1.93" transformations="translations" pos="48 688" stroke="black" type="label" width="87.284" height="6.815" depth="1.93" valign="baseline">Instruction Memory</text>
+<text matrix="1 0 0 1 -10.9783 1.8745" transformations="translations" pos="160 688" stroke="black" type="label" width="59.665" height="6.926" depth="1.93" valign="baseline">Control Logic</text>
+<text matrix="1 0 0 1 -7.412 1.881" transformations="translations" pos="256 688" stroke="black" type="label" width="85.347" height="7.473" depth="2.49" valign="baseline">Register File (read)</text>
+<text matrix="1 0 0 1 -26.1637 0.9685" transformations="translations" pos="400 688" stroke="black" type="label" width="21.171" height="6.808" depth="0" valign="baseline">ALU</text>
+<path stroke="black" arrow="normal/normal">
+384.026 689.037 m
+335.387 648.504 l
+</path>
+<path matrix="1 0 0 1 0 -0.32021" stroke="black" arrow="normal/normal">
+301.753 642.862 m
+260.766 642.862 l
+</path>
+<path stroke="black" arrow="normal/normal">
+171.748 642.542 m
+130.601 642.542 l
+</path>
+<path stroke="black" arrow="normal/normal">
+90.7408 647.301 m
+63.077 687.861 l
+</path>
 </page>
 </ipe>

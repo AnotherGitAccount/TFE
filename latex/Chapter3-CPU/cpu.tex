@@ -1,4 +1,4 @@
-\chapter{Beta machine and CPU design}
+\chapter{Beta machine, CPU design}
 
 As explained in the introduction, the goal of this work is to design a Beta machine. This machine is 
 in fact a minimalist CPU based on the Harvard architecture, i.e. data and intructions are stored in 
@@ -445,6 +445,41 @@ module is given, in Figure \ref{fig:components/cl}.
     \label{fig:components/cl}
 \end{figure}
 
+\subsection{Clock controller}
+
+As mentioned earlier, the different modules making up the machine are executed in sequence and not 
+in parallel. This allows to avoid pipelining in the machine and to simplify its realization. The 
+execution of an instruction thus takes seven clock cycles. Pipelining could be a very interesting 
+and useful subject for future works. 
+
+For this sequence to be realized, the modules must be executed in the right order. It is therefore 
+important to have a module that generates the sequence. This module is the clock\_controller. It
+generates a signal named clk\_sequence which contains the seven clk\_enable signals which are 
+necessary for the realization of the machine. The interface of the clock\_controller is given in
+Figure \ref{fig:components/cc}. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter3-CPU/res/clock_controller}
+    \caption{Clock controller}
+    \label{fig:components/cc}
+\end{figure}
+
+At the level of the realization, this module is very simple, it initializes a register to 
+$0b0000001$ when the alive signal is low, then when alive is high, it carries out a circular logical 
+left shift at each clock cycle. Thus, only one bit of the clk\_sequence signal is high at a time, 
+and thus only one module is activated. The internal circuits of this module are shown in Figure 
+\ref{fig:components/cc_in}. It is then sufficient to associate the generated signal with the clk\_en 
+signals of the different modules in the right order to obtain the expected execution sequence.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter3-CPU/res/clock_controller_in}
+    \caption{Clock controller internal circuit}
+    \label{fig:components/cc_in}
+\end{figure}
+
+
 \section{Instruction Set Architecture}
 \subsection{Instructions formats}
 
@@ -511,6 +546,27 @@ $[R_x]$ means the content of register $R_x$.
 Concerning the comparison operations, they are simply put a $0$ in $R_c$ when the comparison is 
 false, a $1$ otherwise.
 
+\subsubsection*{Memory instructions}
+
+Here, only two instructions are present. One is to load a value from the data memory and the other 
+is to store a value in it. The notation $<x>$ means at address $x$ in memory. Note that here $R_c$
+doesn't necessarily contains a result at the end of an operation and is used as an operand for ST.
+Also, addresses must be byte aligned here and offsets contained in Constant must also be byte
+aligned. Both instructions are detailed in Table \ref{tab:instruction/dm}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Name}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Operation}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Opcode}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Action}} \\ \hline
+    Load                                                        & LD                                                              & 0x18                                                         & {[}Rc{]} = $<${[}Ra{]} + Constant$>$      \\ \hline
+    Store                                                       & ST                                                              & 0x19                                                         & $<${[}Ra{]} + Constant$>$ = {[}Rc{]}        \\ \hline
+    \end{tabular}
+    \caption{Memory instructions}
+    \label{tab:instruction/dm}
+\end{table}
+
 \subsubsection*{Program counter instructions}
 
 The purpose of these instructions is to modify the value of the program counter conditionally or 
@@ -533,27 +589,6 @@ aligned for BEQ and BNE (as they already multiply the constant by 4).
     \label{tab:instruction/pc}
 \end{table}
 
-\subsubsection*{Memory instructions}
-
-Here, only two instructions are present. One is to load a value from the data memory and the other 
-is to store a value in it. The notation $<x>$ means at address $x$ in memory. Note that here $R_c$
-doesn't necessarily contains a result at the end of an operation and is used as an operand for ST.
-Also, addresses must be byte aligned here and offsets contained in Constant must also be byte
-aligned. Both instructions are detailed in Table \ref{tab:instruction/dm}.
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l|l|l|l|}
-    \hline
-    \rowcolor[HTML]{DAE8FC} 
-    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Name}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Operation}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Opcode}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Action}} \\ \hline
-    Load                                                        & LD                                                              & 0x18                                                         & {[}Rc{]} = $<${[}Ra{]} + Constant$>$      \\ \hline
-    Store                                                       & ST                                                              & 0x19                                                         & $<${[}Ra{]} + Constant$>$ = {[}Rc{]}        \\ \hline
-    \end{tabular}
-    \caption{Memory instructions}
-    \label{tab:instruction/dm}
-\end{table}
-
 \subsubsection*{Control instructions}
 
 Only one control instruction exists. This instruction bascally stops the machine and has no operand
@@ -573,9 +608,209 @@ or result. The instruction is detailed in Table \ref{tab:instruction/ctrl}
 
 \section{Beta machine}
 
+The final circuit of the beta machine is shown in Figure \ref{fig:beta/all}. The details of this 
+circuit and how the modules have been interconnected are explained in this section. 
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{Chapter3-CPU/res/beta_machine}
-    \caption{Beta machine}
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/beta_machine_in}
+    \caption{Beta machine internal circuit}
     \label{fig:beta/all}
+\end{figure}
+
+\subsection{Modules sequence}
+
+The first thing to establish is the execution sequence.  The first step is to fetch an instruction 
+from the memory instruction, so it is executed first. Then, the opcode of this instruction must be 
+decoded by the control logic. The control logic has the second position. The register file can now 
+be executed in read mode, in order to obtain the values of the registers useful in the current 
+instruction. This step could not have been carried out at the same time as the previous one because 
+a multiplexer controlled by a signal from the control logic is present at the cpu\_read\_address\_2 
+input of the Register File. This allows it to choose between Rb and Rc, Ra always being the address 
+of the first port. 
+
+The values of the registers are now present at the output of the Register file, the ALU is then 
+executed. In case the result of the ALU should be stored in Data memory, it is then executed. Also, when 
+executing the Data memory, it could provide data that must be stored in a register. That is why the 
+next step is the execution of the Register file in write mod. Finally, the Program counter is enabled 
+so that the PC is updated. The execution sequence is displayed in Figure \ref{fig:beta/sequence}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter3-CPU/res/sequence}
+    \caption{Execution sequence}
+    \label{fig:beta/sequence}
+\end{figure}
+
+\subsection{Instructions and control logic}
+
+In this section, the content of the control logic is defined. At the same time, the connections 
+between the different modules forming the Beta machine are also explained. The complete circuit of 
+the Beta machine is shown in Figure \ref{fig:beta/all}. The reader can refer to it to follow the 
+developments of this section.
+
+First of all, the output pc\_next of the program counter is connected to its input pc\_in to form a 
+counter by 4. The output pc\_out of the program counter can be connected to the CPU address of the 
+memory instruction in order to read the current instruction. The first six bits of this instruction 
+are connected to the address of the control logic so that the opcode is decoded. Of course, the clk 
+and clk\_enable signals of all modules are also set to follow the sequence described in the previous 
+section.
+
+\subsubsection*{Arithmetic and logic instructions}
+
+In order for an ALU instruction to perform correctly, two things are required. Firstly, that the 
+necessary registers are read from the register file and secondly that the ALU executes the operation. 
+To do this, the instruction coming from the instruction memory is split. The bits corresponding to 
+Ra go to the address of the first port and the bits corresponding to Rb to the second port. As the 
+results are stored in the register Rc, the bits corresponding to Rc in the instruction are 
+used as the write address for the register file. The two operand registers can then be loaded. 
+
+For the ALU, it needs on its first input the value read in the register Ra, this is why the reading 
+of the first port directly goes to the first input of the ALU. As for the second operand of the ALU, 
+it can either be the value of Rb or a constant. This is why a multiplexer is placed on the input 
+corresponding to the second operand. Finally, the result of the ALU is redirected to the register 
+file so that it can store this value in Rc.
+
+At the control logic level, three signals are necessary. The first is used to control the operation 
+of the ALU, it is alufn. The second is bsel and allows to choose if the second operand of the ALU 
+is the constant or the value read in register Rb. And lastly, the signal werf allows to 
+authorize the write operation in the register file. The current content of the control logic is 
+shown in Table \ref{tab:cl/alu}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|c|c|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Instruction}} & \textbf{alufn} & \textbf{werf} & \textbf{bsel} \\ \hline
+    ALU instruction                                                    & opcode         & 1             & 1             \\ \hline
+    ALU constant instruction                                           & opcode         & 1             & 0             \\ \hline
+    \end{tabular}
+    \caption{Control logic - ALU instructions}
+    \label{tab:cl/alu}
+\end{table}
+
+\subsubsection*{Memory instructions}
+
+As shown in Table \ref{tab:instruction/dm}, the load operation (LD) executes [Rc] = $<$[Ra] + constant$>$.
+To make this operation possible, a sum with constant must be performed and its result used as an 
+address for the data memory. This is why the output of the ALU is set as an address for the data 
+memory. Then the value read from the data memory must be used as a write value to the register file. 
+As a signal has already been connected to this register file entry, a multiplexer must be added 
+which chooses between the ALU output and the value read from the data memory.
+
+Concerning the control logic, a signal named wdsel is added to drive the newly added multiplexer.
+
+For the storage operation in data memory (ST), $<$[Ra] + constant$>$ = [Rc] must be executed.
+Everything remains the same as for the load at the ALU and the first port of the register file. 
+However, the value in Rc must be read in the register file and nothing allows it until now. As Ra is 
+already using the first port, Rc is put on the second port for reading. A multiplexer must be added 
+to it as Rb was already associated with this port. The output of the second port of the register 
+file must be connected to the cpu\_data\_write input of the data memory so that [Rc] is written 
+there. 
+
+Two new signals are added to the control logic. The first, wr, allows the data memory to be written 
+and the second, ra2sel, drives the multiplier which has just been added. The current content of the 
+logical control is displayed in Table \ref{tab:cl/dm}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|c|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Instruction}} & \textbf{alufn} & \textbf{werf} & \textbf{bsel} & \multicolumn{1}{l|}{\cellcolor[HTML]{DAE8FC}\textbf{wdsel}} & \multicolumn{1}{l|}{\cellcolor[HTML]{DAE8FC}\textbf{wr}} & \multicolumn{1}{l|}{\cellcolor[HTML]{DAE8FC}\textbf{ra2sel}} \\ \hline
+    ALU instruction                                                    & opcode         & 1             & 1             & 01                                                          & 0                                                        & 0                                                            \\ \hline
+    ALU constant instruction                                           & opcode         & 1             & 0             & 01                                                          & 0                                                        & x                                                            \\ \hline
+    Load instruction                                                   & add            & 1             & 0             & 10                                                          & 0                                                        & x                                                            \\ \hline
+    Store instruction                                                  & add            & 0             & 0             & xx                                                          & 1                                                        & 1                                                            \\ \hline
+    \end{tabular}
+    \caption{Control logic - ALU and memory instructions}
+    \label{tab:cl/dm}
+\end{table}
+
+\subsubsection*{Program counter instructions}
+
+For the JMP instruction, it is first necessary to save the value of PC + 4 in Rc. This means that 
+the output pc\_next of the program counter must be able to be used as a write value for the register 
+file. pc\_nect is therefore added to the multiplexer driven by wdsel. Then, the value of PC must be 
+set to the value given in Ra. The reading of the first port of the register file is therefore 
+connected to the data port of the register file. The register file must also be set to JMP mode.
+
+Only one signal must be added to the control logic, this is the pcsel which will allow the program 
+counter mode to be set.
+
+For the branch instructions, everything happens as for JMP except that the value of pc is different 
+in the control logic and that the constant contained in the instruction is connected to the offset 
+input of the program counter.. The final content of the control logic is given in Table \ref{tab:cl/all}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|c|c|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Instruction}} & \textbf{alufn} & \textbf{werf} & \textbf{bsel} & \textbf{wdsel} & \textbf{wr} & \textbf{ra2sel} & \textbf{pc} \\ \hline
+    ALU instruction                                                    & opcode         & 1             & 1             & 01             & 0           & 0               & 00          \\ \hline
+    ALU constant instruction                                           & opcode         & 1             & 0             & 01             & 0           & x               & 00          \\ \hline
+    Load instruction                                                   & add            & 1             & 0             & 10             & 0           & x               & 00          \\ \hline
+    Store instruction                                                  & add            & 0             & 0             & xx             & 1           & 1               & 00          \\ \hline
+    JMP instruction                                                    & xxxx           & 1             & x             & 00             & 0           & x               & 10          \\ \hline
+    BEQ instruction                                                    & xxxx           & 1             & x             & 00             & 0           & x               & 01          \\ \hline
+    BNE instruction                                                    & xxxx           & 1             & x             & 00             & 0           & x               & 11          \\ \hline
+    \end{tabular}
+    \caption{Control logic - ALU, memory and program counter instructions}
+    \label{tab:cl/all}
+\end{table}
+
+In the control logic, all values corresponding to don't care (x), are set to 0. 
+
+\subsubsection*{Control instructions}
+
+The last instruction to be handled is EXIT which is intended to generate a halt signal. As the EXIT 
+instruction corresponds to opcode 0x3F, it is sufficient to put all the bits of the opcode at the 
+input of an AND logic gate in order to have at the output the halt signal which will be high when 
+EXIT is called.
+
+\subsection{Other signals and ports}
+
+The Beta machine is only part of the system designed during this work. In fact, it consists of the 
+CPU of this system. It therefore has other ports which allow its connection with other super-modules. 
+
+First there are the four ports exported\_address, exported\_data, exported\_wren and io\_data,
+the first three allow to add listeners to the ST instruction. io\_data allows, with the 
+three signals mentioned above, to add the IO unit (IOU) as a listener to the LD instruction. In the 
+context of this work, the first two bits of the address are used to designate the listener which 
+is concerned by the ST and LD operations. For the LD part, it is therefore necessary to add a 
+multiplexer before putting the result of a data memory load on the multiplexer controlled by wdsel. 
+The purpose of this multiplexer is to select where the load comes from. io\_data therefore 
+constitutes an input of this multiplexer. The addressing table for the different units is described 
+in Table \ref{tab:beta/address}. 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Super unit}} & \textbf{Address} \\ \hline
+    CPU                                                               & 00               \\ \hline
+    IOU                                                               & 01               \\ \hline
+    GPU                                                               & 10               \\ \hline
+    \end{tabular}
+    \caption{Super unit addresses}
+    \label{tab:beta/address}
+\end{table}
+
+Then, there are the halt and alive signals. These two signals allow communication with the control 
+unit (CTRLU), their use is discussed later.
+
+Finally, there are all the signals starting with mau. These are connected to the Memory Access Unit 
+(MAU). Again, this unit is seen later in the report. 
+
+In the end, this gives the CPU a more complex interface than usual. This interface is that of 
+Figure \ref{fig:beta/interface}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter3-CPU/res/beta_machine}
+    \caption{Beta machine, the CPU}
+    \label{fig:beta/interface}
 \end{figure}

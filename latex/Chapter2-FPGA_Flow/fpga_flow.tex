@@ -2,7 +2,7 @@
 
 Now that the reader is aware of the internal structure of FPGAs, the design flow on these FPGAs can 
 be discussed. Indeed, a series of more or less compulsory steps are required to carry out the 
-realization of an embedded system on FPGA. This chapter is dedicated to the description of this 
+design of an embedded system on FPGA. This chapter is dedicated to the description of this 
 design flow and the tools used to carry it out. All the tools that are discussed in this chapter are
 part of a super-tool named Quartus. Quartus is the main software used for the development on Intel 
 FPGA. In fact, it is a kind of IDE for hardware development. It interfaces many tools together to
@@ -32,16 +32,19 @@ components of the board to find out how to set up all the IOs.
 
 \subsection{Design Entry}
 
-In this step, the user defines the different logical entities he needs to realize his circuits. 
+In this step, the user defines the different logical entities that are needed to build up the 
+desired circuit. A logical entity or a module is simply a sub-circuit with a given interface, an
+example is shown later in this section.
+
 All this is done in a so-called hardware description language. There is no need for special tools 
 here, a simple text editor will do. However, Quartus contains an editor that can be used for this 
-purpose. As far as languages are concerned, there is a multitude of choices, three frequently used 
-languages are VHDL, Verilog and System Verilog. VHDL is a highly typed high level language. While 
+purpose. Concerning the languages, there is a multitude of choices. But there are three frequently used 
+languages. These are VHDL, Verilog and System Verilog. VHDL is a high level language that is highly typed.
 Verilog and System Verilog are weakly typed and of lower level. For example, in VHDL it is 
-frequent to work directly on structures, complex types that can quickly hide the logic of an 
+frequent to work directly on data-structures, complex types that can quickly hide the logic of an 
 architecture. In Verilog and System Verilog, few types are provided and the hardware architect does 
 regularly work with registers and words in which the bits are assignable one by one. Since System 
-Verilog is a newer language and not always supported (correctly) by the tools, it was decided to use 
+Verilog is a newer language and not always (correctly) supported by the tools, it was decided to use 
 Verilog for this work. 
 
 It should be noted that these languages, although similar to software programming languages, do not 
@@ -51,11 +54,11 @@ which means that this I/O have no specific functionality, it just serves as a co
 as a reg, which means that this I/O is registered. A register is therefore placed at this I/O. 
 
 Inside the module, the developer then defines how these inputs and outputs are linked. Here again, 
-two possibilities are available to the user. Indeed, it is possible to define circuits that is 
+two possibilities are available to the user. Indeed, it is possible to define circuits that are 
 either combinatorial or sequential. For the combinatorial circuits, they can take any input 
 (registered or not) and transmit its outputs to non-registered outputs. It is important that the 
 output is non-registered because combinatorial circuits are asynchronous, the compiler would not 
-understand who is driving the register if it were put directly at the output of a combinatorial 
+understand who is driving the register if it was put directly at the output of a combinatorial 
 circuit. The other possibility is to describe sequential circuits. For these, a sensitivity list 
 must be chosen. That is to say, signals that have the effect of updating the circuit. In 
 general, only the clock is used, and the state of the circuit changes at each clock cycle. Note that
@@ -68,11 +71,13 @@ inputs. This makes it possible to put a combinatorial output on an output regist
 though it is impossible with the combinational circuit alone. 
 
 At the level of sequential circuits, another subtlety compared to software programming languages 
-should be noted. The assignment of outputs is done in a blocking way. This means that these 
+should be noted. The assignment of registers is done in a blocking way. This means that these 
 assignments are only effective at the next clock cycle (or next sensitivity signal update) and 
 that all these assignments are made at the same time in parallel. One should not forget that the 
 language describes circuits. And so all outputs appear at the same time once the rising or falling 
-edge of the clock is perceived.
+edge of the clock is perceived. For example assigning x to a and then a to b results in
+a[t] containing x[t - 1] and b[t] contains a[t - 1], which might not be obvious for a software
+developer.
 
 All this is a lot of information, so a small example of a module described in Verilog is given 
 below. This one simply describes an AND logic gate whose output is registered. The corresponding 
@@ -147,8 +152,12 @@ tool, the address space of each slave has to be specified. Qsys checks if the sp
 addresses are not outside the address space of the master to which they are connected. Figure \ref{fig:tools/qsys} 
 shows the interface to the HPS (ARM processor) and the connections to a slave.
 
-In addition to the signals useful for communication on the interconnect, others allow interraction 
-with the FPGA. These signals ared called exported signals. Once a system is described, it only
+In addition to the signals that are useful for communication on the interconnect, others allow interraction 
+with the FPGA. This means that these signals are inputs or outpus of the Verilog that is generated
+by QSys. They can thus be connected to other circuits on the FPGA side, contrary to the other
+signals shown in QSys. These signals ared called exported signals and the user can chose which one
+is exported, usualy the ones that are not direct links of the interconnect. Once a system is 
+described, it only
 remains to ask Qsys to generate the system. It then creates all the necessary Verilog files that 
 can be used as a single module later in the user's Verilog code. This module receives as inputs and 
 outputs all the signals that have been exported. To summarize, QSys is a kind of graphical 
@@ -165,19 +174,20 @@ In Figure \ref{fig:tools/qsys} different elements have been highlighted. The two
 represented in yellow, there is thus the HPS named hps\_0 which is an external representation of the 
 ARM processor and an Avalon to External Bus Bridge called im\_bus which makes it possible to make 
 the link between a bus of the interconnection and a bus defined by the user on the FPGA. This module 
-is discussed again later. In each module, some lines are in red. The red represents the 
+is discussed again later. In each module, some lines are in red. Red represents the 
 different slaves of the system. In the base and end columns, it can be seen that these slaves have 
 a defined address space. They all start at 0 because they are relative to the starting address of 
 the master. In green, in the im\_bus can be seen an exported signal, this one is accessible 
-from the FPGA. In fact, it is not a single signal but several describing a bus. Finally, a 
-master-slave connection is shown in blue.
+from the FPGA. In fact, most of the lines shown in QSys represent several signals describing entities,
+ bus, ... Finally, a master-slave connection is shown in blue.
 
 \subsection{Simulation}
 
 Once the different modules of the system have been defined, it can be interesting to simulate some 
 of them. This step is not necessarily mandatory but it can save a lot of time if the system is big. 
-Indeed, compiling a large system can quickly take several hours. The verifications are therefore 
-done before compilation by simulation and not afterwards by measurements on the working system. 
+Indeed, compiling a large system can quickly take several hours, or days. The verifications are 
+therefore done before compilation by simulation and not afterwards by measurements on the working 
+system. 
 Sometimes, the simulation is also more practical because it allows to easily generate precise 
 scenarios. To simulate, the tool used by quartus is Modelsim. In this tool, signals can be fixed 
 and tests can be performed. All signals are then displayed so that the user can verify the 
@@ -208,28 +218,25 @@ testing the signal propagation delays at different temperatures. If one of the t
 design is not validated and it has to be modified. For a timing to be validated, it is 
 necessary for example that all the stages of a circuit have finished their work in the time existing 
 between two rising edges of the clock. The software responsible for these verifications (TimeQuest) 
-does a lot of tests and measurements but these are not discussed in this work, this is outside the 
+does a lot of tests and measurements but these are not discussed in this work, this is outside of the 
 scope. What is important to remember is that the user sets the constraints, by imposing the clock 
-frequencies, etc.. The software then takes care of checking them in the worst possible 
+frequencies and so on and the software then takes care of checking them in the worst possible 
 scenarios. 
 
 \subsection{On-Chip Debug}
 
-The last step is to program the FPGA with the just compiled and validated design. This is done
+The last step is to program the FPGA with the just compiled and timing-validated design. This is done
 using the Quartus Programmer, it is a straight forward manipulatin and there is not much to say
-about it. Nevertheless, we still have to perform a last verification, the one in real situation. 
+about it. Nevertheless, one still has to perform a last verification, the one in real environment. 
 Most of the time, it is errors made during the Design Entry that are seen here. For 
 example, the user has connected components incorrectly, in a way that is not structurally 
 wrong but is functionally wrong. Other errors that are not totally due to the user can also occur 
-but only in specific cases (e.g. access to modules with different frequencies, ...).
+but are very specific (e.g. bugs due to operations on clock signals, ...).
 
 To help the user in this debugging task, a really handy tool is provided in the Intel suite. This 
 tool is the Signal Tap Logic Analyzer. Indeed, it allows to add a logic analyzer to the design 
-which is connected to signals of the design that the user chooses. If the design and the 
+which is connected to signals of the design that the user can choose. If the design and the 
 analyzer are present on the FPGA, it is possible to display the signals in real time in the tool 
-window when the board is connected to the computer. This tool also allows to realize more advanced 
-measurements such as with triggers which launches the recording of the data on a certain 
-duration, etc. In short, the perfect tool for debugging.
-
-At this point, all the steps of the design flow have now been completed, and the user can enjoy what 
-he has just implemented.
+window when the board is connected to the computer. This tool also allows to make more advanced 
+measurements such as triggered measurement which launches the recording of the data when a given
+trigger occures (when a signal goes high for example). In short, it is the perfect tool for debugging.
