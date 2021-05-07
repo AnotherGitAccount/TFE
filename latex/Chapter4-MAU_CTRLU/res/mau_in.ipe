@@ -1,0 +1,920 @@
+<?xml version="1.0"?>
+<!DOCTYPE ipe SYSTEM "ipe.dtd">
+<ipe version="70218" creator="Ipe 7.2.23">
+<info created="D:20210507235046" modified="D:20210507235046"/>
+<ipestyle name="basic">
+<symbol name="arrow/arc(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/farc(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/ptarc(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/fptarc(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="mark/circle(sx)" transformations="translations">
+<path fill="sym-stroke">
+0.6 0 0 0.6 0 0 e
+0.4 0 0 0.4 0 0 e
+</path>
+</symbol>
+<symbol name="mark/disk(sx)" transformations="translations">
+<path fill="sym-stroke">
+0.6 0 0 0.6 0 0 e
+</path>
+</symbol>
+<symbol name="mark/fdisk(sfx)" transformations="translations">
+<group>
+<path fill="sym-fill">
+0.5 0 0 0.5 0 0 e
+</path>
+<path fill="sym-stroke" fillrule="eofill">
+0.6 0 0 0.6 0 0 e
+0.4 0 0 0.4 0 0 e
+</path>
+</group>
+</symbol>
+<symbol name="mark/box(sx)" transformations="translations">
+<path fill="sym-stroke" fillrule="eofill">
+-0.6 -0.6 m
+0.6 -0.6 l
+0.6 0.6 l
+-0.6 0.6 l
+h
+-0.4 -0.4 m
+0.4 -0.4 l
+0.4 0.4 l
+-0.4 0.4 l
+h
+</path>
+</symbol>
+<symbol name="mark/square(sx)" transformations="translations">
+<path fill="sym-stroke">
+-0.6 -0.6 m
+0.6 -0.6 l
+0.6 0.6 l
+-0.6 0.6 l
+h
+</path>
+</symbol>
+<symbol name="mark/fsquare(sfx)" transformations="translations">
+<group>
+<path fill="sym-fill">
+-0.5 -0.5 m
+0.5 -0.5 l
+0.5 0.5 l
+-0.5 0.5 l
+h
+</path>
+<path fill="sym-stroke" fillrule="eofill">
+-0.6 -0.6 m
+0.6 -0.6 l
+0.6 0.6 l
+-0.6 0.6 l
+h
+-0.4 -0.4 m
+0.4 -0.4 l
+0.4 0.4 l
+-0.4 0.4 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="mark/cross(sx)" transformations="translations">
+<group>
+<path fill="sym-stroke">
+-0.43 -0.57 m
+0.57 0.43 l
+0.43 0.57 l
+-0.57 -0.43 l
+h
+</path>
+<path fill="sym-stroke">
+-0.43 0.57 m
+0.57 -0.43 l
+0.43 -0.57 l
+-0.57 0.43 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="arrow/fnormal(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/pointed(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/fpointed(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/linear(spx)">
+<path stroke="sym-stroke" pen="sym-pen">
+-1 0.333 m
+0 0 l
+-1 -0.333 l
+</path>
+</symbol>
+<symbol name="arrow/fdouble(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+-1 0 m
+-2 0.333 l
+-2 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/double(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+-1 0 m
+-2 0.333 l
+-2 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-normal(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0.5 0 m
+-0.5 0.333 l
+-0.5 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-fnormal(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0.5 0 m
+-0.5 0.333 l
+-0.5 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-pointed(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0.5 0 m
+-0.5 0.333 l
+-0.3 0 l
+-0.5 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-fpointed(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0.5 0 m
+-0.5 0.333 l
+-0.3 0 l
+-0.5 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-double(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+1 0 m
+0 0.333 l
+0 -0.333 l
+h
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/mid-fdouble(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+1 0 m
+0 0.333 l
+0 -0.333 l
+h
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<anglesize name="22.5 deg" value="22.5"/>
+<anglesize name="30 deg" value="30"/>
+<anglesize name="45 deg" value="45"/>
+<anglesize name="60 deg" value="60"/>
+<anglesize name="90 deg" value="90"/>
+<arrowsize name="large" value="10"/>
+<arrowsize name="small" value="5"/>
+<arrowsize name="tiny" value="3"/>
+<color name="blue" value="0 0 1"/>
+<color name="brown" value="0.647 0.165 0.165"/>
+<color name="darkblue" value="0 0 0.545"/>
+<color name="darkcyan" value="0 0.545 0.545"/>
+<color name="darkgray" value="0.663"/>
+<color name="darkgreen" value="0 0.392 0"/>
+<color name="darkmagenta" value="0.545 0 0.545"/>
+<color name="darkorange" value="1 0.549 0"/>
+<color name="darkred" value="0.545 0 0"/>
+<color name="gold" value="1 0.843 0"/>
+<color name="gray" value="0.745"/>
+<color name="green" value="0 1 0"/>
+<color name="lightblue" value="0.678 0.847 0.902"/>
+<color name="lightcyan" value="0.878 1 1"/>
+<color name="lightgray" value="0.827"/>
+<color name="lightgreen" value="0.565 0.933 0.565"/>
+<color name="lightyellow" value="1 1 0.878"/>
+<color name="navy" value="0 0 0.502"/>
+<color name="orange" value="1 0.647 0"/>
+<color name="pink" value="1 0.753 0.796"/>
+<color name="purple" value="0.627 0.125 0.941"/>
+<color name="red" value="1 0 0"/>
+<color name="seagreen" value="0.18 0.545 0.341"/>
+<color name="turquoise" value="0.251 0.878 0.816"/>
+<color name="violet" value="0.933 0.51 0.933"/>
+<color name="yellow" value="1 1 0"/>
+<dashstyle name="dash dot dotted" value="[4 2 1 2 1 2] 0"/>
+<dashstyle name="dash dotted" value="[4 2 1 2] 0"/>
+<dashstyle name="dashed" value="[4] 0"/>
+<dashstyle name="dotted" value="[1 3] 0"/>
+<gridsize name="10 pts (~3.5 mm)" value="10"/>
+<gridsize name="14 pts (~5 mm)" value="14"/>
+<gridsize name="16 pts (~6 mm)" value="16"/>
+<gridsize name="20 pts (~7 mm)" value="20"/>
+<gridsize name="28 pts (~10 mm)" value="28"/>
+<gridsize name="32 pts (~12 mm)" value="32"/>
+<gridsize name="4 pts" value="4"/>
+<gridsize name="56 pts (~20 mm)" value="56"/>
+<gridsize name="8 pts (~3 mm)" value="8"/>
+<opacity name="10%" value="0.1"/>
+<opacity name="30%" value="0.3"/>
+<opacity name="50%" value="0.5"/>
+<opacity name="75%" value="0.75"/>
+<pen name="fat" value="1.2"/>
+<pen name="heavier" value="0.8"/>
+<pen name="ultrafat" value="2"/>
+<symbolsize name="large" value="5"/>
+<symbolsize name="small" value="2"/>
+<symbolsize name="tiny" value="1.1"/>
+<textsize name="Huge" value="\Huge"/>
+<textsize name="LARGE" value="\LARGE"/>
+<textsize name="Large" value="\Large"/>
+<textsize name="footnote" value="\footnotesize"/>
+<textsize name="huge" value="\huge"/>
+<textsize name="large" value="\large"/>
+<textsize name="small" value="\small"/>
+<textsize name="tiny" value="\tiny"/>
+<textstyle name="center" begin="\begin{center}" end="\end{center}"/>
+<textstyle name="item" begin="\begin{itemize}\item{}" end="\end{itemize}"/>
+<textstyle name="itemize" begin="\begin{itemize}" end="\end{itemize}"/>
+<tiling name="falling" angle="-60" step="4" width="1"/>
+<tiling name="rising" angle="30" step="4" width="1"/>
+</ipestyle>
+<page>
+<layer name="alpha"/>
+<view layers="alpha" active="alpha"/>
+<group layer="alpha" matrix="1 0 0 1 84.4326 -175.894">
+<path matrix="1.24248 0 0 1 6.19664 106.427" stroke="black">
+43.9049 694.217 m
+43.9049 565.38 l
+300.174 565.38 l
+300.174 694.217 l
+h
+</path>
+<text matrix="1 0 0 1 20.0072 104.719" transformations="translations" pos="142.708 628" stroke="black" type="label" width="114.474" height="9.803" depth="2.79" valign="baseline" size="Large">Memory Access 32</text>
+<group matrix="1 0 0 1 12.1197 248.829">
+<group matrix="1 0 0 1 -11.7628 2.33042">
+<text matrix="1 0 0 1 17.3306 -18.9569" transformations="translations" pos="47.7078 557" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
+<text matrix="1 0 0 1 15.3306 -2.34716" transformations="translations" pos="49.7078 527" stroke="black" type="label" width="80.299" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge.1</text>
+<text matrix="1 0 0 1 17.7867 -5.22809" transformations="translations" pos="47.2517 514.561" stroke="black" type="label" width="38.262" height="6.926" depth="1.93" valign="baseline">bus\_irq.1</text>
+<text matrix="1 0 0 1 12.7699 1.35098" transformations="translations" pos="52.2685 492.669" stroke="black" type="label" width="63.556" height="6.918" depth="0" valign="baseline">bus\_address.16</text>
+<text matrix="1 0 0 1 8.66531 -1.54167" transformations="translations" pos="56.3731 482.18" stroke="black" type="label" width="72.595" height="6.918" depth="0" valign="baseline">bus\_bus\_enable.1</text>
+<text matrix="1 0 0 1 12.3139 -0.79377" transformations="translations" pos="52.7246 468.042" stroke="black" type="label" width="76.414" height="6.926" depth="1.93" valign="baseline">bus\_byte\_enable.4</text>
+<text matrix="1 0 0 1 10.0335 -1.05573" transformations="translations" pos="55.0049 452.991" stroke="black" type="label" width="37.432" height="6.918" depth="0" valign="baseline">bus\_rw.1</text>
+<text matrix="1 0 0 1 1.36821 -0.299831" transformations="translations" pos="63.6702 438.853" stroke="black" type="label" width="76.441" height="6.918" depth="0" valign="baseline">bus\_write\_data.32</text>
+<text transformations="translations" pos="65.0384 425.171" stroke="black" type="label" width="73.12" height="6.918" depth="0" valign="baseline">bus\_read\_data.32</text>
+</group>
+<group matrix="1 0 0 1 80.6415 -43.7934">
+<text matrix="1 0 0 1 -4.30321 0" transformations="translations" pos="241.081 550.59" stroke="black" type="label" width="44.97" height="6.918" depth="0" valign="baseline">address.32</text>
+<text matrix="1 0 0 1 -17.9728 -0.780173" transformations="translations" pos="245.186 536.452" stroke="black" type="label" width="54.535" height="6.918" depth="0" valign="baseline">read\_data.32</text>
+<text matrix="1 0 0 1 -21.2928 2.54428" transformations="translations" pos="245.186 518.209" stroke="black" type="label" width="57.855" height="6.918" depth="0" valign="baseline">write\_data.32</text>
+<text matrix="1 0 0 1 -7.20238 1.30003" transformations="translations" pos="248.834 504.527" stroke="black" type="label" width="40.116" height="6.926" depth="1.93" valign="baseline">byte\_en.4</text>
+<text transformations="translations" pos="252.939 489.477" stroke="black" type="label" width="28.809" height="6.42" depth="0" valign="baseline">wren.1</text>
+</group>
+</group>
+</group>
+<group matrix="1 0 0 1 84.4326 -320.464">
+<path matrix="1.24248 0 0 1 6.19664 106.427" stroke="black">
+43.9049 694.217 m
+43.9049 565.38 l
+300.174 565.38 l
+300.174 694.217 l
+h
+</path>
+<text matrix="1 0 0 1 20.0072 104.719" transformations="translations" pos="142.708 628" stroke="black" type="label" width="114.474" height="9.803" depth="2.79" valign="baseline" size="Large">Memory Access 32</text>
+<group matrix="1 0 0 1 12.1197 248.829">
+<group matrix="1 0 0 1 -11.7628 2.33042">
+<text matrix="1 0 0 1 17.3306 -18.9569" transformations="translations" pos="47.7078 557" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
+<text matrix="1 0 0 1 15.3306 -2.34716" transformations="translations" pos="49.7078 527" stroke="black" type="label" width="80.299" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge.1</text>
+<text matrix="1 0 0 1 17.7867 -5.22809" transformations="translations" pos="47.2517 514.561" stroke="black" type="label" width="38.262" height="6.926" depth="1.93" valign="baseline">bus\_irq.1</text>
+<text matrix="1 0 0 1 12.7699 1.35098" transformations="translations" pos="52.2685 492.669" stroke="black" type="label" width="63.556" height="6.918" depth="0" valign="baseline">bus\_address.16</text>
+<text matrix="1 0 0 1 8.66531 -1.54167" transformations="translations" pos="56.3731 482.18" stroke="black" type="label" width="72.595" height="6.918" depth="0" valign="baseline">bus\_bus\_enable.1</text>
+<text matrix="1 0 0 1 12.3139 -0.79377" transformations="translations" pos="52.7246 468.042" stroke="black" type="label" width="76.414" height="6.926" depth="1.93" valign="baseline">bus\_byte\_enable.4</text>
+<text matrix="1 0 0 1 10.0335 -1.05573" transformations="translations" pos="55.0049 452.991" stroke="black" type="label" width="37.432" height="6.918" depth="0" valign="baseline">bus\_rw.1</text>
+<text matrix="1 0 0 1 1.36821 -0.299831" transformations="translations" pos="63.6702 438.853" stroke="black" type="label" width="76.441" height="6.918" depth="0" valign="baseline">bus\_write\_data.32</text>
+<text transformations="translations" pos="65.0384 425.171" stroke="black" type="label" width="73.12" height="6.918" depth="0" valign="baseline">bus\_read\_data.32</text>
+</group>
+<group matrix="1 0 0 1 80.6415 -43.7934">
+<text matrix="1 0 0 1 -4.30321 0" transformations="translations" pos="241.081 550.59" stroke="black" type="label" width="44.97" height="6.918" depth="0" valign="baseline">address.32</text>
+<text matrix="1 0 0 1 -17.9728 -0.780173" transformations="translations" pos="245.186 536.452" stroke="black" type="label" width="54.535" height="6.918" depth="0" valign="baseline">read\_data.32</text>
+<text matrix="1 0 0 1 -21.2928 2.54428" transformations="translations" pos="245.186 518.209" stroke="black" type="label" width="57.855" height="6.918" depth="0" valign="baseline">write\_data.32</text>
+<text matrix="1 0 0 1 -7.20238 1.30003" transformations="translations" pos="248.834 504.527" stroke="black" type="label" width="40.116" height="6.926" depth="1.93" valign="baseline">byte\_en.4</text>
+<text transformations="translations" pos="252.939 489.477" stroke="black" type="label" width="28.809" height="6.42" depth="0" valign="baseline">wren.1</text>
+</group>
+</group>
+</group>
+<group matrix="1 0 0 1 84.4326 -465.035">
+<path matrix="1.24248 0 0 1 6.19664 106.427" stroke="black">
+43.9049 694.217 m
+43.9049 565.38 l
+300.174 565.38 l
+300.174 694.217 l
+h
+</path>
+<text matrix="1 0 0 1 20.0072 104.719" transformations="translations" pos="142.708 628" stroke="black" type="label" width="114.474" height="9.803" depth="2.79" valign="baseline" size="Large">Memory Access 32</text>
+<group matrix="1 0 0 1 12.1197 248.829">
+<group matrix="1 0 0 1 -11.7628 2.33042">
+<text matrix="1 0 0 1 17.3306 -18.9569" transformations="translations" pos="47.7078 557" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
+<text matrix="1 0 0 1 15.3306 -2.34716" transformations="translations" pos="49.7078 527" stroke="black" type="label" width="80.299" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge.1</text>
+<text matrix="1 0 0 1 17.7867 -5.22809" transformations="translations" pos="47.2517 514.561" stroke="black" type="label" width="38.262" height="6.926" depth="1.93" valign="baseline">bus\_irq.1</text>
+<text matrix="1 0 0 1 12.7699 1.35098" transformations="translations" pos="52.2685 492.669" stroke="black" type="label" width="63.556" height="6.918" depth="0" valign="baseline">bus\_address.16</text>
+<text matrix="1 0 0 1 8.66531 -1.54167" transformations="translations" pos="56.3731 482.18" stroke="black" type="label" width="72.595" height="6.918" depth="0" valign="baseline">bus\_bus\_enable.1</text>
+<text matrix="1 0 0 1 12.3139 -0.79377" transformations="translations" pos="52.7246 468.042" stroke="black" type="label" width="76.414" height="6.926" depth="1.93" valign="baseline">bus\_byte\_enable.4</text>
+<text matrix="1 0 0 1 10.0335 -1.05573" transformations="translations" pos="55.0049 452.991" stroke="black" type="label" width="37.432" height="6.918" depth="0" valign="baseline">bus\_rw.1</text>
+<text matrix="1 0 0 1 1.36821 -0.299831" transformations="translations" pos="63.6702 438.853" stroke="black" type="label" width="76.441" height="6.918" depth="0" valign="baseline">bus\_write\_data.32</text>
+<text transformations="translations" pos="65.0384 425.171" stroke="black" type="label" width="73.12" height="6.918" depth="0" valign="baseline">bus\_read\_data.32</text>
+</group>
+<group matrix="1 0 0 1 80.6415 -43.7934">
+<text matrix="1 0 0 1 -4.30321 0" transformations="translations" pos="241.081 550.59" stroke="black" type="label" width="44.97" height="6.918" depth="0" valign="baseline">address.32</text>
+<text matrix="1 0 0 1 -17.9728 -0.780173" transformations="translations" pos="245.186 536.452" stroke="black" type="label" width="54.535" height="6.918" depth="0" valign="baseline">read\_data.32</text>
+<text matrix="1 0 0 1 -21.2928 2.54428" transformations="translations" pos="245.186 518.209" stroke="black" type="label" width="57.855" height="6.918" depth="0" valign="baseline">write\_data.32</text>
+<text matrix="1 0 0 1 -7.20238 1.30003" transformations="translations" pos="248.834 504.527" stroke="black" type="label" width="40.116" height="6.926" depth="1.93" valign="baseline">byte\_en.4</text>
+<text transformations="translations" pos="252.939 489.477" stroke="black" type="label" width="28.809" height="6.42" depth="0" valign="baseline">wren.1</text>
+</group>
+</group>
+</group>
+<group matrix="1 0 0 1 9.11937 -577.745">
+<path matrix="1.24248 0 0 1 81.5099 74.566" stroke="black">
+43.9049 694.217 m
+43.9049 565.38 l
+300.174 565.38 l
+300.174 694.217 l
+h
+</path>
+<text matrix="1 0 0 1 91.8085 72.858" transformations="translations" pos="142.708 628" stroke="black" type="label" width="121.498" height="9.803" depth="2.79" valign="baseline" size="Large">Memory Access 128</text>
+<group matrix="1 0 0 1 -0.238458 0.000687">
+<text matrix="1 0 0 1 92.3357 200.341" transformations="translations" pos="47.7078 557" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
+<text matrix="1 0 0 1 90.3357 216.951" transformations="translations" pos="49.7078 527" stroke="black" type="label" width="80.299" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge.1</text>
+<text matrix="1 0 0 1 92.7918 214.07" transformations="translations" pos="47.2517 514.561" stroke="black" type="label" width="38.262" height="6.926" depth="1.93" valign="baseline">bus\_irq.1</text>
+<text matrix="1 0 0 1 87.775 220.649" transformations="translations" pos="52.2685 492.669" stroke="black" type="label" width="58.575" height="6.918" depth="0" valign="baseline">bus\_address.8</text>
+<text matrix="1 0 0 1 83.6704 217.756" transformations="translations" pos="56.3731 482.18" stroke="black" type="label" width="72.595" height="6.918" depth="0" valign="baseline">bus\_bus\_enable.1</text>
+<text matrix="1 0 0 1 87.319 218.504" transformations="translations" pos="52.7246 468.042" stroke="black" type="label" width="81.395" height="6.926" depth="1.93" valign="baseline">bus\_byte\_enable.16</text>
+<text matrix="1 0 0 1 85.0386 218.242" transformations="translations" pos="55.0049 452.991" stroke="black" type="label" width="37.432" height="6.918" depth="0" valign="baseline">bus\_rw.1</text>
+<text matrix="1 0 0 1 76.3733 218.998" transformations="translations" pos="63.6702 438.853" stroke="black" type="label" width="81.423" height="6.918" depth="0" valign="baseline">bus\_write\_data.128</text>
+<text matrix="1 0 0 1 75.0051 219.298" transformations="translations" pos="65.0384 425.171" stroke="black" type="label" width="78.102" height="6.918" depth="0" valign="baseline">bus\_read\_data.128</text>
+<group>
+<text matrix="1 0 0 1 169.894 180.872" transformations="translations" pos="241.081 550.59" stroke="black" type="label" width="39.989" height="6.918" depth="0" valign="baseline">address.8</text>
+<text matrix="1 0 0 1 146.262 180.092" transformations="translations" pos="245.186 536.452" stroke="black" type="label" width="59.516" height="6.918" depth="0" valign="baseline">read\_data.128</text>
+<text matrix="1 0 0 1 142.941 183.416" transformations="translations" pos="245.186 518.209" stroke="black" type="label" width="62.837" height="6.918" depth="0" valign="baseline">write\_data.128</text>
+<text matrix="1 0 0 1 157.032 182.172" transformations="translations" pos="248.834 504.527" stroke="black" type="label" width="45.098" height="6.926" depth="1.93" valign="baseline">byte\_en.16</text>
+<text matrix="1 0 0 1 169.216 180.872" transformations="translations" pos="252.939 489.477" stroke="black" type="label" width="28.809" height="6.42" depth="0" valign="baseline">wren.1</text>
+</group>
+</group>
+</group>
+<path matrix="1.24248 0 0 1 90.6293 75.1041" stroke="black">
+43.9049 694.217 m
+43.9049 565.38 l
+300.174 565.38 l
+300.174 694.217 l
+h
+</path>
+<text matrix="1 0 0 1 104.44 73.3961" transformations="translations" pos="142.708 628" stroke="black" type="label" width="114.474" height="9.803" depth="2.79" valign="baseline" size="Large">Memory Access 32</text>
+<group matrix="1 0 0 1 84.7895 219.837">
+<text matrix="1 0 0 1 17.3306 -18.9569" transformations="translations" pos="47.7078 557" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
+<text matrix="1 0 0 1 15.3306 -2.34716" transformations="translations" pos="49.7078 527" stroke="black" type="label" width="80.299" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge.1</text>
+<text matrix="1 0 0 1 17.7867 -5.22809" transformations="translations" pos="47.2517 514.561" stroke="black" type="label" width="38.262" height="6.926" depth="1.93" valign="baseline">bus\_irq.1</text>
+<text matrix="1 0 0 1 12.7699 1.35098" transformations="translations" pos="52.2685 492.669" stroke="black" type="label" width="63.556" height="6.918" depth="0" valign="baseline">bus\_address.16</text>
+<text matrix="1 0 0 1 8.66531 -1.54167" transformations="translations" pos="56.3731 482.18" stroke="black" type="label" width="72.595" height="6.918" depth="0" valign="baseline">bus\_bus\_enable.1</text>
+<text matrix="1 0 0 1 12.3139 -0.79377" transformations="translations" pos="52.7246 468.042" stroke="black" type="label" width="76.414" height="6.926" depth="1.93" valign="baseline">bus\_byte\_enable.4</text>
+<text matrix="1 0 0 1 10.0335 -1.05573" transformations="translations" pos="55.0049 452.991" stroke="black" type="label" width="37.432" height="6.918" depth="0" valign="baseline">bus\_rw.1</text>
+<text matrix="1 0 0 1 1.36821 -0.299831" transformations="translations" pos="63.6702 438.853" stroke="black" type="label" width="76.441" height="6.918" depth="0" valign="baseline">bus\_write\_data.32</text>
+<text transformations="translations" pos="65.0384 425.171" stroke="black" type="label" width="73.12" height="6.918" depth="0" valign="baseline">bus\_read\_data.32</text>
+</group>
+<group matrix="1 0 0 1 177.194 173.713">
+<text matrix="1 0 0 1 -4.30321 0" transformations="translations" pos="241.081 550.59" stroke="black" type="label" width="44.97" height="6.918" depth="0" valign="baseline">address.32</text>
+<text matrix="1 0 0 1 -17.9728 -0.780173" transformations="translations" pos="245.186 536.452" stroke="black" type="label" width="54.535" height="6.918" depth="0" valign="baseline">read\_data.32</text>
+<text matrix="1 0 0 1 -21.2928 2.54428" transformations="translations" pos="245.186 518.209" stroke="black" type="label" width="57.855" height="6.918" depth="0" valign="baseline">write\_data.32</text>
+<text matrix="1 0 0 1 -7.20238 1.30003" transformations="translations" pos="248.834 504.527" stroke="black" type="label" width="40.116" height="6.926" depth="1.93" valign="baseline">byte\_en.4</text>
+<text transformations="translations" pos="252.939 489.477" stroke="black" type="label" width="28.809" height="6.42" depth="0" valign="baseline">wren.1</text>
+</group>
+<text matrix="1 0 0 1 36.9388 200.356" transformations="translations" pos="47.7078 557" stroke="black" type="label" width="12.453" height="6.918" depth="0" valign="baseline">clk</text>
+<text matrix="1 0 0 1 -39.8142 216.966" transformations="translations" pos="49.7078 527" stroke="black" type="label" width="87.206" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge\_im</text>
+<text matrix="1 0 0 1 4.67793 214.085" transformations="translations" pos="47.2517 514.561" stroke="black" type="label" width="45.17" height="6.926" depth="1.93" valign="baseline">bus\_irq\_im</text>
+<text matrix="1 0 0 1 -20.6509 220.664" transformations="translations" pos="52.2685 492.669" stroke="black" type="label" width="65.482" height="6.918" depth="0" valign="baseline">bus\_address\_im</text>
+<text matrix="1 0 0 1 -38.7755 217.771" transformations="translations" pos="56.3731 482.18" stroke="black" type="label" width="79.502" height="6.918" depth="0" valign="baseline">bus\_bus\_enable\_im</text>
+<text matrix="1 0 0 1 -38.946 218.519" transformations="translations" pos="52.7246 468.042" stroke="black" type="label" width="83.321" height="6.926" depth="1.93" valign="baseline">bus\_byte\_enable\_im</text>
+<text matrix="1 0 0 1 -2.24427 218.257" transformations="translations" pos="55.0049 452.991" stroke="black" type="label" width="44.339" height="6.918" depth="0" valign="baseline">bus\_rw\_im</text>
+<text matrix="1 0 0 1 -44.9376 219.013" transformations="translations" pos="63.6702 438.853" stroke="black" type="label" width="78.367" height="6.918" depth="0" valign="baseline">bus\_write\_data\_im</text>
+<text matrix="1 0 0 1 -42.9858 219.313" transformations="translations" pos="65.0384 425.171" stroke="black" type="label" width="75.047" height="6.918" depth="0" valign="baseline">bus\_read\_data\_im</text>
+<text matrix="1 0 0 1 36.9388 56.1236" transformations="translations" pos="47.7078 557" stroke="black" type="label" width="12.453" height="6.918" depth="0" valign="baseline">clk</text>
+<text matrix="1 0 0 1 -42.5822 72.7336" transformations="translations" pos="49.7078 527" stroke="black" type="label" width="89.974" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge\_dm</text>
+<text matrix="1 0 0 1 1.91093 69.8526" transformations="translations" pos="47.2517 514.561" stroke="black" type="label" width="47.937" height="6.926" depth="1.93" valign="baseline">bus\_irq\_dm</text>
+<text matrix="1 0 0 1 -23.4189 76.4316" transformations="translations" pos="52.2685 492.669" stroke="black" type="label" width="68.25" height="6.918" depth="0" valign="baseline">bus\_address\_dm</text>
+<text matrix="1 0 0 1 -41.5425 73.5396" transformations="translations" pos="56.3731 482.18" stroke="black" type="label" width="82.269" height="6.918" depth="0" valign="baseline">bus\_bus\_enable\_dm</text>
+<text matrix="1 0 0 1 -41.713 74.2876" transformations="translations" pos="52.7246 468.042" stroke="black" type="label" width="86.088" height="6.926" depth="1.93" valign="baseline">bus\_byte\_enable\_dm</text>
+<text matrix="1 0 0 1 -5.01227 74.0256" transformations="translations" pos="55.0049 452.991" stroke="black" type="label" width="47.107" height="6.918" depth="0" valign="baseline">bus\_rw\_dm</text>
+<text matrix="1 0 0 1 -47.7056 74.7806" transformations="translations" pos="63.6702 438.853" stroke="black" type="label" width="81.135" height="6.918" depth="0" valign="baseline">bus\_write\_data\_dm</text>
+<text matrix="1 0 0 1 -45.7528 75.0806" transformations="translations" pos="65.0384 425.171" stroke="black" type="label" width="77.814" height="6.918" depth="0" valign="baseline">bus\_read\_data\_dm</text>
+<text matrix="1 0 0 1 36.9388 -86.7925" transformations="translations" pos="47.7078 557" stroke="black" type="label" width="12.453" height="6.918" depth="0" valign="baseline">clk</text>
+<text matrix="1 0 0 1 -35.6912 -70.1825" transformations="translations" pos="49.7078 527" stroke="black" type="label" width="83.083" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge\_rf</text>
+<text matrix="1 0 0 1 8.80193 -73.0635" transformations="translations" pos="47.2517 514.561" stroke="black" type="label" width="41.046" height="6.926" depth="1.93" valign="baseline">bus\_irq\_rf</text>
+<text matrix="1 0 0 1 -16.5279 -66.4845" transformations="translations" pos="52.2685 492.669" stroke="black" type="label" width="61.359" height="6.918" depth="0" valign="baseline">bus\_address\_rf</text>
+<text matrix="1 0 0 1 -34.6525 -69.3765" transformations="translations" pos="56.3731 482.18" stroke="black" type="label" width="75.379" height="6.918" depth="0" valign="baseline">bus\_bus\_enable\_rf</text>
+<text matrix="1 0 0 1 -34.823 -68.6285" transformations="translations" pos="52.7246 468.042" stroke="black" type="label" width="79.198" height="6.926" depth="1.93" valign="baseline">bus\_byte\_enable\_rf</text>
+<text matrix="1 0 0 1 1.87873 -68.8905" transformations="translations" pos="55.0049 452.991" stroke="black" type="label" width="40.216" height="6.918" depth="0" valign="baseline">bus\_rw\_rf</text>
+<text matrix="1 0 0 1 -40.8146 -68.1355" transformations="translations" pos="63.6702 438.853" stroke="black" type="label" width="74.244" height="6.918" depth="0" valign="baseline">bus\_write\_data\_rf</text>
+<text matrix="1 0 0 1 -38.8618 -67.8355" transformations="translations" pos="65.0384 425.171" stroke="black" type="label" width="70.923" height="6.918" depth="0" valign="baseline">bus\_read\_data\_rf</text>
+<text matrix="1 0 0 1 36.9388 -233.006" transformations="translations" pos="47.7078 557" stroke="black" type="label" width="12.453" height="6.918" depth="0" valign="baseline">clk</text>
+<text matrix="1 0 0 1 -36.4942 -216.396" transformations="translations" pos="49.7078 527" stroke="black" type="label" width="83.886" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge\_io</text>
+<text matrix="1 0 0 1 7.99893 -219.277" transformations="translations" pos="47.2517 514.561" stroke="black" type="label" width="41.849" height="6.926" depth="1.93" valign="baseline">bus\_irq\_io</text>
+<text matrix="1 0 0 1 -17.3299 -212.698" transformations="translations" pos="52.2685 492.669" stroke="black" type="label" width="62.161" height="6.918" depth="0" valign="baseline">bus\_address\_io</text>
+<text matrix="1 0 0 1 -35.4545 -215.59" transformations="translations" pos="56.3731 482.18" stroke="black" type="label" width="76.181" height="6.918" depth="0" valign="baseline">bus\_bus\_enable\_io</text>
+<text matrix="1 0 0 1 -35.625 -214.842" transformations="translations" pos="52.7246 468.042" stroke="black" type="label" width="80" height="6.926" depth="1.93" valign="baseline">bus\_byte\_enable\_io</text>
+<text matrix="1 0 0 1 1.07673 -215.104" transformations="translations" pos="55.0049 452.991" stroke="black" type="label" width="41.018" height="6.918" depth="0" valign="baseline">bus\_rw\_io</text>
+<text matrix="1 0 0 1 -41.6176 -214.349" transformations="translations" pos="63.6702 438.853" stroke="black" type="label" width="75.047" height="6.918" depth="0" valign="baseline">bus\_write\_data\_io</text>
+<text matrix="1 0 0 1 -39.6648 -214.049" transformations="translations" pos="65.0384 425.171" stroke="black" type="label" width="71.726" height="6.918" depth="0" valign="baseline">bus\_read\_data\_io</text>
+<text matrix="1 0 0 1 36.9388 -377.314" transformations="translations" pos="47.7078 557" stroke="black" type="label" width="12.453" height="6.918" depth="0" valign="baseline">clk</text>
+<text matrix="1 0 0 1 -42.3052 -360.704" transformations="translations" pos="49.7078 527" stroke="black" type="label" width="89.697" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge\_mk</text>
+<text matrix="1 0 0 1 2.18793 -363.585" transformations="translations" pos="47.2517 514.561" stroke="black" type="label" width="47.66" height="6.926" depth="1.93" valign="baseline">bus\_irq\_mk</text>
+<text matrix="1 0 0 1 -23.1419 -357.006" transformations="translations" pos="52.2685 492.669" stroke="black" type="label" width="67.973" height="6.918" depth="0" valign="baseline">bus\_address\_mk</text>
+<text matrix="1 0 0 1 -41.2665 -359.898" transformations="translations" pos="56.3731 482.18" stroke="black" type="label" width="81.993" height="6.918" depth="0" valign="baseline">bus\_bus\_enable\_mk</text>
+<text matrix="1 0 0 1 -41.437 -359.15" transformations="translations" pos="52.7246 468.042" stroke="black" type="label" width="85.812" height="6.926" depth="1.93" valign="baseline">bus\_byte\_enable\_mk</text>
+<text matrix="1 0 0 1 -4.73527 -359.412" transformations="translations" pos="55.0049 452.991" stroke="black" type="label" width="46.83" height="6.918" depth="0" valign="baseline">bus\_rw\_mk</text>
+<text matrix="1 0 0 1 -47.4286 -358.657" transformations="translations" pos="63.6702 438.853" stroke="black" type="label" width="80.858" height="6.918" depth="0" valign="baseline">bus\_write\_data\_mk</text>
+<text matrix="1 0 0 1 -45.4758 -358.357" transformations="translations" pos="65.0384 425.171" stroke="black" type="label" width="77.537" height="6.918" depth="0" valign="baseline">bus\_read\_data\_mk</text>
+<path stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.399246 -113.277" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.399246 -99.1173" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.399246 -84.9577" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.399246 -70.7982" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.399246 -56.6386" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.399246 -42.4791" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.399246 -28.3195" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.399246 -14.16" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.291606 -144.765" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.690852 -258.042" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.690852 -243.882" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.690852 -229.722" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.690852 -215.563" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.690852 -201.403" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.690852 -187.244" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.690852 -173.084" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.690852 -158.925" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.583471 -288.362" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.982717 -401.639" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.982717 -387.479" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.982717 -373.32" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.982717 -359.16" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.982717 -345.001" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.982717 -330.841" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.982717 -316.682" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.982717 -302.522" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 0.00025847 -433.711" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -546.988" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -532.828" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -518.668" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -504.509" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -490.349" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -476.19" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -462.03" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -447.871" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 0.00025847 -578.184" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -691.461" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -677.301" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -663.141" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -648.982" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -634.822" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -620.663" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -606.503" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 -0.398988 -592.344" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<text matrix="1 0 0 1 35.335 -2.51089" transformations="translations" pos="476.672 726.733" stroke="black" type="label" width="46.896" height="6.918" depth="0" valign="baseline">address\_im</text>
+<text matrix="1 0 0 1 31.7404 -2.61813" transformations="translations" pos="480.267 713.029" stroke="black" type="label" width="56.461" height="6.918" depth="0" valign="baseline">read\_data\_im</text>
+<text matrix="1 0 0 1 34.4363 -1.60208" transformations="translations" pos="477.571 698.202" stroke="black" type="label" width="59.782" height="6.918" depth="0" valign="baseline">write\_data\_im</text>
+<text matrix="1 0 0 1 19.8335 -3.04279" transformations="translations" pos="492.174 666.3" stroke="black" type="label" width="35.716" height="6.654" depth="0" valign="baseline">wren\_im</text>
+<path matrix="1 0 0 1 364.881 -94.2148" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<group matrix="1.51724 0 0 0.963195 -239.553 25.6482">
+<path stroke="black">
+463.538 682.856 m
+501.064 682.856 l
+</path>
+<path stroke="black">
+499.228 679.766 m
+502.546 685.841 l
+</path>
+<path matrix="-1 0 0 1 1001.77 0.00014488" stroke="black">
+499.228 679.766 m
+502.546 685.841 l
+</path>
+</group>
+<path matrix="1 0 0 1 364.881 -60.7404" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 364.881 -46.929" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 364.881 -33.1175" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<text matrix="1 0 0 1 35.1566 -147.515" transformations="translations" pos="476.672 726.733" stroke="black" type="label" width="49.664" height="6.918" depth="0" valign="baseline">address\_dm</text>
+<text matrix="1 0 0 1 31.562 -147.622" transformations="translations" pos="480.267 713.029" stroke="black" type="label" width="59.228" height="6.918" depth="0" valign="baseline">read\_data\_dm</text>
+<text matrix="1 0 0 1 34.2579 -146.606" transformations="translations" pos="477.571 698.202" stroke="black" type="label" width="62.549" height="6.918" depth="0" valign="baseline">write\_data\_dm</text>
+<text matrix="1 0 0 1 19.6551 -148.046" transformations="translations" pos="492.174 666.3" stroke="black" type="label" width="38.484" height="6.918" depth="0" valign="baseline">wren\_dm</text>
+<path matrix="1 0 0 1 364.703 -239.219" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<group matrix="1.51724 0 0 0.963195 -239.731 -119.356">
+<path stroke="black">
+463.538 682.856 m
+501.064 682.856 l
+</path>
+<path stroke="black">
+499.228 679.766 m
+502.546 685.841 l
+</path>
+<path matrix="-1 0 0 1 1001.77 0.00014488" stroke="black">
+499.228 679.766 m
+502.546 685.841 l
+</path>
+</group>
+<path matrix="1 0 0 1 364.703 -205.744" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 364.703 -191.933" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 364.703 -178.121" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<text matrix="1 0 0 1 35.1566 -292.696" transformations="translations" pos="476.672 726.733" stroke="black" type="label" width="42.773" height="6.918" depth="0" valign="baseline">address\_rf</text>
+<text matrix="1 0 0 1 31.562 -292.803" transformations="translations" pos="480.267 713.029" stroke="black" type="label" width="52.337" height="6.918" depth="0" valign="baseline">read\_data\_rf</text>
+<text matrix="1 0 0 1 34.2579 -291.787" transformations="translations" pos="477.571 698.202" stroke="black" type="label" width="55.658" height="6.918" depth="0" valign="baseline">write\_data\_rf</text>
+<text matrix="1 0 0 1 19.6551 -293.228" transformations="translations" pos="492.174 666.3" stroke="black" type="label" width="31.593" height="6.918" depth="0" valign="baseline">wren\_rf</text>
+<path matrix="1 0 0 1 364.703 -384.4" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<group matrix="1.51724 0 0 0.963195 -239.731 -264.537">
+<path stroke="black">
+463.538 682.856 m
+501.064 682.856 l
+</path>
+<path stroke="black">
+499.228 679.766 m
+502.546 685.841 l
+</path>
+<path matrix="-1 0 0 1 1001.77 0.00014488" stroke="black">
+499.228 679.766 m
+502.546 685.841 l
+</path>
+</group>
+<path matrix="1 0 0 1 364.703 -350.926" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 364.703 -337.114" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 364.703 -323.303" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<text matrix="1 0 0 1 35.1566 -436.81" transformations="translations" pos="476.672 726.733" stroke="black" type="label" width="43.576" height="6.918" depth="0" valign="baseline">address\_io</text>
+<text matrix="1 0 0 1 31.562 -436.917" transformations="translations" pos="480.267 713.029" stroke="black" type="label" width="53.14" height="6.918" depth="0" valign="baseline">read\_data\_io</text>
+<text matrix="1 0 0 1 34.2579 -435.901" transformations="translations" pos="477.571 698.202" stroke="black" type="label" width="56.461" height="6.918" depth="0" valign="baseline">write\_data\_io</text>
+<text matrix="1 0 0 1 19.6551 -437.342" transformations="translations" pos="492.174 666.3" stroke="black" type="label" width="32.395" height="6.654" depth="0" valign="baseline">wren\_io</text>
+<path matrix="1 0 0 1 364.703 -528.514" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<group matrix="1.51724 0 0 0.963195 -239.731 -408.651">
+<path stroke="black">
+463.538 682.856 m
+501.064 682.856 l
+</path>
+<path stroke="black">
+499.228 679.766 m
+502.546 685.841 l
+</path>
+<path matrix="-1 0 0 1 1001.77 0.00014488" stroke="black">
+499.228 679.766 m
+502.546 685.841 l
+</path>
+</group>
+<path matrix="1 0 0 1 364.703 -495.04" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 364.703 -481.228" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 364.703 -467.417" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<text matrix="1 0 0 1 35.8683 -573.985" transformations="translations" pos="476.672 726.733" stroke="black" type="label" width="49.387" height="6.918" depth="0" valign="baseline">address\_mk</text>
+<text matrix="1 0 0 1 32.2737 -574.093" transformations="translations" pos="480.267 713.029" stroke="black" type="label" width="58.951" height="6.918" depth="0" valign="baseline">read\_data\_mk</text>
+<text matrix="1 0 0 1 34.9696 -573.077" transformations="translations" pos="477.571 698.202" stroke="black" type="label" width="62.272" height="6.918" depth="0" valign="baseline">write\_data\_mk</text>
+<text matrix="1 0 0 1 20.3668 -574.517" transformations="translations" pos="492.174 666.3" stroke="black" type="label" width="38.207" height="6.918" depth="0" valign="baseline">wren\_mk</text>
+<path matrix="1 0 0 1 365.414 -665.689" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<group matrix="1.51724 0 0 0.963195 -239.02 -545.826">
+<path stroke="black">
+463.538 682.856 m
+501.064 682.856 l
+</path>
+<path stroke="black">
+499.228 679.766 m
+502.546 685.841 l
+</path>
+<path matrix="-1 0 0 1 1001.77 0.00014488" stroke="black">
+499.228 679.766 m
+502.546 685.841 l
+</path>
+</group>
+<path matrix="1 0 0 1 365.414 -632.215" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 365.414 -618.403" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+<path matrix="1 0 0 1 365.414 -604.592" stroke="black" rarrow="normal/normal">
+145.321 760.799 m
+98.8658 760.799 l
+99.1321 760.799 l
+</path>
+</page>
+</ipe>

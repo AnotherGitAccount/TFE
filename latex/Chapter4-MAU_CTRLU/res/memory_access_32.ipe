@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210507011339" modified="D:20210508000123"/>
+<info created="D:20210507230839" modified="D:20210507231602"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,33 +312,32 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<text layer="alpha" matrix="1 0 0 1 27.9941 67.1174" transformations="translations" pos="194.694 643.718" stroke="black" type="label" width="30.233" height="9.803" depth="0" valign="baseline" size="Large">CPU</text>
-<path stroke="black">
-395.376 777.306 m
-395.376 654.168 l
-80.2327 654.168 l
-80.2327 777.306 l
+<path layer="alpha" matrix="1.24248 0 0 1 -6.67436 -142.846" stroke="black">
+43.9049 694.217 m
+43.9049 565.38 l
+300.174 565.38 l
+300.174 694.217 l
 h
 </path>
-<group matrix="1 0 0 1 -0.700697 -1.28871">
-<group>
-<group matrix="1 0 0 1 -7.47608 7.619">
-<text matrix="1 0 0 1 -19.0546 0" transformations="translations" pos="111.557 748.35" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
-<text matrix="1 0 0 1 -193.747 26.0699" transformations="translations" pos="286.25 708.265" stroke="black" type="label" width="61.757" height="6.926" depth="1.93" valign="baseline">clk\_sequence.7</text>
+<text matrix="1 0 0 1 7.13621 -144.554" transformations="translations" pos="142.708 628" stroke="black" type="label" width="114.474" height="9.803" depth="2.79" valign="baseline" size="Large">Memory Access 32</text>
+<group matrix="1 0 0 1 -0.751313 -0.443643">
+<group matrix="1 0 0 1 -11.7628 2.33042">
+<text matrix="1 0 0 1 17.3306 -18.9569" transformations="translations" pos="47.7078 557" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
+<text matrix="1 0 0 1 15.3306 -2.34716" transformations="translations" pos="49.7078 527" stroke="black" type="label" width="80.299" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge.1</text>
+<text matrix="1 0 0 1 17.7867 -5.22809" transformations="translations" pos="47.2517 514.561" stroke="black" type="label" width="38.262" height="6.926" depth="1.93" valign="baseline">bus\_irq.1</text>
+<text matrix="1 0 0 1 12.7699 1.35098" transformations="translations" pos="52.2685 492.669" stroke="black" type="label" width="63.556" height="6.918" depth="0" valign="baseline">bus\_address.16</text>
+<text matrix="1 0 0 1 8.66531 -1.54167" transformations="translations" pos="56.3731 482.18" stroke="black" type="label" width="72.595" height="6.918" depth="0" valign="baseline">bus\_bus\_enable.1</text>
+<text matrix="1 0 0 1 12.3139 -0.79377" transformations="translations" pos="52.7246 468.042" stroke="black" type="label" width="76.414" height="6.926" depth="1.93" valign="baseline">bus\_byte\_enable.4</text>
+<text matrix="1 0 0 1 10.0335 -1.05573" transformations="translations" pos="55.0049 452.991" stroke="black" type="label" width="37.432" height="6.918" depth="0" valign="baseline">bus\_rw.1</text>
+<text matrix="1 0 0 1 1.36821 -0.299831" transformations="translations" pos="63.6702 438.853" stroke="black" type="label" width="76.441" height="6.918" depth="0" valign="baseline">bus\_write\_data.32</text>
+<text transformations="translations" pos="65.0384 425.171" stroke="black" type="label" width="73.12" height="6.918" depth="0" valign="baseline">bus\_read\_data.32</text>
 </group>
-<text matrix="1 0 0 1 17.5852 25.6925" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="69.827" height="6.918" depth="0" valign="baseline">im\_mau\_bus.bus</text>
-<text matrix="1 0 0 1 17.5852 12.4327" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="72.595" height="6.918" depth="0" valign="baseline">dm\_mau\_bus.bus</text>
-<text matrix="1 0 0 1 17.5852 -0.827199" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="65.704" height="6.918" depth="0" valign="baseline">rf\_mau\_bus.bus</text>
-<text matrix="1 0 0 1 17.5852 -14.087" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="66.506" height="6.918" depth="0" valign="baseline">io\_mau\_bus.bus</text>
-<text matrix="1 0 0 1 17.5852 -27.3468" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="72.318" height="6.918" depth="0" valign="baseline">mk\_mau\_bus.bus</text>
-</group>
-<text matrix="1 0 0 1 79.8382 19.228" transformations="translations" pos="284.472 747.37" stroke="black" type="label" width="27.674" height="6.918" depth="0" valign="baseline">alive.1</text>
-<text matrix="1 0 0 1 71.9402 19.228" transformations="translations" pos="295.137 733.743" stroke="black" type="label" width="24.907" height="6.918" depth="0" valign="baseline">halt.1</text>
-<group matrix="1 0 0 1 0 35.1247">
-<text matrix="1 0 0 1 30.9742 -14.125" transformations="translations" pos="290.397 697.008" stroke="black" type="label" width="70.613" height="6.926" depth="1.93" valign="baseline">exported\_wren.1</text>
-<text matrix="1 0 0 1 28.8662 -4.25266" transformations="translations" pos="289.212 667.975" stroke="black" type="label" width="73.906" height="6.926" depth="1.93" valign="baseline">exported\_data.32</text>
-<text matrix="1 0 0 1 21.9222 -3.26776" transformations="translations" pos="283.287 647.83" stroke="black" type="label" width="86.775" height="6.926" depth="1.93" valign="baseline">exported\_address.32</text>
-<text matrix="1 0 0 1 64.6672 -0.497456" transformations="translations" pos="283.88 625.908" stroke="black" type="label" width="43.437" height="6.918" depth="0" valign="baseline">io\_data.32</text>
+<group matrix="1 0 0 1 80.6415 -43.7934">
+<text matrix="1 0 0 1 -4.30321 0" transformations="translations" pos="241.081 550.59" stroke="black" type="label" width="44.97" height="6.918" depth="0" valign="baseline">address.32</text>
+<text matrix="1 0 0 1 -17.9728 -0.780173" transformations="translations" pos="245.186 536.452" stroke="black" type="label" width="54.535" height="6.918" depth="0" valign="baseline">read\_data.32</text>
+<text matrix="1 0 0 1 -21.2928 2.54428" transformations="translations" pos="245.186 518.209" stroke="black" type="label" width="57.855" height="6.918" depth="0" valign="baseline">write\_data.32</text>
+<text matrix="1 0 0 1 -7.20238 1.30003" transformations="translations" pos="248.834 504.527" stroke="black" type="label" width="40.116" height="6.926" depth="1.93" valign="baseline">byte\_en.4</text>
+<text transformations="translations" pos="252.939 489.477" stroke="black" type="label" width="28.809" height="6.42" depth="0" valign="baseline">wren.1</text>
 </group>
 </group>
 </page>
