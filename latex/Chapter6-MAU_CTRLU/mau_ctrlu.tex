@@ -80,7 +80,7 @@ an acknowledgement from the external slave. When this timer reaches 0, the reque
 The protocol is considered simpler because it offers an interface closer to that used by the memories 
 than that of the Avalon. Indeed, the usual signals address, write data, read data and R$\overline{W}$ are 
 present. Moreover, this protocol is very simple to use. Indeed, as can be seen in Figure \ref{fig:mau/bus_bridge_protocol}. The master 
-places all the necessary elements on the bus and then pass the bus enable signal to high. This means 
+places all the necessary elements on the bus and then switches the bus enable signal to high. This means 
 that the slave can act. The slave then does what it has to do. Either take the data and write it to 
 the address given by the master or send the requested data that is present at the address given by 
 the master. Once the slave has finished its job, it switches the acknowledgement signal to high 
@@ -95,14 +95,14 @@ during a clock cycle to validate the transaction.
 
 It is possible to configure the address range and the word size used by these bus. For this work, 
 it is decided that the 
-addressable space is 256Kbytes and that the words are on 32bits for each access except for the 
+addressable space is 256Kbytes long and that the words are on 32bits for each access except for the 
 access to the GPU mask memory which is on 4Kbytes with 128bits words. Each of these accesses are 
 put on the HPS-FPGA bridge, their offset is given in Table \ref{mau/bus}. These dimensions were 
 chosen to make the offset easy to understand. Indeed, only the sixth number changes in the 
 hexadecimal address. Moreover, this gives future users a large margin if they want to change the 
 dimensions of the memories. As far as the mask memory is concerned, the address range is simply the 
 size of the memory. This has been done especially to discourage any modification at this level. 
-Indeed, this would lead to a large modification of the CPU which could degrade its performance or 
+Indeed, this would lead to a large modification of the GPU which could degrade its performance or 
 make it impossible to include in the design (due to lack of space on the FPGA).
 
 \begin{table}[H]
@@ -125,7 +125,7 @@ The connections in QSys are shown in Figure \ref{fig:avalon/bus}.
 The different modules and the HPS are highlighted in 
 yellow. The different Avalon slaves and the master are shown in red. It can be noticed by following 
 the connection highlighted in blue that it is indeed the HPS-FPGA bridge that is used 
-(h2f\_axi\_master on Qsys) and that the offsets of the slaves are indeed those previously given. The 
+(h2f\_axi\_master in Qsys) and that the offsets of the slaves are indeed those previously given. The 
 signals corresponding to the buses are displayed in green. Each of them is exported, that is to say 
 that they can be used from the FPGA. They are the ones that are connected to the different memories.
 
@@ -136,16 +136,16 @@ that they can be used from the FPGA. They are the ones that are connected to the
     \label{fig:avalon/bus}
 \end{figure}
 
-Now that the description of the external bus bridge and its implementation are done, the design of 
+Now that the descriptions of the external bus bridge and its implementation are done, the design of 
 the MAU can be considered.
 
 \subsection{Memory Access}
 
 In fact, the Memory Access Unit is composed of only two types of modules. The Memory Access 32, and 
-the Memory Access 128 allowing both the interfacing between an external bus and a memory (having 
-respectively words of 32 and 128 bits). To do this, they both implement a finite state machine. 
-That of Memory Access 32 is given in Figure \ref{fig:ma_fsm}. The only difference that the 128 bits version will 
-have is that the address is not multiplied by 4 in the Iddle state. 
+the Memory Access 128 allowing both the interfacing between an external bus and a memory (these two
+modules respectively have words of 32 and 128 bits). To do this, they both implement a finite state machine. 
+That of Memory Access 32 is given in Figure \ref{fig:ma_fsm}. The only difference that the 128 bits version 
+has is that the address is not multiplied by 4 in the Iddle state. 
 
 \begin{figure}[H]
     \center
