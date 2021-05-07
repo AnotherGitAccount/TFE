@@ -1,5 +1,0 @@
-module clku(
-	clk,
-	cpu_clk,
-	gpu_clk
-);

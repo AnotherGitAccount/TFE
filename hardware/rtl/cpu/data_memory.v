@@ -28,13 +28,13 @@ module data_memory(
 	wire [31:0] ram_data_write;
 	wire 			ram_wren;
 	wire			ram_clk_en;
-
-	assign ram_address    = (alive == 1'b0) ? mau_address[13:2] : cpu_address[13:2];
+	
+	assign ram_address    = (alive == 1'b0) ? mau_address[15:2] : cpu_address[15:2];
 	assign ram_data_write = (alive == 1'b0) ? mau_data_write : cpu_data_write;
 	assign ram_wren       = (alive == 1'b0) ? mau_wren : cpu_wren;
 	assign ram_clk_en     = (alive == 1'b0) ? mau_clk_en : cpu_clk_en;
 
-	ram_4096 data_memory_ram(
+	ram_16384 data_memory_ram(
 		.clock(clk),
 		.clk_en(ram_clk_en),
 		.address(ram_address),
