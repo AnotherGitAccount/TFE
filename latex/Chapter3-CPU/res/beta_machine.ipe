@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210507011339" modified="D:20210508000123"/>
+<info created="D:20210507011339" modified="D:20210508001357"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -320,26 +320,20 @@ h
 80.2327 777.306 l
 h
 </path>
-<group matrix="1 0 0 1 -0.700697 -1.28871">
-<group>
-<group matrix="1 0 0 1 -7.47608 7.619">
-<text matrix="1 0 0 1 -19.0546 0" transformations="translations" pos="111.557 748.35" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
-<text matrix="1 0 0 1 -193.747 26.0699" transformations="translations" pos="286.25 708.265" stroke="black" type="label" width="61.757" height="6.926" depth="1.93" valign="baseline">clk\_sequence.7</text>
-</group>
-<text matrix="1 0 0 1 17.5852 25.6925" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="69.827" height="6.918" depth="0" valign="baseline">im\_mau\_bus.bus</text>
-<text matrix="1 0 0 1 17.5852 12.4327" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="72.595" height="6.918" depth="0" valign="baseline">dm\_mau\_bus.bus</text>
-<text matrix="1 0 0 1 17.5852 -0.827199" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="65.704" height="6.918" depth="0" valign="baseline">rf\_mau\_bus.bus</text>
-<text matrix="1 0 0 1 17.5852 -14.087" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="66.506" height="6.918" depth="0" valign="baseline">io\_mau\_bus.bus</text>
-<text matrix="1 0 0 1 17.5852 -27.3468" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="72.318" height="6.918" depth="0" valign="baseline">mk\_mau\_bus.bus</text>
-</group>
-<text matrix="1 0 0 1 79.8382 19.228" transformations="translations" pos="284.472 747.37" stroke="black" type="label" width="27.674" height="6.918" depth="0" valign="baseline">alive.1</text>
-<text matrix="1 0 0 1 71.9402 19.228" transformations="translations" pos="295.137 733.743" stroke="black" type="label" width="24.907" height="6.918" depth="0" valign="baseline">halt.1</text>
-<group matrix="1 0 0 1 0 35.1247">
+<text matrix="1 0 0 1 79.1375 17.9393" transformations="translations" pos="284.472 747.37" stroke="black" type="label" width="27.674" height="6.918" depth="0" valign="baseline">alive.1</text>
+<text matrix="1 0 0 1 71.2395 17.9393" transformations="translations" pos="295.137 733.743" stroke="black" type="label" width="24.907" height="6.918" depth="0" valign="baseline">halt.1</text>
+<group matrix="1 0 0 1 -0.700697 33.8359">
 <text matrix="1 0 0 1 30.9742 -14.125" transformations="translations" pos="290.397 697.008" stroke="black" type="label" width="70.613" height="6.926" depth="1.93" valign="baseline">exported\_wren.1</text>
 <text matrix="1 0 0 1 28.8662 -4.25266" transformations="translations" pos="289.212 667.975" stroke="black" type="label" width="73.906" height="6.926" depth="1.93" valign="baseline">exported\_data.32</text>
 <text matrix="1 0 0 1 21.9222 -3.26776" transformations="translations" pos="283.287 647.83" stroke="black" type="label" width="86.775" height="6.926" depth="1.93" valign="baseline">exported\_address.32</text>
 <text matrix="1 0 0 1 64.6672 -0.497456" transformations="translations" pos="283.88 625.908" stroke="black" type="label" width="43.437" height="6.918" depth="0" valign="baseline">io\_data.32</text>
 </group>
+<group matrix="1 0 0 1 -8.17678 6.33029">
+<text matrix="1 0 0 1 -19.0546 0" transformations="translations" pos="111.557 748.35" stroke="black" type="label" width="20.202" height="6.918" depth="0" valign="baseline">clk.1</text>
+<text matrix="1 0 0 1 -193.747 26.0699" transformations="translations" pos="286.25 708.265" stroke="black" type="label" width="61.757" height="6.926" depth="1.93" valign="baseline">clk\_sequence.7</text>
 </group>
+<text matrix="1 0 0 1 16.8845 24.4038" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="69.827" height="6.918" depth="0" valign="baseline">im\_mau\_bus.bus</text>
+<text matrix="1 0 0 1 16.8845 11.144" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="72.595" height="6.918" depth="0" valign="baseline">dm\_mau\_bus.bus</text>
+<text matrix="1 0 0 1 16.8845 -2.11591" transformations="translations" pos="67.4411 687.882" stroke="black" type="label" width="65.704" height="6.918" depth="0" valign="baseline">rf\_mau\_bus.bus</text>
 </page>
 </ipe>
