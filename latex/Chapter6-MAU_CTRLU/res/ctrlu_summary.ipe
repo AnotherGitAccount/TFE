@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210507224633" modified="D:20210509212542"/>
+<info created="D:20210509221010" modified="D:20210509221010"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,83 +312,122 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<path layer="alpha" matrix="2.51319 0 0 0.955939 -204.399 26.7891" stroke="black" arrow="normal/normal">
-128 608 m
-128 544 l
-</path>
-<path matrix="1.167 0 0 1.00183 -24.5171 -1.40341" stroke="black" arrow="normal/normal">
-304 640 m
-320 640 l
-320 768 l
-240 768 l
-</path>
-<path matrix="1.17157 0 0 0.998541 -38.4533 1.12019" stroke="black" arrow="normal/normal">
-80 512 m
-64 512 l
-64 768 l
-144 768 l
-</path>
-<group matrix="1 0 0 1 0.941192 1.05178">
-<path stroke="black" arrow="normal/normal">
-192 736 m
-128 672 l
-</path>
-<path stroke="black" arrow="normal/normal">
-192 736 m
-256 672 l
-</path>
-<text matrix="1 0 0 1 -26.3835 -10.8328" transformations="translations" pos="112 736" stroke="black" type="minipage" width="80" height="11.924" depth="6.95" valign="top" style="center">bus\_enable = 1 
-and 
-bus\_rw = 1</text>
-<text matrix="1 0 0 1 105.934 -10.8328" transformations="translations" pos="112 736" stroke="black" type="minipage" width="80" height="11.924" depth="6.95" valign="top" style="center">bus\_enable = 1 
-and 
-bus\_rw = 0</text>
+<text layer="alpha" matrix="1 0 0 1 -58.2297 24.5649" transformations="translations" pos="400 384" stroke="black" type="label" width="25.551" height="9.803" depth="0" valign="baseline" size="Large">PIO</text>
+<group matrix="1 0 0 1 -0.0728621 -36.1917">
+<text matrix="1 0 0 1 4.8055 0" transformations="translations" pos="240 384" stroke="black" type="label" width="51.059" height="6.926" depth="1.93" valign="baseline">Lightweight</text>
+<text matrix="1 0 0 1 -11.5055 5.00411" transformations="translations" pos="256 368" stroke="black" type="label" width="51.681" height="6.808" depth="0" valign="baseline">HPS-FPGA</text>
+<text matrix="1 0 0 1 0 27.8202" transformations="translations" pos="256 336" stroke="black" type="label" width="28.67" height="6.926" depth="1.93" valign="baseline">Bridge</text>
 </group>
-<path matrix="1 0 0 1 0.716533 2.51065" stroke="black" arrow="normal/normal">
-208 800 m
-208 816 l
-176 816 l
-176 800 l
+<path matrix="0.499534 0 0 1 126.429 0" stroke="black" arrow="normal/normal">
+207.895 400.473 m
+367.975 400.473 l
 </path>
-<text matrix="1 0 0 1 -3.80397 -11.4182" transformations="translations" pos="176 832" stroke="black" type="label" width="41.041" height="6.918" depth="0" valign="baseline">otherwise</text>
-<path matrix="1.29592 0 0 1.01733 -56.0998 -11.661" stroke="black">
-144 800 m
-144 736 l
-240 736 l
-240 800 l
+<path matrix="0.499534 0 0 1 126.429 0" stroke="black" arrow="normal/normal">
+367.519 379.037 m
+207.895 379.037 l
+</path>
+<path matrix="0.499534 0 0 1 126.429 0" stroke="black" arrow="normal/normal">
+367.975 374.477 m
+207.895 374.477 l
+</path>
+<group matrix="1 0 0 1 -74.1489 0">
+<path matrix="1 0 0 1 0 8" stroke="black">
+384 352 m
+384 384 l
+432 384 l
+432 352 l
 h
 </path>
-<text matrix="1 0 0 1 -13.5212 -8.5" transformations="translations" pos="176 784" stroke="black" type="label" width="60.476" height="10.756" depth="3.59" valign="baseline" size="Large">Iddle (00)</text>
-<text matrix="1 0 0 1 -30.8116 1.09" transformations="translations" pos="165.114 755.35" stroke="black" type="label" width="116.829" height="6.919" depth="0.83" valign="baseline">address = bus\_address $\times$ 4</text>
-<text matrix="1 0 0 1 8.1453 -1.06" transformations="translations" pos="164.355 749.283" stroke="black" type="label" width="40.432" height="6.42" depth="0" valign="baseline">wren = 0</text>
-<text matrix="1 0 0 1 -19.1164 -2.887" transformations="translations" pos="165.872 743.216" stroke="black" type="label" width="91.922" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge = 0</text>
-<path matrix="1.29592 0 0 1.01733 -131.526 -141.047" stroke="black">
-144 800 m
-144 736 l
-240 736 l
-240 800 l
+<text matrix="1 0 0 1 -11.0723 -33.2581" transformations="translations" pos="401.25 406.816" stroke="black" type="label" width="35.644" height="6.815" depth="1.93" valign="baseline">Register</text>
+<path matrix="1 0 0 1 -0.375753 0.159524" stroke="black">
+384.376 359.84 m
+384.376 420.954 l
+473.765 420.954 l
+473.765 359.84 l
 h
 </path>
-<text matrix="1 0 0 1 -95.0948 -41.8822" transformations="translations" pos="176 688" stroke="black" type="label" width="72.77" height="10.756" depth="3.59" valign="baseline" size="Large">Read 1 (01)</text>
-<text matrix="1 0 0 1 126.837 128.492" transformations="translations" pos="95.3457 498.649" stroke="black" type="label" width="91.922" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge = 1</text>
-<text matrix="1 0 0 1 -8.2554 3.83876" transformations="translations" pos="214.785 613.16" stroke="black" type="label" width="123.227" height="6.918" depth="0" valign="baseline">write\_data = bus\_write\_data</text>
-<text matrix="1 0 0 1 28.9706 5.60376" transformations="translations" pos="218.956 603.68" stroke="black" type="label" width="40.432" height="6.42" depth="0" valign="baseline">wren = 1</text>
-<path matrix="1.29592 0 0 1.01733 19.3266 -141.047" stroke="black">
-144 800 m
-144 736 l
-240 736 l
-240 800 l
+</group>
+<path matrix="1 0 0 1 -57.7304 0" stroke="black" dash="dashed" arrow="normal/normal">
+367.878 400.278 m
+457.32 400.278 l
+</path>
+<path stroke="black" dash="dashed" rarrow="normal/normal">
+357.729 375.451 m
+399.154 375.451 l
+</path>
+<path stroke="black">
+458.3 432.975 m
+458.3 347.655 l
+582.724 347.655 l
+582.724 432.975 l
 h
 </path>
-<text matrix="1 0 0 1 44.1492 102.198" transformations="translations" pos="192 544" stroke="black" type="label" width="63.988" height="10.756" depth="3.59" valign="baseline" size="Large">Write (11)</text>
-<text matrix="1 0 0 1 -24.0166 0" transformations="translations" pos="95.3457 498.649" stroke="black" type="label" width="91.922" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge = 1</text>
-<text matrix="1 0 0 1 -37.4856 -4.1503" transformations="translations" pos="96.4832 491.824" stroke="black" type="label" width="116.585" height="6.918" depth="0" valign="baseline">bus\_read\_data = read\_data</text>
-<text matrix="1 0 0 1 -95.0951 -88.1588" transformations="translations" pos="176 608" stroke="black" type="label" width="72.77" height="10.756" depth="3.59" valign="baseline" size="Large">Read 2 (10)</text>
-<path matrix="1.29592 0 0 1.01733 -131.527 -267.324" stroke="black">
-144 800 m
-144 736 l
-240 736 l
-240 800 l
+<text matrix="1 0 0 1 -42.6962 -17.7937" transformations="translations" pos="538.24 403.208" stroke="black" type="label" width="49.936" height="9.803" depth="0" valign="baseline" size="Large">CTRLU</text>
+<group matrix="1 0 0 1 0 -6.72174">
+<text transformations="translations" pos="464.225 406.905" stroke="black" type="label" width="36.851" height="6.926" depth="1.93" valign="baseline">hps\_cmd</text>
+<text matrix="1 0 0 1 -6.51748 0" transformations="translations" pos="470.742 380.243" stroke="black" type="label" width="21.088" height="6.128" depth="0" valign="baseline">state</text>
+</group>
+<group matrix="1 0 0 1 -18.2575 -7.70248">
+<text matrix="1 0 0 1 0 1.77749" transformations="translations" pos="507.477 355.95" stroke="black" type="label" width="17.158" height="6.918" depth="0" valign="baseline">halt</text>
+<text transformations="translations" pos="550.137 357.728" stroke="black" type="label" width="19.925" height="6.918" depth="0" valign="baseline">alive</text>
+</group>
+<path matrix="1 0 0 1 -0.0256336 0.435771" stroke="black" arrow="normal/normal">
+399.375 399.766 m
+457.742 399.766 l
+</path>
+<group matrix="-1.92302 -0.00447281 0.00410029 -1.76286 784.933 1831.53">
+<path matrix="0.459284 0 0 1.00828 103.743 -6.78092" stroke="0" pen="heavier">
+191.963 831.995 m
+178.493 831.995 l
+178.398 818.809 l
+192.058 818.809 l
+</path>
+<path stroke="0" pen="heavier">
+191.868 832.09 m
+6.64795 0 0 -6.64795 191.441 825.455 191.299 818.809 a
+</path>
+</group>
+<group matrix="1 0 0 1 0 0.0628353">
+<path matrix="1 0 0 1 210.881 -1135.14" stroke="black">
+3.98346 0 0 3.98346 225.046 1516 e
+</path>
+<path matrix="1 0 0 1 210.881 -1145.95" stroke="black">
+3.98346 0 0 3.98346 225.046 1516 e
+</path>
+</group>
+<path stroke="black">
+440.162 381.022 m
+450.596 381.022 l
+450.596 375.426 l
+458.28 375.426 l
+</path>
+<path matrix="1.00757 0 0 0.992717 -3.33151 2.69127" stroke="black">
+450.501 375.52 m
+450.501 369.544 l
+439.972 369.544 l
+</path>
+<path stroke="black">
+407.216 375.418 m
+399.235 375.418 l
+</path>
+<path matrix="1 0 0 1 1.75527 0" stroke="black" arrow="normal/normal">
+495.399 328.603 m
+495.399 347.56 l
+</path>
+<path stroke="black" arrow="normal/normal">
+541.387 347.911 m
+541.387 329.656 l
+</path>
+<text matrix="1 0 0 1 -14.2528 0" transformations="translations" pos="492.334 314.685" stroke="black" type="label" width="84.861" height="9.963" depth="0" valign="baseline" size="Large">Beta Machine</text>
+<text matrix="1 0 0 1 56.2073 0" transformations="translations" pos="202.971 407.426" stroke="black" type="label" width="22.167" height="6.654" depth="0" valign="baseline">write</text>
+<text matrix="1 0 0 1 39.9641 0" transformations="translations" pos="220.875 386.714" stroke="black" type="label" width="18.846" height="6.918" depth="0" valign="baseline">read</text>
+<text matrix="1 0 0 1 21.4238 0" transformations="translations" pos="229.3 365.65" stroke="black" type="label" width="39.076" height="6.661" depth="1.93" valign="baseline">interrupt</text>
+<text matrix="1 0 0 1 21.0889 4.596" transformations="translations" pos="160 384" stroke="black" type="label" width="33.74" height="9.803" depth="0" valign="baseline" size="Large">ARM</text>
+<path matrix="1 0 0 1 21.9589 0" stroke="black">
+144 416 m
+144 368 l
+208 368 l
+208 416 l
 h
 </path>
 </page>

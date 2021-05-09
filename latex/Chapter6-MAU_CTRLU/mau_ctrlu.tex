@@ -31,7 +31,7 @@ slaves time to capture them. Once ready, the slave removes the waitrequest and i
 data is available by switching readdatavalid to high and sending the first word. The other words 
 are then sent to the master in the order of their addresses. 
 
-\begin{figure}[H]
+\begin{figure}[ht!]
   \center
   \includegraphics[width=\linewidth]{"Chapter6-MAU_CTRLU/res/avalon_mm_read.png"}
   \caption{Read operation using Avalon MM}
@@ -48,7 +48,7 @@ is switched off, the master sets the beginbusttransfer to low and send the words
 starting at the next clock cycle. If the write signal goes down, the burst is paused and resumes 
 as soon as it goes up again.
 
-\begin{figure}[H]
+\begin{figure}[ht!]
   \center
   \includegraphics[width=\linewidth]{"Chapter6-MAU_CTRLU/res/avalon_mm_write.png"}
   \caption{Write operation using Avalon MM}
@@ -70,7 +70,7 @@ module has an integrated timer that is reset each time the Avalon to external bu
 an acknowledgement from the external slave. When this timer reaches 0, the request from the master 
 (denoted by Avalon Switch Fabric in the Figure) is deleted.
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/external_bus_bridge.PNG"}
     \caption{Avalon to external bus bridge interface and signals}
@@ -86,7 +86,7 @@ the address given by the master or send the requested data that is present at th
 the master. Once the slave has finished its job, it switches the acknowledgement signal to high 
 during a clock cycle to validate the transaction. 
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/external_bus_timings.PNG"}
     \caption{External bus protocol timings}
@@ -105,7 +105,7 @@ size of the memory. This has been done especially to discourage any modification
 Indeed, this would lead to a large modification of the GPU which could degrade its performance or 
 make it impossible to include in the design (due to lack of space on the FPGA).
 
-\begin{table}[H]
+\begin{table}[ht!]
     \centering
     \begin{tabular}{|l|c|c|c|c|}
     \hline
@@ -129,7 +129,7 @@ the connection highlighted in blue that it is indeed the HPS-FPGA bridge that is
 signals corresponding to the buses are displayed in green. Each of them is exported, that is to say 
 that they can be used from the FPGA. They are the ones that are connected to the different memories.
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \center
     \includegraphics[width=\linewidth]{"Chapter6-MAU_CTRLU/res/qsys_mau.PNG"}
     \caption{Avalon to external bus bridges connections in Qsys}
@@ -147,7 +147,7 @@ modules respectively have words of 32 and 128 bits). To do this, they both imple
 That of Memory Access 32 is given in Figure \ref{fig:ma_fsm}. The only difference that the 128 bits version 
 has is that the address is not multiplied by 4 in the Iddle state. 
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/mau_fsm"}
     \caption{Memory Access 32 finite state machine}
@@ -160,14 +160,14 @@ is reevaluated at each clock cycle). On the read side, a state seems to be usele
 one is in fact very important, it gives the memory time to fetch the value present at the requested 
 address. The interfaces of the memory acess are given in Figures \ref{fig:ma32} and \ref{fig:ma128}.
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/memory_access_32"}
     \caption{Memory Access 32}
     \label{fig:ma32}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/memory_access_128"}
     \caption{Memory Access 128}
@@ -182,18 +182,98 @@ QSys. The circuit of the MAU is given in Figure \ref{fig:mau_in} and its interfa
 Figure \ref{fig:mau}. In order to simplify the interface of the MAU, not all signals are put in it 
 and a bus representation is used. However, all signals are available in the internal circuit.
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \center
     \includegraphics[width=\linewidth]{"Chapter6-MAU_CTRLU/res/mau_in"}
     \caption{Memory Access Unit internal circuit}
     \label{fig:mau_in}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/mau"}
     \caption{Memory Access Unit}
     \label{fig:mau}
 \end{figure}
 
-\section{Control Unit}
+\section{Control Unit (CTRLU)}
+
+The control unit is a very simple unit. It manages the state of the machine. By managing the state is meant that 
+it decides whether the machine is switched on or off. Initially, the machine is switched off (alive 
+in the low state). When alive is low, the memories of the machine can be manipulated by the ARM 
+processor. It is thus at this moment that the machine is programmed. Once this is done, the ARM 
+processor can start the machine by switching alive to the high state, the means by which this is 
+achieved are seen just after. During the execution of a program, it can be stopped in two ways. 
+Firstly by the ARM processor which can force the stop, by passing alive to the low state. Secondly, 
+the beta machine itself can order the stop by executing the EXIT instruction which will change the 
+halt signal to high. The control unit will then respond to this signal by switching alive to low.
+
+As for the MAU, it is necessary to connect a module to the interconnect to make this unit 
+accessible from the ARM processor. Once again, the Avalon protocol is not used directly. 
+Instead, a module called Parallel IO (PIO) is used. This one gives direct access to a register 
+from the interconnect (and thus from the ARM processor). This module also uses the MM avalon, so 
+the register has an address from the point of view of the ARM processor. A difference with 
+the Avalon to external bus bridge of the MAU is that the PIO is put on the lightweight HPS-FPGA 
+bridge. This choice is made because the PIO is not frequently used and does not require large data 
+transfers. For this kind of modules, the HPS documentation advises to use the lightweight.
+
+The connection of the parallel IO in QSys is shown in Figure \ref{fig:qsys/ctrlu}. The same color 
+code as usual is used.
+
+\begin{figure}[ht!]
+    \center
+    \includegraphics[width=\linewidth]{"Chapter6-MAU_CTRLU/res/qsys_ctrlu.PNG"}
+    \caption{Parallel IO connections in QSys}
+    \label{fig:qsys/ctrlu}
+\end{figure}
+
+One of the ports is exported. In fact this one exposes two signals. One input and one output. The 
+output allows to read what the ARM processor proposes as new value of the register while the input 
+allows to set the value of the register. A module must therefore be added between the input and the 
+output in order to listen to the ARM processor port and the beta machine port and to set the 
+register accordingly. This module is in fact the control unit itself.
+
+\subsection{Control Unit circuit}
+
+The Control Unit, like the memory access, simply implements a finite state machine. This one is 
+described in Figure \ref{fig:ctrlu/fsm}. The hps\_cmd signal represents the signal coming from the 
+PIO (thus from the HPS) and the halt is the stop signal of the beta machine. According to these 
+signals, the value of alive is fixed. The on/off transitions initiated by the ARM processor are 
+done in two steps. A transition is completed when the ARM processor sends a 1 followed by a 0. This 
+has been done as so to have only one bit for the command. If the change of state was done directly 
+when a 1 appeared, the final state would have been uncertain. Indeed, it is impossible to know for 
+how many clock cycles the 1 is maintained by the ARM. Depending on the number of cycles it would 
+take to reset its signal to 0, the state would switch several times between on and off. With 
+the intermediate state, any bounce between states is avoided.
+
+\begin{figure}[ht!]
+    \center
+    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/ctrlu_fsm"}
+    \caption{Finite state machine of the Control Unit}
+    \label{fig:ctrlu/fsm}
+\end{figure}
+
+The control unit then exposes its state and the alive signal. The two bits of the state are passed 
+into a logic AND gate whose two inputs are inverted and the output of this gate is used to set the 
+PIO register (the corresponding circuit is shown when the entire system is connected later in this 
+report). The PIO register is  therefore high when the machine is stopped and low at any other time. 
+This is done because when the register goes from low to high, an interrupt is sent to the ARM 
+processor. As it is interesting to receive the interrupt when the machine is shut down, it has been 
+done this way. However, this interrupt has not been taken into account in this work but it could be 
+used as a basis for a future work to add interaction between the ARM processor and beta machine. 
+A visual summary is displayed in Figure \ref{fig:ctrlu/summary} and the interface of the Control 
+Unit is therefore the one given in Figure \ref{fig:ctrlu}.
+
+\begin{figure}[ht!]
+    \center
+    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/ctrlu_summary"}
+    \caption{ARM, Beta Machine and CTRLU interaction summary}
+    \label{fig:ctrlu/summary}
+\end{figure}
+
+\begin{figure}[ht!]
+    \center
+    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/ctrlu"}
+    \caption{Control Unit}
+    \label{fig:ctrlu}
+\end{figure}
