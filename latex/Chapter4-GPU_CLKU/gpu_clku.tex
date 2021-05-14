@@ -405,11 +405,84 @@ made up of the three color signals of the corresponding tile.
     \label{fig:gpu/mlu}
 \end{figure}
 
-
 \subsection{Graphic Counter (GC)}
+
+The graphics counter is the first element fully included in the HDMI controller part of the GPU. 
+It simply counts and provides several counts. Firstly, it provides the current position of the 
+pixel taken into account, so cnt\_h and cnt\_v representing the horizontal and vertical position 
+of the pixel. These go through all the virtual screen of the VESA, that is to say from 0 to 1087 
+for cnt\_h and from 0 to 516 for cnt\_v. These counts are then used to correctly generate the 
+synchronization signals of the VESA in another module. 
+
+Then, it provides four other counters blk\_x, blk\_y, off\_x, off\_y which again give the position 
+of a pixel but using this time the GPU coordinate system. It should be noted that these counters 
+only count from the start of the useful screen. In other words, blk\_x and blk\_y will both be at 0 
+when they reach values of cnt\_h and cnt\_v which correspond to the location of the first tile in 
+memory, the one at the top left of the useful screen. And their values will continue to increase 
+until the end of the VESA virtual screen.
+
+It should be noted that the useful screen does not correspond to the entire active area of the 
+VESA. As mentioned earlier, not all the space is used because of memory constraints. The useful 
+screen is centered in this active region. When the counter is in the useful region of the screen, 
+the in\_mem signal is high to warn that the position given by the counter corresponds to a tile 
+present in memory. The range of the counters and a schematic of the positioning of the useful 
+region are given in Figure \ref{fig:gpu/gc_screen}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/gc_screen}
+    \caption{Counters range and useful screen}
+    \label{fig:gpu/gc_screen}
+\end{figure}
+
+All these counters are implemented with the help of registers by choosing correctly the clk\_enable 
+signals and the reset signals. The inner circuit without the in\_memory which is only a condition 
+on the values of h\_cnt and v\_cnt is given in Figure \ref{fig:gpu/gc_in}
+. The interface is also shown in Figure \ref{fig:gpu/gc}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter4-GPU_CLKU/res/gc}
+    \caption{Graphic counter}
+    \label{fig:gpu/gc}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/gc_in}
+    \caption{Graphic counter internal circuit}
+    \label{fig:gpu/gc_in}
+\end{figure}
 
 \subsection{Synchronizer}
 
+The synchronizer is in charge of generating the synchronization and display enable signals of the
+VESA protocol. It simply looks at the values of the h\_cnt and v\_cnt signals provided by the 
+graphic counter. If the values are within the ranges associated with the synchronizations or display
+enable, the synchronizer sets the signal to high. As a reminder, the ranges were described in 
+Figure \ref{fig:gpu/screen_vesa} and Table \ref{tab:gpu/vesa}. As the internal circuit is 
+only a condition, it is not shown. The interface is shown in Figure \ref{fig:gpu/synchronizer}.  
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/synchronizer}
+    \caption{Synchronizer}
+    \label{fig:gpu/synchronizer}
+\end{figure}
+
 \subsection{I2C HDMI Config}
+
+This module is provided by Terasic to configure the HDMI controller present on the DE10 nano board. 
+In this work, it is used as a library. That is to say, it has not been tried to understand what it 
+does, what are its internal circuits. In the GPU, it is simply connected to the pins of the physical
+HDMI controller as Terasic suggests in his tutorial. The interface is still provided in 
+Figure \ref{fig:gpu/i2c}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter4-GPU_CLKU/res/i2c}
+    \caption{I2C HDMI Config}
+    \label{fig:gpu/i2c}
+\end{figure}
 
 \subsection{Complete circuit}
