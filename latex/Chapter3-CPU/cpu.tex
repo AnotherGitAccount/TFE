@@ -1,12 +1,12 @@
 \chapter{Beta machine, CPU design}
 
 As explained in the introduction, the goal of this work is to design a Beta machine. This machine is 
-in fact a minimalist CPU based on the Harvard architecture, i.e. data and intructions are stored in 
-two different memories. The machine uses words of 32 bits, represented in small endians, 
-and only implements operations of 2's complement signed integers. 
+in fact a minimal CPU based on the Harvard architecture, i.e., data and intructions are stored in 
+two different memories. The machine uses words of 32 bits, stored in memory according to the little-endian convention, 
+and only implements operations on 2's complement signed 32 bits integers. 
 
 In this section the different modules making up the Beta machine are studied one by one, from 
-their functionality to their design. Simulation results are even provided for some of them. Once the 
+their functionality to their design. Simulation results are provided for some of them. Once the 
 different elements are explained, the desired instruction set for the Beta machine is
 described. And finally, the different modules are connected to each other to form the Beta
 machine with the desired instruction set.
@@ -48,11 +48,10 @@ is set to 0b00, the program counter acts like a simple 32bits 4-by-4 counter.
 Concerning the internal circuit (that is shown in Figure \ref{fig:components/pc_in}), the pc\_out 
 values is evaluated for the different modes and 
 is put on a multiplexer which chooses the right output according to the pcsel value. For the BNE 
-and BEQ modes, another multiplexer is used to make the selection between the two possible results, 
-the control of these two multiplexers is naturally done by the result of $data == 0$. 
+and BEQ modes, another multiplexer is used to select between the two possible results, the comparison $data == 0$ naturally controls these two multiplexers. 
 
-For the offset, it should be noted that it first undergoes a conversion from signed 16bits to 
-signed 32bits before actually being used in the circuit.
+For the offset, it should be noted that it first undergoes a conversion from
+signed 16 bits to signed 32 bits before actually being used in the circuit.
 
 The result selected by the multiplexer controlled by pcsel then goes to the register where it is 
 stored at the next rising edge of the clock if the clk\_enable is high. The 
@@ -66,8 +65,9 @@ the reset (rst) is high, the register is synchronously reset to 0.
     \label{fig:components/pc_in}
 \end{figure}
 
-The Verilog implementation of the program counter is not a problem. Everything is relatively 
-straight-forward for this module.
+%PF There are ways to do it in a less expensive way, with a little logic arround pcsel and only one of these multiplexers
+
+The Verilog implementation of the program counter is relatively straight-forward.
 
 \subsubsection*{Program counter simulations}
 
