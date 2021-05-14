@@ -16,7 +16,7 @@ graphics memory in a loop and draws its content on the screen. The controller ca
 the VESA 848x480, it is described later. 
 
 Before moving on to the description of the different modules making up the GPU, a description of 
-how the screen and the masks are interpreted by the GPU is done.
+how the screen and the masks are interpreted by the GPU is done. The VESA protocol is also detailed.
 
 \subsection{Screen and tiles representation}
 
@@ -157,3 +157,259 @@ Figure \ref{fig:gpu/store_data}.
     \caption{Store instruction data}
     \label{fig:gpu/store_data}
 \end{figure}
+
+\subsection{VESA protocol}
+
+The VESA protocol works exactly like the VGA protocol. That is, four signals are present. On the 
+one hand there is the 24 bit color signal (8 bits for each primary color), the vertical and 
+horizontal synchronization signals and the display enable signal. The synchronization signals 
+inform the screen of the end of a line for horizontal synchronization and the end of a frame (all 
+the lines on a screen) for vertical synchronization. Between two horizontal synchronization 
+signals, several things happen. First, there is a pause just after the signal. This time is called 
+horizontal back porch. Then, after this pause the colors are sent, the value must be maintained for 
+a certain time to fix a pixel. All the pixels of the line are assigned one after the other, in 
+burst. Of course there are specific timing criteria that must be met for this to work, this is 
+discussed next. After sending all the colors, a new pause time takes place, called horizontal front 
+porch. And finally, after this pause, a new horizontal synchronization signal is sent. For the 
+frames, it's the same. Before the frame, there is a pause (vertical front porch) followed by the 
+vertical synchronization followed by the vertical back porch. Note that the horizontal and vertical 
+synchronizations are independent, so both must be evaluated at each moment. When no pause or 
+synchronization occurs, either horizontal or vertical, the display is said to be enable. The 
+display enable signal is then high and the colors are actually used for the pixels. Outside this 
+condition, the color signal can be set to any value and is not listened to. 
+
+The operation of the protocol is shown in Figure \ref{fig:gpu/screen_vesa}. The legend and length
+of the signals are available in Table \ref{tab:gpu/vesa}. In this figure, 
+the protocol is described in relation to the pixels, and therefore the position on the screen. As 
+the screen only includes the pixels of the region where display enable is high, the frame shown is 
+a virtual screen allowing the schematic. The description is made in relation to the pixels because 
+it is easier to imagine but also to implement. Indeed, as shown later in this report, pixel 
+counters are sufficient to implement this protocol. Then, it is enough to fix the good clock 
+frequency so that the timings of each pixel are respected. For VESA 848x480, a clock of 33.750MHz
+is used. Figure \ref{fig:gpu/vesa_signals} shows the value of the signals according to the position
+on the screen.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/screen_vesa}
+    \caption{VESA virtual screen schematic}
+    \label{fig:gpu/screen_vesa}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor[HTML]{DAE8FC} 
+    \textbf{Signal} & \textbf{Complete name}    & \multicolumn{1}{l|}{\cellcolor[HTML]{DAE8FC}\textbf{Length (pixels)}} \\ \hline
+    HFP             & Horizontal Front Porch    & 16                                                                    \\ \hline
+    HSYNC           & Horizontal Sync           & 112                                                                   \\ \hline
+    HBP             & Horizontal Back Porch     & 112                                                                   \\ \hline
+    HDEN            & Horizontal Display Enable & 848                                                                   \\ \hline
+    VFP             & Vertical Front Porch      & 6                                                                     \\ \hline
+    VSYNC           & Vertical Sync             & 8                                                                     \\ \hline
+    VBP             & Vertical Back Porch       & 23                                                                    \\ \hline
+    VDEN            & Vertical Display Enable   & 480                                                                   \\ \hline
+    \end{tabular}
+    \caption{VESA 848x480 counts}
+    \label{tab:gpu/vesa}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/vesa_signals.PNG}
+    \caption{VESA signals - video signal represents both display enable signals}
+    \label{fig:gpu/vesa_signals}
+\end{figure}
+
+\section{GPU components}
+
+\subsection{Graphic memory}
+
+The graphic memory has two functions. The first one is of course to store the state of all the 
+pixels on the screen. This is done as discussed above by splitting the memory into four parts. One 
+for each color of the Figure \ref{fig:gpu/screen_tiling} paving. Each of these sub-memories is then divided into three, one for 
+each primary color. This was done this way because it is more optimal to have three memories whose 
+word size is a power of two. By dividing by three, each word has 4bits while it would have had 
+12bits in the case of full colors, which is not a power of 2. A fifth port with a different clock 
+from the first 4 ports is also exposed. This one allows the reading of the memory tile by tile for 
+the HDMI controller part of the GPU. This tile is refered to as Tile b.
+
+The second function is to correctly direct the values in memory to the outputs when reading, and 
+the values in input to the memories when writing. Indeed, depending on the editing position (address), the 
+current tile belongs to one of the memories. And the memories of the other three tiles to be 
+selected also depends on this position. See Figure \ref{fig:gpu/screen_tiling_cases} for the different possible configurations. 
+
+From now on, the current tile (at the target position) will be tile 0. The one to the right of it
+will be tile 1, the one below it will be tile 2 and the one below it on the right will be tile 3. 
+Figure \ref{fig:gpu/tile_ids} summarizes this. Note that the colors are set by tiles. A memory word 
+is therefore $4 \times 64$ = 256bits.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/tile_ids}
+    \caption{Tile identifiers}
+    \label{fig:gpu/tile_ids}
+\end{figure}
+
+\subsubsection*{Memory unit}
+
+The memory units are the modules representing the groups of tiles, so there are 4 of them in the 
+graphic memory. Each memory unit is composed of three Altsyncram configured in true-dualport RAM 
+representing the three primary colors. True dualport means with two completely independent ports, 
+the clocks are different. The module simply interfaces these three Altsyncrams. The internal 
+circuit is given in Figure \ref{fig:gpu/memory_unit_in} and its module in Figure 
+\ref{fig:gpu/memory_unit}. As you can see, the wren\_b and data\_b signals 
+of each memory are grounded since the second port is read-only. For the rest, the signals are 
+simply retransmitted. The addresses in the three internal memories are the same, since it is the
+same block that is targeted each time. The words are all 256bits in size as each word contains 64 
+pixels and one of their color components on 4bits. 
+
+Now that the memory units are described, it is possible to establish the complete memory circuit.
+The complete circuit is shown in Figure \ref{fig:gpu/memory_in}. It consists of a parallel 
+connection of four memory units. 
+
+Each color input of each memory unit is multiplexed between the four color inputs of the same color 
+of the memory itself. The four inputs of these multiplexers are in fact the colors of each of the 
+tiles used (tile 0, tile 1, tile 2 and tile 3). Then, each of the outputs of the memory are 
+multiplexed from the values in memory in the different memory units. All these multiplexers ensure 
+that the tiles are correctly routed, as explained above. These multiplexers are controlled by five 
+signals: sw0, sw1, sw2, sw3 and swb which are respectively linked to tile 0, tile 1, tile 2, tile 3 
+and tile b. The determination of the values of these switches as well as those of the addresses of 
+the memory units are not displayed in the circuit so as not to make it more cumbersome.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/memory_unit}
+    \caption{Memory Unit}
+    \label{fig:gpu/memory_unit}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/memory_unit_in}
+    \caption{Memory Unit internal circuit}
+    \label{fig:gpu/memory_unit_in}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.55]{Chapter4-GPU_CLKU/res/memory_in_part1}
+    \caption{Memory internal circuit}
+    \label{fig:gpu/memory_in}
+\end{figure}
+
+
+\subsection{Mask memory}
+
+The mask memory is identical to the CPU memory instruction except that the Altsyncram used contains 
+only 256 words of 128bits. This allows to store 256 masks. The circuits are given in Figures
+\ref{fig:gpu/mask_memory_in} and \ref{fig:gpu/mask_memory}. Note that if the address is equal to
+255, then the mask sent to the data\_read output is a constant mask (named clear mask) which 
+clears all pixels.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/mask_memory_in}
+    \caption{Mask memory internal circuit}
+    \label{fig:gpu/mask_memory_in}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter4-GPU_CLKU/res/mask_memory}
+    \caption{Mask memory}
+    \label{fig:gpu/mask_memory}
+\end{figure}
+
+\subsection{Shifter}
+
+The objective of this module is to replicate the mask four times and to shift it in each of these 
+copies so that it corresponds to the mask offset given by the user. After that, each of the copies 
+can be associated with one of the four tiles loaded out of memory. This association is done in 
+another module.
+
+\subsubsection*{Shifter Unit}
+
+This is the module that is responsible of the shifting. To do this it simply takes the signed 
+offsets given in input and shifts the bits of the mask. The offsets being given in pixels and the
+masks having two bits per pixel, it is necessary to multiply by two each offset. To realize an 
+offset according to x, each line of the mask is shifted 2 $\times$ offset\_x while for an offset 
+according to y, the whole mask is shifted of 16 $\times$ offset\_y given that there are 8 pixels 
+by line. The circuit and the interface of the shifter unit are respectively given in Figures
+\ref{fig:gpu/shifter_unit_in} and \ref{fig:gpu/shifter_unit}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/shifter_unit_in}
+    \caption{Shifter unit internal circuit}
+    \label{fig:gpu/shifter_unit_in}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter4-GPU_CLKU/res/shifter_unit}
+    \caption{Shifter unit}
+    \label{fig:gpu/shifter_unit}
+\end{figure}
+
+The complete shifter is just a simple paralleling of four shifters but you have to choose the right 
+offsets for each shifter unit. In Figure are shown \ref{fig:gpu/shifter_offsets}
+the different offsets needed to obtain the desired masks. Each offset is taken with respect to the 
+upper left corner of the mask to which it is associated. off\_0 is of course equal to 
+(off\_x, off\_y) since the offset is always given from the selected tile and the selected tile is 
+identified by id 0. For the others, the offsets are off\_1 = (off\_x - 8, off\_y), off\_2 = 
+(off\_x, off\_y - 8) and off\_3 = (off\_x - 8, off\_y - 8).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/shifter_offsets}
+    \caption{Masks offsets}
+    \label{fig:gpu/shifter_offsets}
+\end{figure}
+
+The complete shifter circuit can then be established and is given in Figure \ref{fig:gpu/shifter_in}. 
+Figure \ref{fig:gpu/shifter} contains the shifter interface.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/shifter_in}
+    \caption{Shifter internal circuit}
+    \label{fig:gpu/shifter_in}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/shifter}
+    \caption{Shifter}
+    \label{fig:gpu/shifter}
+\end{figure}
+
+
+\subsection{Mask Logic Unit (MLU)}
+
+The MLU is simply used to modify the current value of a pixel in a tile according to the operation 
+described for this pixel in the corresponding mask. This module is a kind of giant multiplexer. In 
+fact, it contains a multiplexer for each primary color of each pixel and will select an input 
+(the current value of the pixel, the primary color, the secondary color or the black color) 
+according to the value of the mask at that position. Its operation is very simple to understand 
+and its circuit impossible to draw on a page of this report. That's why the internal circuit is 
+passed for this module. The interface is however given in Figure \ref{fig:gpu/mlu}.
+Note that this circuit is completely combinatorial. Converning the tile buses, they are simply
+made up of the three color signals of the corresponding tile.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/mlu}
+    \caption{Mask Logic Unit}
+    \label{fig:gpu/mlu}
+\end{figure}
+
+
+\subsection{Graphic Counter (GC)}
+
+\subsection{Synchronizer}
+
+\subsection{I2C HDMI Config}
+
+\subsection{Complete circuit}
