@@ -299,6 +299,16 @@ the memory units are not displayed in the circuit so as not to make it more cumb
     \label{fig:gpu/memory_in}
 \end{figure}
 
+The interface of the memory can be found in Figure \ref{fig:gpu/memory}. 
+The red, green and blue signals of each tile 
+are put together in a bus to simplify the representation of the module.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/memory}
+    \caption{Memory}
+    \label{fig:gpu/memory}
+\end{figure}
 
 \subsection{Mask memory}
 
@@ -486,3 +496,66 @@ Figure \ref{fig:gpu/i2c}.
 \end{figure}
 
 \subsection{Complete circuit}
+
+The GPU whose internal circuitry is given in Figure \ref{fig:gpu/gpu_in}, like the CPU, runs in 
+sequence. It starts by reading the mask in the mask memory. Then it reads the tiles to be edited in 
+the memory and shifts the masks at the same time. The results of these two operations arrive in the 
+mask logic unit where they are processed in a combinatorial way. Each mask operates on the tile 
+associated with it, taking into account the primary and secondary colors. Once this is done, the 
+memory is activated again, in writing this time. 
+
+As for some CPU memories, the mask memory has a MAU access that allows reading and writing of this 
+memory from the ARM processor.
+
+This constitutes the computational part of the GPU, the one that the CPU controls through its ST and 
+LD operations.
+
+Then, there is the controller that fetches each tile in memory one by one and traces all the pixels. 
+It also manages the synchronization signals of the VESA protocol. The graphic counter is used to 
+provide the address of the memory. To do this, the blk\_x and blk\_y outputs are concatenated to 
+form the address. Then, the offsets are added to form an index in the tile and select the current 
+pixel. The selected pixel is then put on the output if the signal in\_memory of the graphic counter 
+is high, otherwise the color is black. It is to this effect that the two multiplexers are used on 
+the hdmi\_tx\_d output. It should be noted that the index and the im\_mem signal must be timed so 
+that they arrive at the multiplexers at the same time as the tile requested from the memory. This 
+is why two registers are left on their way. The cnt\_h and cnt\_v signals go to the synchronizer 
+which is responsible for generating the synchronization signals. And finally, there is also the 
+I2C\_HDMI\_Config to configure the physical HDMI controller.
+
+It should be noted that two clocks are present. On the computational side, it is the same clock as 
+the CPU that is used to ensure that the two modules are synchronized. On the HDMI side, it is the 
+VESA protocol clock that is used. It is called gpu\_clk. The GPU interface is available in Figure
+\ref{fig:gpu/gpu}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/gpu_in}
+    \caption{GPU internal circuit}
+    \label{fig:gpu/gpu_in}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/gpu}
+    \caption{GPU}
+    \label{fig:gpu/gpu}
+\end{figure}
+
+\section{Clock Unit (CLKU)}
+
+As it has been seen, two clocks are needed. One as high as possible for the CPU and the modules 
+working synchronously with it and one for the 33.750MHz HDMI controller. The CPU clock cannot 
+exceed 50MHz. Indeed, other higher frequencies have been tested but do not meet the timing 
+constraints at compile time. For the CPU, the clock unit only passes the FPGA clock from 50MHz to 
+the input to the output. On the other hand, it must be modified for the HDMI part. This is done 
+using a PLL (Phased-locked loop) which allows to generate a clock with a given frequency from 
+another clock with a fixed frequency. This PLL is easily configured in a GUI using the Quartus 
+Mega Wizard by setting the input and output frequency. The CLKU is then only a PLL. Its interface 
+is given in Figure \ref{fig:clku/clku}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/clku}
+    \caption{CLKU}
+    \label{fig:clku/clku}
+\end{figure}

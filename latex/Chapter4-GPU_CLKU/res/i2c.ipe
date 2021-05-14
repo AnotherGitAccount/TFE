@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210514170730" modified="D:20210514170730"/>
+<info created="D:20210514170730" modified="D:20210515000440"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,21 +312,20 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<text layer="alpha" matrix="1 0 0 1 164.388 -154.937" transformations="translations" pos="77.6256 707.811" stroke="black" type="label" width="111.348" height="9.962" depth="2.79" valign="baseline" size="Large">I2C\_HDMI\_Config</text>
-<path matrix="1.1304 0 0 1.11434 146.843 -227.2" stroke="black">
+<text layer="alpha" matrix="1 0 0 1 129.09 -169.511" transformations="translations" pos="77.6256 707.811" stroke="0" type="label" valign="baseline" size="Large">I2C\_HDMI\_Config</text>
+<path matrix="1.1304 0 0 1.11434 111.54 -241.774" stroke="0">
 45.3286 748.183 m
 45.3286 658.313 l
 221.558 658.313 l
 221.558 748.183 l
 h
 </path>
-<text matrix="1 0 0 1 136.56 -37.2117" transformations="translations" pos="204.249 575.643" stroke="black" type="label" width="53.815" height="6.808" depth="0" valign="baseline">I2C\_SCLK.1</text>
-<text matrix="1 0 0 1 135.858 -12.989" transformations="translations" pos="204.951 541.942" stroke="black" type="label" width="53.815" height="6.808" depth="0" valign="baseline">I2C\_SDAT.1</text>
-<text matrix="1 0 0 1 110.847 -16.1485" transformations="translations" pos="208.111 535.623" stroke="black" type="label" width="75.666" height="6.808" depth="0" valign="baseline">HDMI\_TX\_INT.1</text>
-<text matrix="1 0 0 1 138.863 -14.7443" transformations="translations" pos="211.621 524.74" stroke="black" type="label" width="44.14" height="6.808" depth="0" valign="baseline">READY.1</text>
-<group matrix="1 0 0 1 -1.28084 0">
-<text matrix="1 0 0 1 73.4407 -140.461" transformations="translations" pos="128 736" stroke="black" type="label" width="31.687" height="6.808" depth="0" valign="baseline">iCLK.1</text>
-<text transformations="translations" pos="201.441 586.175" stroke="black" type="label" width="41.638" height="6.808" depth="0" valign="baseline">iRST\_N.1</text>
+<text matrix="1 0 0 1 101.26 -51.785" transformations="translations" pos="204.249 575.643" stroke="0" type="label" valign="baseline">I2C\_SCLK.1</text>
+<text matrix="1 0 0 1 100.56 -27.563" transformations="translations" pos="204.951 541.942" stroke="0" type="label" valign="baseline">I2C\_SDAT.1</text>
+<text matrix="1 0 0 1 75.55 -30.722" transformations="translations" pos="208.111 535.623" stroke="0" type="label" valign="baseline">HDMI\_TX\_INT.1</text>
+<group matrix="1 0 0 1 -36.58 -14.574">
+<text matrix="1 0 0 1 73.4407 -140.461" transformations="translations" pos="128 736" stroke="0" type="label" valign="baseline">iCLK.1</text>
+<text transformations="translations" pos="201.441 586.175" stroke="0" type="label" valign="baseline">iRST\_N.1</text>
 </group>
 </page>
 </ipe>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210514170305" modified="D:20210515000410"/>
+<info created="D:20210515000143" modified="D:20210515000143"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,26 +312,33 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<group layer="alpha" matrix="1 0 0 1 -1246.62 -1224.73">
-<text matrix="1 0 0 1 1378.8 1024.95" transformations="translations" pos="77.6256 707.811" stroke="0" type="label" valign="baseline" size="Large">Synchronizer</text>
-<path matrix="1 0 0 1 1362.39 1033.1" stroke="0">
-45.3286 748.183 m
-45.3286 658.313 l
-221.558 658.313 l
-221.558 748.183 l
+<path layer="alpha" stroke="black">
+120.555 684.277 m
+120.555 548.595 l
+338.002 548.595 l
+338.002 684.277 l
 h
 </path>
-<group matrix="1 0 0 1 1169.23 1234.53">
-<text matrix="1 0 0 1 113.598 -200.872" transformations="translations" pos="128 736" stroke="0" type="label" valign="baseline">clk.1</text>
-<group matrix="1 0 0 1 -1.89154 -2.02102">
-<text matrix="1 0 0 1 251.04 -175.847" transformations="translations" pos="128 688" stroke="0" type="label" valign="baseline">sync\_h.1</text>
-<text matrix="1 0 0 1 251.04 -186.656" transformations="translations" pos="128 688" stroke="0" type="label" valign="baseline">sync\_h.1</text>
-<text matrix="1 0 0 1 247.996 -197.465" transformations="translations" pos="128 688" stroke="0" type="label" valign="baseline">disp\_en.1</text>
+<group matrix="1 0 0 1 -0.360553 -0.457763">
+<text matrix="1 0 0 1 109.612 -126.202" transformations="translations" pos="104.557 738.195" stroke="black" type="label" width="31.11" height="9.803" depth="0" valign="baseline" size="Large">GPU</text>
+<group matrix="1 0 0 1 0 -9.08039">
+<text matrix="1 0 0 1 -1302.65 -597.808" transformations="translations" pos="1581.11 1280.01" stroke="0" type="label" width="56.71" height="6.918" depth="0" valign="baseline">hdmi\_tx\_d.24</text>
+<text matrix="1 0 0 1 -1185.63 -461.868" transformations="translations" pos="1459.05 1108.52" stroke="0" type="label" width="61.746" height="6.926" depth="1.93" valign="baseline">hdmi\_sync\_h.1</text>
+<text matrix="1 0 0 1 -1188.51 -459.059" transformations="translations" pos="1462.21 1095.18" stroke="0" type="label" width="61.47" height="6.926" depth="1.93" valign="baseline">hdmi\_sync\_v.1</text>
+<text matrix="1 0 0 1 -1192.53 -461.868" transformations="translations" pos="1462.91 1087.45" stroke="0" type="label" width="64.791" height="6.926" depth="1.93" valign="baseline">hdmi\_disp\_en.1</text>
+<text matrix="1 0 0 1 -1177.55 -394.505" transformations="translations" pos="1452.35 976.523" stroke="0" type="label" width="60.363" height="6.918" depth="0" valign="baseline">hdmi\_i2c\_scl.1</text>
+<text matrix="1 0 0 1 -1188.59 -396.025" transformations="translations" pos="1460.07 968.449" stroke="0" type="label" width="63.684" height="6.918" depth="0" valign="baseline">hdmi\_i2c\_sda.1</text>
+<text matrix="1 0 0 1 -1180.2 -395.791" transformations="translations" pos="1457.27 958.619" stroke="0" type="label" width="58.093" height="6.918" depth="0" valign="baseline">hdmi\_tx\_int.1</text>
 </group>
-<group matrix="1 0 0 1 0 -5.74597">
-<text matrix="1 0 0 1 113.598 -210.273" transformations="translations" pos="128 720" stroke="0" type="label" valign="baseline">cnt\_h.11</text>
-<text matrix="1 0 0 1 113.598 -205.511" transformations="translations" pos="128 704" stroke="0" type="label" valign="baseline">cnt\_v.10</text>
-</group>
+<group matrix="1 0 0 1 0 7.8404">
+<text matrix="1 0 0 1 -544.773 -760.987" transformations="translations" pos="668.883 1414.77" stroke="0" type="label" width="39.286" height="6.926" depth="1.93" valign="baseline">cpu\_clk.1</text>
+<text matrix="1 0 0 1 -547.053 -762.373" transformations="translations" pos="671.163 1402.91" stroke="0" type="label" width="61.757" height="6.926" depth="1.93" valign="baseline">clk\_sequence.7</text>
+<text matrix="1 0 0 1 -547.965 -761.022" transformations="translations" pos="672.075 1388.32" stroke="0" type="label" width="32.102" height="6.918" depth="0" valign="baseline">data.32</text>
+<text matrix="1 0 0 1 -563.444 -754.11" transformations="translations" pos="687.554 1328.57" stroke="0" type="label" width="27.674" height="6.918" depth="0" valign="baseline">alive.1</text>
+<text matrix="1 0 0 1 -24.9867 0.776101" transformations="translations" pos="149.096 615.213" stroke="black" type="label" width="44.97" height="6.918" depth="0" valign="baseline">address.32</text>
+<text matrix="1 0 0 1 -25.8988 -10.665" transformations="translations" pos="150.009 677.695" stroke="black" type="label" width="39.84" height="6.926" depth="1.93" valign="baseline">gpu\_clk.1</text>
+<text matrix="1 0 0 1 -33.1799 0" transformations="translations" pos="157.29 605.179" stroke="black" type="label" width="28.809" height="6.42" depth="0" valign="baseline">wren.1</text>
+<text transformations="translations" pos="124.11 544.151" stroke="black" type="label" width="62.643" height="6.918" depth="0" valign="baseline">mau\_mask.bus</text>
 </group>
 </group>
 </page>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210514023518" modified="D:20210514023518"/>
+<info created="D:20210514023518" modified="D:20210515000635"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,28 +312,24 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<text layer="alpha" matrix="1 0 0 1 2.75343 -7.81881" transformations="translations" pos="154.5 397.851" stroke="0" type="label" width="40.971" height="9.963" depth="0" valign="baseline" size="Large" opacity="75%">Shifter</text>
-<path stroke="0">
+<text layer="alpha" matrix="1 0 0 1 39.857 150.59" transformations="translations" pos="154.5 397.851" stroke="0" type="label" valign="baseline" size="Large">Shifter</text>
+<path matrix="1 0 0 1 37.103 158.41" stroke="0">
 86.1339 423.522 m
 86.1339 366.506 l
 269.343 366.506 l
 269.343 423.522 l
 h
 </path>
-<group matrix="1 0 0 1 0.721495 -0.63731">
-<group>
-<text matrix="1 0 0 1 32.4904 -10.2684" transformations="translations" pos="187.527 414.648" stroke="0" type="label" width="45.164" height="6.918" depth="0" valign="baseline" opacity="75%">mask0.128</text>
-<text matrix="1 0 0 1 28.7464 -8.60437" transformations="translations" pos="191.271 403.624" stroke="0" type="label" width="45.164" height="6.918" depth="0" valign="baseline" opacity="75%">mask1.128</text>
-<text matrix="1 0 0 1 26.4584 -10.0604" transformations="translations" pos="193.559 395.72" stroke="0" type="label" width="45.164" height="6.918" depth="0" valign="baseline" opacity="75%">mask2.128</text>
-<text matrix="1 0 0 1 29.9944 -10.2684" transformations="translations" pos="190.023 386.568" stroke="0" type="label" width="45.164" height="6.918" depth="0" valign="baseline" opacity="75%">mask3.128</text>
+<group matrix="1 0 0 1 6.75 157.77">
+<text matrix="1 0 0 1 5.57598 0" transformations="translations" pos="114.352 413" stroke="black" type="label" valign="baseline">clk.1</text>
+<text matrix="1 0 0 1 4.57598 0.0805397" transformations="translations" pos="115.352 403" stroke="black" type="label" valign="baseline">clk\_en.1</text>
+<text matrix="1 0 0 1 1.66399 2.43302" transformations="translations" pos="118.264 390.728" stroke="black" type="label" valign="baseline">offset\_x.3</text>
+<text matrix="1 0 0 1 -0.207999 1.24151" transformations="translations" pos="120.136 381.992" stroke="black" type="label" valign="baseline">offset\_y.3</text>
+<text transformations="translations" pos="119.928 371.384" stroke="black" type="label" valign="baseline">mask.128</text>
 </group>
-<group matrix="1 0 0 1 -31.0753 0">
-<text matrix="1 0 0 1 5.57598 0" transformations="translations" pos="114.352 413" stroke="0" type="label" width="20.202" height="6.918" depth="0" valign="baseline" opacity="75%">clk.1</text>
-<text matrix="1 0 0 1 4.57598 0.0805397" transformations="translations" pos="115.352 403" stroke="0" type="label" width="33.751" height="6.918" depth="0" valign="baseline" opacity="75%">clk\_en.1</text>
-<text matrix="1 0 0 1 1.66399 2.43302" transformations="translations" pos="118.264 390.728" stroke="0" type="label" width="39.618" height="6.918" depth="0" valign="baseline" opacity="75%">offset\_x.3</text>
-<text matrix="1 0 0 1 -0.207999 1.24151" transformations="translations" pos="120.136 381.992" stroke="0" type="label" width="38.788" height="6.926" depth="1.93" valign="baseline" opacity="75%">offset\_y.3</text>
-<text transformations="translations" pos="119.928 371.384" stroke="0" type="label" width="40.183" height="6.918" depth="0" valign="baseline" opacity="75%">mask.128</text>
-</group>
-</group>
+<text matrix="1 0 0 1 70.315 147.51" transformations="translations" pos="187.527 414.648" stroke="0" type="label" valign="baseline">mask0.128</text>
+<text matrix="1 0 0 1 66.571 149.17" transformations="translations" pos="191.271 403.624" stroke="0" type="label" valign="baseline">mask1.128</text>
+<text matrix="1 0 0 1 64.283 147.71" transformations="translations" pos="193.559 395.72" stroke="0" type="label" valign="baseline">mask2.128</text>
+<text matrix="1 0 0 1 67.819 147.51" transformations="translations" pos="190.023 386.568" stroke="0" type="label" valign="baseline">mask3.128</text>
 </page>
 </ipe>
