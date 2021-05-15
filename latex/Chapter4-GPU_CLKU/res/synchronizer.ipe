@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210514025316" modified="D:20210515000603"/>
+<info created="D:20210514170305" modified="D:20210515000410"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,33 +312,25 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<group layer="alpha" matrix="1 0 0 1 -1033.07 -841.521">
-<text matrix="1 0 0 1 1102.74 795.822" transformations="translations" pos="192 688" stroke="0" type="label" valign="baseline" size="Large">Mask Logic Unit</text>
-<path matrix="1 0 0 1 1106.28 791.878" stroke="0">
-92.7137 778.724 m
-92.7137 612.335 l
-387.094 612.335 l
-387.094 778.724 l
+<group layer="alpha" matrix="1 0 0 1 -1246.62 -1224.73">
+<text matrix="1 0 0 1 1378.8 1024.95" transformations="translations" pos="77.6256 707.811" stroke="0" type="label" valign="baseline" size="Large">Synchronizer</text>
+<path matrix="1 0 0 1 1362.39 1033.1" stroke="0">
+45.3286 748.183 m
+45.3286 658.313 l
+221.558 658.313 l
+221.558 748.183 l
 h
 </path>
-<group matrix="1 0 0 1 1108.55 791.878">
-<group matrix="1 0 0 1 0 -3.80059">
-<text transformations="translations" pos="96 768" stroke="0" type="label" valign="baseline">primary.12</text>
-<text transformations="translations" pos="96 752" stroke="0" type="label" valign="baseline">secondary.12</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 720" stroke="0" type="label" valign="baseline">mask0.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 704" stroke="0" type="label" valign="baseline">mask1.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 688" stroke="0" type="label" valign="baseline">mask2.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 672" stroke="0" type="label" valign="baseline">mask3.128</text>
-<text matrix="1 0 0 1 0 32" transformations="translations" pos="96 640" stroke="0" type="label" valign="baseline">tile0.bus</text>
-<text matrix="1 0 0 1 0 32" transformations="translations" pos="96 624" stroke="0" type="label" valign="baseline">tile1.bus</text>
-<text matrix="1 0 0 1 0 48" transformations="translations" pos="96 592" stroke="0" type="label" valign="baseline">tile2.bus</text>
-<text matrix="1 0 0 1 0 48" transformations="translations" pos="96 576" stroke="0" type="label" valign="baseline">tile3.bus</text>
+<group matrix="1 0 0 1 1169.23 1234.53">
+<text matrix="1 0 0 1 113.598 -200.872" transformations="translations" pos="128 736" stroke="0" type="label" valign="baseline">clk.1</text>
+<group matrix="1 0 0 1 -1.89154 -2.02102">
+<text matrix="1 0 0 1 251.04 -175.847" transformations="translations" pos="128 688" stroke="0" type="label" valign="baseline">sync\_h.1</text>
+<text matrix="1 0 0 1 251.04 -186.656" transformations="translations" pos="128 688" stroke="0" type="label" valign="baseline">sync\_h.1</text>
+<text matrix="1 0 0 1 247.996 -197.465" transformations="translations" pos="128 688" stroke="0" type="label" valign="baseline">disp\_en.1</text>
 </group>
-<group matrix="1 0 0 1 0 28.0709">
-<text transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile0.bus</text>
-<text matrix="1 0 0 1 0 -16" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile1.bus</text>
-<text matrix="1 0 0 1 0 -32" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile2.bus</text>
-<text matrix="1 0 0 1 0 -48" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile3.bus</text>
+<group matrix="1 0 0 1 0 -5.74597">
+<text matrix="1 0 0 1 113.598 -210.273" transformations="translations" pos="128 720" stroke="0" type="label" valign="baseline">cnt\_h.11</text>
+<text matrix="1 0 0 1 113.598 -205.511" transformations="translations" pos="128 704" stroke="0" type="label" valign="baseline">cnt\_v.10</text>
 </group>
 </group>
 </group>

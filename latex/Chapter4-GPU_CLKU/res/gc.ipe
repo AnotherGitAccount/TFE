@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210514025316" modified="D:20210515000603"/>
+<info created="D:20210514163241" modified="D:20210515000320"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,34 +312,26 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<group layer="alpha" matrix="1 0 0 1 -1033.07 -841.521">
-<text matrix="1 0 0 1 1102.74 795.822" transformations="translations" pos="192 688" stroke="0" type="label" valign="baseline" size="Large">Mask Logic Unit</text>
-<path matrix="1 0 0 1 1106.28 791.878" stroke="0">
-92.7137 778.724 m
-92.7137 612.335 l
-387.094 612.335 l
-387.094 778.724 l
+<group layer="alpha" matrix="1 0 0 1 -749.092 -605.695">
+<text matrix="1 0 0 1 892.742 426.647" transformations="translations" pos="77.6256 707.811" stroke="0" type="label" valign="baseline" size="Large">Graphic Counter</text>
+<path matrix="1 0 0 1 888.674 434.797" stroke="0">
+45.3286 748.183 m
+45.3286 658.313 l
+221.558 658.313 l
+221.558 748.183 l
 h
 </path>
-<group matrix="1 0 0 1 1108.55 791.878">
-<group matrix="1 0 0 1 0 -3.80059">
-<text transformations="translations" pos="96 768" stroke="0" type="label" valign="baseline">primary.12</text>
-<text transformations="translations" pos="96 752" stroke="0" type="label" valign="baseline">secondary.12</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 720" stroke="0" type="label" valign="baseline">mask0.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 704" stroke="0" type="label" valign="baseline">mask1.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 688" stroke="0" type="label" valign="baseline">mask2.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 672" stroke="0" type="label" valign="baseline">mask3.128</text>
-<text matrix="1 0 0 1 0 32" transformations="translations" pos="96 640" stroke="0" type="label" valign="baseline">tile0.bus</text>
-<text matrix="1 0 0 1 0 32" transformations="translations" pos="96 624" stroke="0" type="label" valign="baseline">tile1.bus</text>
-<text matrix="1 0 0 1 0 48" transformations="translations" pos="96 592" stroke="0" type="label" valign="baseline">tile2.bus</text>
-<text matrix="1 0 0 1 0 48" transformations="translations" pos="96 576" stroke="0" type="label" valign="baseline">tile3.bus</text>
+<text matrix="1 0 0 1 809.103 435.352" transformations="translations" pos="128 736" stroke="0" type="label" valign="baseline">clk.1</text>
+<group matrix="1 0 0 1 0 -62.3917">
+<text matrix="1 0 0 1 943.719 451.352" transformations="translations" pos="128 720" stroke="0" type="label" valign="baseline">cnt\_h.11</text>
+<text matrix="1 0 0 1 943.996 456.114" transformations="translations" pos="128 704" stroke="0" type="label" valign="baseline">cnt\_v.10</text>
 </group>
-<group matrix="1 0 0 1 0 28.0709">
-<text transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile0.bus</text>
-<text matrix="1 0 0 1 0 -16" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile1.bus</text>
-<text matrix="1 0 0 1 0 -32" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile2.bus</text>
-<text matrix="1 0 0 1 0 -48" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile3.bus</text>
-</group>
+<group matrix="1 0 0 1 0 22.4639">
+<text matrix="1 0 0 1 948.977 460.377" transformations="translations" pos="128 688" stroke="0" type="label" valign="baseline">blk\_x.7</text>
+<text matrix="1 0 0 1 949.808 464.633" transformations="translations" pos="128 672" stroke="0" type="label" valign="baseline">blk\_y.6</text>
+<text matrix="1 0 0 1 951.745 466.966" transformations="translations" pos="128 656" stroke="0" type="label" valign="baseline">off\_x.3</text>
+<text matrix="1 0 0 1 952.575 471.222" transformations="translations" pos="128 640" stroke="0" type="label" valign="baseline">off\_y.3</text>
+<text matrix="1 0 0 1 938.461 473.82" transformations="translations" pos="128 624" stroke="0" type="label" valign="baseline">in\_mem.1</text>
 </group>
 </group>
 </page>

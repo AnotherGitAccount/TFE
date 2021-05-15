@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210514025316" modified="D:20210515000603"/>
+<info created="D:20210514170730" modified="D:20210515000440"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,35 +312,20 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<group layer="alpha" matrix="1 0 0 1 -1033.07 -841.521">
-<text matrix="1 0 0 1 1102.74 795.822" transformations="translations" pos="192 688" stroke="0" type="label" valign="baseline" size="Large">Mask Logic Unit</text>
-<path matrix="1 0 0 1 1106.28 791.878" stroke="0">
-92.7137 778.724 m
-92.7137 612.335 l
-387.094 612.335 l
-387.094 778.724 l
+<text layer="alpha" matrix="1 0 0 1 129.09 -169.511" transformations="translations" pos="77.6256 707.811" stroke="0" type="label" valign="baseline" size="Large">I2C\_HDMI\_Config</text>
+<path matrix="1.1304 0 0 1.11434 111.54 -241.774" stroke="0">
+45.3286 748.183 m
+45.3286 658.313 l
+221.558 658.313 l
+221.558 748.183 l
 h
 </path>
-<group matrix="1 0 0 1 1108.55 791.878">
-<group matrix="1 0 0 1 0 -3.80059">
-<text transformations="translations" pos="96 768" stroke="0" type="label" valign="baseline">primary.12</text>
-<text transformations="translations" pos="96 752" stroke="0" type="label" valign="baseline">secondary.12</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 720" stroke="0" type="label" valign="baseline">mask0.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 704" stroke="0" type="label" valign="baseline">mask1.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 688" stroke="0" type="label" valign="baseline">mask2.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 672" stroke="0" type="label" valign="baseline">mask3.128</text>
-<text matrix="1 0 0 1 0 32" transformations="translations" pos="96 640" stroke="0" type="label" valign="baseline">tile0.bus</text>
-<text matrix="1 0 0 1 0 32" transformations="translations" pos="96 624" stroke="0" type="label" valign="baseline">tile1.bus</text>
-<text matrix="1 0 0 1 0 48" transformations="translations" pos="96 592" stroke="0" type="label" valign="baseline">tile2.bus</text>
-<text matrix="1 0 0 1 0 48" transformations="translations" pos="96 576" stroke="0" type="label" valign="baseline">tile3.bus</text>
-</group>
-<group matrix="1 0 0 1 0 28.0709">
-<text transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile0.bus</text>
-<text matrix="1 0 0 1 0 -16" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile1.bus</text>
-<text matrix="1 0 0 1 0 -32" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile2.bus</text>
-<text matrix="1 0 0 1 0 -48" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile3.bus</text>
-</group>
-</group>
+<text matrix="1 0 0 1 101.26 -51.785" transformations="translations" pos="204.249 575.643" stroke="0" type="label" valign="baseline">I2C\_SCLK.1</text>
+<text matrix="1 0 0 1 100.56 -27.563" transformations="translations" pos="204.951 541.942" stroke="0" type="label" valign="baseline">I2C\_SDAT.1</text>
+<text matrix="1 0 0 1 75.55 -30.722" transformations="translations" pos="208.111 535.623" stroke="0" type="label" valign="baseline">HDMI\_TX\_INT.1</text>
+<group matrix="1 0 0 1 -36.58 -14.574">
+<text matrix="1 0 0 1 73.4407 -140.461" transformations="translations" pos="128 736" stroke="0" type="label" valign="baseline">iCLK.1</text>
+<text transformations="translations" pos="201.441 586.175" stroke="0" type="label" valign="baseline">iRST\_N.1</text>
 </group>
 </page>
 </ipe>

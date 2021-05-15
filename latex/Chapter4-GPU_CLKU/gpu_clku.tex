@@ -299,6 +299,16 @@ the memory units are not displayed in the circuit so as not to make it more cumb
     \label{fig:gpu/memory_in}
 \end{figure}
 
+The interface of the memory can be found in Figure \ref{fig:gpu/memory}. 
+The red, green and blue signals of each tile 
+are put together in a bus to simplify the representation of the module.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/memory}
+    \caption{Memory}
+    \label{fig:gpu/memory}
+\end{figure}
 
 \subsection{Mask memory}
 
@@ -405,11 +415,147 @@ made up of the three color signals of the corresponding tile.
     \label{fig:gpu/mlu}
 \end{figure}
 
-
 \subsection{Graphic Counter (GC)}
+
+The graphics counter is the first element fully included in the HDMI controller part of the GPU. 
+It simply counts and provides several counts. Firstly, it provides the current position of the 
+pixel taken into account, so cnt\_h and cnt\_v representing the horizontal and vertical position 
+of the pixel. These go through all the virtual screen of the VESA, that is to say from 0 to 1087 
+for cnt\_h and from 0 to 516 for cnt\_v. These counts are then used to correctly generate the 
+synchronization signals of the VESA in another module. 
+
+Then, it provides four other counters blk\_x, blk\_y, off\_x, off\_y which again give the position 
+of a pixel but using this time the GPU coordinate system. It should be noted that these counters 
+only count from the start of the useful screen. In other words, blk\_x and blk\_y will both be at 0 
+when they reach values of cnt\_h and cnt\_v which correspond to the location of the first tile in 
+memory, the one at the top left of the useful screen. And their values will continue to increase 
+until the end of the VESA virtual screen.
+
+It should be noted that the useful screen does not correspond to the entire active area of the 
+VESA. As mentioned earlier, not all the space is used because of memory constraints. The useful 
+screen is centered in this active region. When the counter is in the useful region of the screen, 
+the in\_mem signal is high to warn that the position given by the counter corresponds to a tile 
+present in memory. The range of the counters and a schematic of the positioning of the useful 
+region are given in Figure \ref{fig:gpu/gc_screen}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/gc_screen}
+    \caption{Counters range and useful screen}
+    \label{fig:gpu/gc_screen}
+\end{figure}
+
+All these counters are implemented with the help of registers by choosing correctly the clk\_enable 
+signals and the reset signals. The inner circuit without the in\_memory which is only a condition 
+on the values of h\_cnt and v\_cnt is given in Figure \ref{fig:gpu/gc_in}
+. The interface is also shown in Figure \ref{fig:gpu/gc}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter4-GPU_CLKU/res/gc}
+    \caption{Graphic counter}
+    \label{fig:gpu/gc}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/gc_in}
+    \caption{Graphic counter internal circuit}
+    \label{fig:gpu/gc_in}
+\end{figure}
 
 \subsection{Synchronizer}
 
+The synchronizer is in charge of generating the synchronization and display enable signals of the
+VESA protocol. It simply looks at the values of the h\_cnt and v\_cnt signals provided by the 
+graphic counter. If the values are within the ranges associated with the synchronizations or display
+enable, the synchronizer sets the signal to high. As a reminder, the ranges were described in 
+Figure \ref{fig:gpu/screen_vesa} and Table \ref{tab:gpu/vesa}. As the internal circuit is 
+only a condition, it is not shown. The interface is shown in Figure \ref{fig:gpu/synchronizer}.  
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/synchronizer}
+    \caption{Synchronizer}
+    \label{fig:gpu/synchronizer}
+\end{figure}
+
 \subsection{I2C HDMI Config}
 
+This module is provided by Terasic to configure the HDMI controller present on the DE10 nano board. 
+In this work, it is used as a library. That is to say, it has not been tried to understand what it 
+does, what are its internal circuits. In the GPU, it is simply connected to the pins of the physical
+HDMI controller as Terasic suggests in his tutorial. The interface is still provided in 
+Figure \ref{fig:gpu/i2c}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter4-GPU_CLKU/res/i2c}
+    \caption{I2C HDMI Config}
+    \label{fig:gpu/i2c}
+\end{figure}
+
 \subsection{Complete circuit}
+
+The GPU whose internal circuitry is given in Figure \ref{fig:gpu/gpu_in}, like the CPU, runs in 
+sequence. It starts by reading the mask in the mask memory. Then it reads the tiles to be edited in 
+the memory and shifts the masks at the same time. The results of these two operations arrive in the 
+mask logic unit where they are processed in a combinatorial way. Each mask operates on the tile 
+associated with it, taking into account the primary and secondary colors. Once this is done, the 
+memory is activated again, in writing this time. 
+
+As for some CPU memories, the mask memory has a MAU access that allows reading and writing of this 
+memory from the ARM processor.
+
+This constitutes the computational part of the GPU, the one that the CPU controls through its ST and 
+LD operations.
+
+Then, there is the controller that fetches each tile in memory one by one and traces all the pixels. 
+It also manages the synchronization signals of the VESA protocol. The graphic counter is used to 
+provide the address of the memory. To do this, the blk\_x and blk\_y outputs are concatenated to 
+form the address. Then, the offsets are added to form an index in the tile and select the current 
+pixel. The selected pixel is then put on the output if the signal in\_memory of the graphic counter 
+is high, otherwise the color is black. It is to this effect that the two multiplexers are used on 
+the hdmi\_tx\_d output. It should be noted that the index and the im\_mem signal must be timed so 
+that they arrive at the multiplexers at the same time as the tile requested from the memory. This 
+is why two registers are left on their way. The cnt\_h and cnt\_v signals go to the synchronizer 
+which is responsible for generating the synchronization signals. And finally, there is also the 
+I2C\_HDMI\_Config to configure the physical HDMI controller.
+
+It should be noted that two clocks are present. On the computational side, it is the same clock as 
+the CPU that is used to ensure that the two modules are synchronized. On the HDMI side, it is the 
+VESA protocol clock that is used. It is called gpu\_clk. The GPU interface is available in Figure
+\ref{fig:gpu/gpu}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/gpu_in}
+    \caption{GPU internal circuit}
+    \label{fig:gpu/gpu_in}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/gpu}
+    \caption{GPU}
+    \label{fig:gpu/gpu}
+\end{figure}
+
+\section{Clock Unit (CLKU)}
+
+As it has been seen, two clocks are needed. One as high as possible for the CPU and the modules 
+working synchronously with it and one for the 33.750MHz HDMI controller. The CPU clock cannot 
+exceed 50MHz. Indeed, other higher frequencies have been tested but do not meet the timing 
+constraints at compile time. For the CPU, the clock unit only passes the FPGA clock from 50MHz to 
+the input to the output. On the other hand, it must be modified for the HDMI part. This is done 
+using a PLL (Phased-locked loop) which allows to generate a clock with a given frequency from 
+another clock with a fixed frequency. This PLL is easily configured in a GUI using the Quartus 
+Mega Wizard by setting the input and output frequency. The CLKU is then only a PLL. Its interface 
+is given in Figure \ref{fig:clku/clku}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/clku}
+    \caption{CLKU}
+    \label{fig:clku/clku}
+\end{figure}

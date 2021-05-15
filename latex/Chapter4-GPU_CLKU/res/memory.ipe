@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210514025316" modified="D:20210515000603"/>
+<info created="D:20210514213124" modified="D:20210515000519"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,35 +312,29 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<group layer="alpha" matrix="1 0 0 1 -1033.07 -841.521">
-<text matrix="1 0 0 1 1102.74 795.822" transformations="translations" pos="192 688" stroke="0" type="label" valign="baseline" size="Large">Mask Logic Unit</text>
-<path matrix="1 0 0 1 1106.28 791.878" stroke="0">
-92.7137 778.724 m
-92.7137 612.335 l
-387.094 612.335 l
-387.094 778.724 l
+<text layer="alpha" matrix="1 0 0 1 21.62 -124.356" transformations="translations" pos="169.989 743.046" stroke="0" type="label" valign="baseline" size="Large">Memory</text>
+<path matrix="1 0 0 1 31.17 -127.47" stroke="0">
+63.5227 800.873 m
+63.5227 698.46 l
+308.072 698.46 l
+308.072 800.873 l
 h
 </path>
-<group matrix="1 0 0 1 1108.55 791.878">
-<group matrix="1 0 0 1 0 -3.80059">
-<text transformations="translations" pos="96 768" stroke="0" type="label" valign="baseline">primary.12</text>
-<text transformations="translations" pos="96 752" stroke="0" type="label" valign="baseline">secondary.12</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 720" stroke="0" type="label" valign="baseline">mask0.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 704" stroke="0" type="label" valign="baseline">mask1.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 688" stroke="0" type="label" valign="baseline">mask2.128</text>
-<text matrix="1 0 0 1 0 16" transformations="translations" pos="96 672" stroke="0" type="label" valign="baseline">mask3.128</text>
-<text matrix="1 0 0 1 0 32" transformations="translations" pos="96 640" stroke="0" type="label" valign="baseline">tile0.bus</text>
-<text matrix="1 0 0 1 0 32" transformations="translations" pos="96 624" stroke="0" type="label" valign="baseline">tile1.bus</text>
-<text matrix="1 0 0 1 0 48" transformations="translations" pos="96 592" stroke="0" type="label" valign="baseline">tile2.bus</text>
-<text matrix="1 0 0 1 0 48" transformations="translations" pos="96 576" stroke="0" type="label" valign="baseline">tile3.bus</text>
-</group>
-<group matrix="1 0 0 1 0 28.0709">
-<text transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile0.bus</text>
-<text matrix="1 0 0 1 0 -16" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile1.bus</text>
-<text matrix="1 0 0 1 0 -32" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile2.bus</text>
-<text matrix="1 0 0 1 0 -48" transformations="translations" pos="320 688" stroke="0" type="label" valign="baseline">next\_tile3.bus</text>
-</group>
-</group>
-</group>
+<text matrix="1 0 0 1 209.66 -111.955" transformations="translations" pos="96.7251 721" stroke="0" type="label" valign="baseline">clk\_b.1</text>
+<text matrix="1 0 0 1 148.84 -89.351" transformations="translations" pos="106.217 678.193" stroke="0" type="label" valign="baseline">block\_address\_b.13</text>
+<text matrix="1 0 0 1 39.83 -155.842" transformations="translations" pos="253.487 755.747" stroke="0" type="label" valign="baseline">qtileb.bus</text>
+<text matrix="1 0 0 1 10.5 -135.53" transformations="translations" pos="87.7251 754" stroke="0" type="label" valign="baseline">clr.1</text>
+<text matrix="1 0 0 1 2.5 -134.719" transformations="translations" pos="95.7251 736" stroke="0" type="label" valign="baseline">clk\_a.1</text>
+<text matrix="1 0 0 1 -0.42 -115.173" transformations="translations" pos="98.6513 707.918" stroke="0" type="label" valign="baseline">clk\_en\_a.1</text>
+<text matrix="1 0 0 1 -2.59 -112.942" transformations="translations" pos="100.813 697.649" stroke="0" type="label" valign="baseline">wren.1</text>
+<text matrix="1 0 0 1 -3.67 -113.642" transformations="translations" pos="101.894 689.813" stroke="0" type="label" valign="baseline">block\_address\_a.13</text>
+<text matrix="1 0 0 1 188.85 0.968" transformations="translations" pos="110.271 658.738" stroke="0" type="label" valign="baseline">tile3.bus</text>
+<text matrix="1 0 0 1 182.64 2.139" transformations="translations" pos="116.486 648.739" stroke="0" type="label" valign="baseline">tile2.bus</text>
+<text matrix="1 0 0 1 179.94 3.58" transformations="translations" pos="119.188 638.471" stroke="0" type="label" valign="baseline">tile1.bus</text>
+<text matrix="1 0 0 1 175.88 0.968" transformations="translations" pos="123.241 632.256" stroke="0" type="label" valign="baseline">tile0.bus</text>
+<text matrix="1 0 0 1 -157.151 -85.51" transformations="translations" pos="255.379 745.208" stroke="0" type="label" valign="baseline">qtile3.bus</text>
+<text matrix="1 0 0 1 -158.503 -85.96" transformations="translations" pos="256.73 736.561" stroke="0" type="label" valign="baseline">qtile2.bus</text>
+<text matrix="1 0 0 1 -162.015 -85.059" transformations="translations" pos="260.243 726.563" stroke="0" type="label" valign="baseline">qtile1.bus</text>
+<text matrix="1 0 0 1 -161.475 -85.51" transformations="translations" pos="259.702 717.916" stroke="0" type="label" valign="baseline">qtile0.bus</text>
 </page>
 </ipe>
