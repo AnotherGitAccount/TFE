@@ -33,7 +33,7 @@ are then sent to the master in the order of their addresses.
 
 \begin{figure}[ht!]
   \center
-  \includegraphics[width=\linewidth]{"Chapter6-MAU_CTRLU/res/avalon_mm_read.png"}
+  \includegraphics[width=\linewidth]{"Chapter5-MAU_CTRLU/res/avalon_mm_read.png"}
   \caption{Read operation using Avalon MM}
   \label{fig:avalon/mm_read}
 \end{figure}
@@ -50,7 +50,7 @@ as soon as it goes up again.
 
 \begin{figure}[ht!]
   \center
-  \includegraphics[width=\linewidth]{"Chapter6-MAU_CTRLU/res/avalon_mm_write.png"}
+  \includegraphics[width=\linewidth]{"Chapter5-MAU_CTRLU/res/avalon_mm_write.png"}
   \caption{Write operation using Avalon MM}
   \label{fig:avalon/mm_write}
 \end{figure}
@@ -72,7 +72,7 @@ an acknowledgement from the external slave. When this timer reaches 0, the reque
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/external_bus_bridge.PNG"}
+    \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/external_bus_bridge.PNG"}
     \caption{Avalon to external bus bridge interface and signals}
     \label{fig:mau/bus_bridge}
 \end{figure}
@@ -88,7 +88,7 @@ during a clock cycle to validate the transaction.
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/external_bus_timings.PNG"}
+    \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/external_bus_timings.PNG"}
     \caption{External bus protocol timings}
     \label{fig:mau/bus_bridge_protocol}
 \end{figure}
@@ -131,7 +131,7 @@ that they can be used from the FPGA. They are the ones that are connected to the
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[width=\linewidth]{"Chapter6-MAU_CTRLU/res/qsys_mau.PNG"}
+    \includegraphics[width=\linewidth]{"Chapter5-MAU_CTRLU/res/qsys_mau.PNG"}
     \caption{Avalon to external bus bridges connections in Qsys}
     \label{fig:avalon/bus}
 \end{figure}
@@ -149,7 +149,7 @@ has is that the address is not multiplied by 4 in the Iddle state.
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/mau_fsm"}
+    \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/mau_fsm"}
     \caption{Memory Access 32 finite state machine}
     \label{fig:ma_fsm}
 \end{figure}
@@ -162,14 +162,14 @@ address. The interfaces of the memory acess are given in Figures \ref{fig:ma32} 
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/memory_access_32"}
+    \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/memory_access_32"}
     \caption{Memory Access 32}
     \label{fig:ma32}
 \end{figure}
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/memory_access_128"}
+    \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/memory_access_128"}
     \caption{Memory Access 128}
     \label{fig:ma128}
 \end{figure}
@@ -184,14 +184,14 @@ and a bus representation is used. However, all signals are available in the inte
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[width=\linewidth]{"Chapter6-MAU_CTRLU/res/mau_in"}
+    \includegraphics[width=\linewidth]{"Chapter5-MAU_CTRLU/res/mau_in"}
     \caption{Memory Access Unit internal circuit}
     \label{fig:mau_in}
 \end{figure}
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/mau"}
+    \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/mau"}
     \caption{Memory Access Unit}
     \label{fig:mau}
 \end{figure}
@@ -222,7 +222,7 @@ code as usual is used.
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[width=\linewidth]{"Chapter6-MAU_CTRLU/res/qsys_ctrlu.PNG"}
+    \includegraphics[width=\linewidth]{"Chapter5-MAU_CTRLU/res/qsys_ctrlu.PNG"}
     \caption{Parallel IO connections in QSys}
     \label{fig:qsys/ctrlu}
 \end{figure}
@@ -248,7 +248,7 @@ the intermediate state, any bounce between states is avoided.
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/ctrlu_fsm"}
+    \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/ctrlu_fsm"}
     \caption{Finite state machine of the Control Unit}
     \label{fig:ctrlu/fsm}
 \end{figure}
@@ -266,14 +266,14 @@ Unit is therefore the one given in Figure \ref{fig:ctrlu}.
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/ctrlu_summary"}
+    \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/ctrlu_summary"}
     \caption{ARM, Beta Machine and CTRLU interaction summary}
     \label{fig:ctrlu/summary}
 \end{figure}
 
 \begin{figure}[ht!]
     \center
-    \includegraphics[scale=0.8]{"Chapter6-MAU_CTRLU/res/ctrlu"}
+    \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/ctrlu"}
     \caption{Control Unit}
     \label{fig:ctrlu}
 \end{figure}

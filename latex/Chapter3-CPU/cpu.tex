@@ -1,4 +1,4 @@
-\chapter{Beta machine, CPU design}
+\chapter{Beta machine CPU and IO unit design}
 
 As explained in the introduction, the goal of this work is to design a Beta machine. This machine is 
 in fact a minimal CPU based on the Harvard architecture, i.e., data and intructions are stored in 
@@ -121,7 +121,7 @@ moving on to the practical implementation that comes later.
 
 %PF allows: si en français, on utilise beaucoup ce genre de construction
 % en Anglais, on l'évite plutôt
-The Arithmetic Logic Unit (ALU), as its name suggest, is used for arithmetic, logic and bit shifting 
+The Arithmetic Logic Unit (ALU), as its name suggests, is used for arithmetic, logic and bit shifting 
 operations. These operations are selected using the alufn signal. The chosen operation is then 
 applied on the two operands data\_a and data\_b and the result is sent on res. The various
 operations are listed in Table \ref{tab:alu/alufn}\footnote{unsigned(data\_b[4:0]) in the table means 
@@ -816,4 +816,51 @@ the CPU and a bus representation is used. However, all signals are available in 
     \includegraphics[scale=0.8]{Chapter3-CPU/res/beta_machine}
     \caption{Beta machine, the CPU}
     \label{fig:beta/interface}
+\end{figure}
+
+\section{IO Unit (IOU)}
+
+The IO unit was very briefly discussed in the previous section, especially in terms of its 
+addressing by the store (ST) and load (LD) operations. It should be noted that this module is 
+very experimental in this work. It was mainly added to add interraction to the programs that 
+are loaded on the beta machine. Its implementation is therefore very direct, naive and 
+incomplete. Incomplete means that only three IOs of the DE10 Nano have controllers in the IOU. 
+These three IOs are the 8 LEDs, the 2 buttons and the 4 switches respectively shown in pink, green
+and red in Figure \ref{fig:iou/ios}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{Chapter3-CPU/res/ios.png}
+    \caption{Used IOs of the DE10 Nano board.}
+    \label{fig:iou/ios}
+\end{figure}
+
+The interface that the IOU exposes is the one in Figure \ref{fig:iou/iou}. It is identical to 
+the memory instruction except that the IOU has the three ports buttons, leds and switches that 
+allow to connect this module to the physical IOs on the board.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{Chapter3-CPU/res/iou}
+    \caption{IO Unit (IOU).}
+    \label{fig:iou/iou}
+\end{figure}
+
+Concerning the internal circuit that is shown in Figure \ref{fig:iou/iou_in}, it looks again very 
+much like a memory with the multiplexing between the two ports (MAU and CPU). Inside, a register 
+represents an IO. The buttons and switches are read-only, the multiplexer added for writing thus has 
+only one output port, the one of the LEDs. On the output side, the values of each register are 
+multiplexed to data\_read. As it can be deduced from the multiplexers, the addresses of the IOs are 
+0x0 for the buttons, 0x1 for the LEDs and 0x2 for the switches. 
+
+Concerning reads and writes, the data word contains the value of all the elements of the addressed 
+IO on its last bits. For example, when writing the LEDs, the last 8 bits of data\_write contain the 
+new state of each LED. To know to which bit corresponds a precise LED, the user can look at the
+DE10 Nano board. The LEDs, buttons and switches are identified on the board.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Chapter3-CPU/res/iou_in}
+    \caption{IO Unit (IOU) internal circuit.}
+    \label{fig:iou/iou_in}
 \end{figure}
