@@ -1,7 +1,8 @@
-\chapter{Beta machine CPU and IO unit design}
+\chapter{The Beta machine CPU and IO unit design}
+% PF Maybe use $\beta$ machine?  I think it looks better
 
 As explained in the introduction, the goal of this work is to design a Beta machine. This machine is 
-in fact a minimal CPU based on the Harvard architecture, i.e., data and intructions are stored in 
+in fact a minimal CPU based on the Harvard architecture, i.e., data and instructions are stored in 
 two different memories. The machine uses words of 32 bits, stored in memory according to the little-endian convention, 
 and only implements operations on 2's complement signed 32 bits integers. 
 
@@ -73,7 +74,7 @@ The Verilog implementation of the program counter is relatively straight-forward
 
 The different modes of the program counter have been verified by simulation. In the first mode 
 (NORMAL mode, pcsel = 0b00), it was checked that with a pc\_in at 4 294 967 292 (the maximum value with 
-the last two bits at 0 that helds on 32 bits), the program counter returned 0 for pc\_next and did not 
+the last two bits at 0 that holds on 32 bits), the program counter returned 0 for pc\_next and did not 
 give a random value. Other random values for pc\_in were checked to be sure that it worked 
 correctly. Results of this first simulation are shown in Figure \ref{fig:sim/pc_00}. Note that the
 input values are changed only once per two clock cycles but the module is totally able to manage
@@ -125,7 +126,7 @@ The Arithmetic Logic Unit (ALU), as its name suggests, is used for arithmetic, l
 operations. These operations are selected using the alufn signal. The chosen operation is then 
 applied on the two operands data\_a and data\_b and the result is sent on res. The various
 operations are listed in Table \ref{tab:alu/alufn}\footnote{unsigned(data\_b[4:0]) in the table means 
-that only the five last bits of data\_b are used and that they are intepreted as an unsigned number
+that only the five last bits of data\_b are used and that they are interpreted as an unsigned number
 } and the module is pictured in Figure \ref{fig:components/alu}. 
 
 \begin{figure}[ht]
@@ -321,7 +322,7 @@ The other bits are unused.}
 
 Now that the module based on the altsyncram is created,  an interface to enable 
 access from the rest of the beta machine is required. One also needs to add the programming ports. The
-module that represents this interface is actually the Instruction memory itself, the module ports
+module that represents this interface is actually the instruction memory itself, the module ports
 are shown in Figure \ref{fig:components/im}.
 
 \begin{figure}[H]
@@ -348,10 +349,10 @@ the ram\_32768 to access the memory.
 
 The data memory is used to store data from the CPU.  It corresponds to the main memory of the CPU.
 
-For this memory, everything happens exactly the same as for the instruction memory. The only 
+This memory is similar to the instruction memory. The only 
 thing that changes is the size of the internal RAM. Indeed, this one is 16384 words of 32 bits. This 
-value has been chosen to be twice as small as the instruction memory and to fit both together in 
-the FPGA (in addition to the other memories that is seen later). The interface of this module
+value has been chosen to be twice as small as the instruction memory, so that both fit together in 
+the FPGA (in addition to the other memories that are presented later). The interface of this module
 is displayed in Figure \ref{fig:components/dm} and its internal circuits in Figure \ref{fig:components/dm_in}.
 
 \begin{figure}[H]
@@ -370,35 +371,34 @@ is displayed in Figure \ref{fig:components/dm} and its internal circuits in Figu
 
 \subsection{Register file}
 
-The purpose of the register file is to give access to 32 registers to the CPU. Two reads and one 
-write operations must be able to be executed simultaneously by this module. A single register is not 
-accessible in read mode. This is register 31. A read to this register always results in a 0
-value writen on the data\_read output.
+The purpose of the register file is to provide access to 32 registers to the CPU. Two simultaneous reads and one 
+write operations may occur.  Register 31 has a special role. A read to this register always results in a 0
+value written on the data\_read output.
 
 In the register file, two memories of 32 words of 32 bits are used, this memory then represents 
 the 32 registers. As the register file needs two simultaneous read and write accesses, it is
 mandatory to use two separate memories because Altsyncrams do not support tri-port accesses.
 By having two rams with two ports, one port of each can be used to perform mirrored writes and the 
 other port is used to have a read access. This gives two independent reads and a single write. In 
-fact, the memories are a copy of each other in this configuration. 
+fact, the memories are copies of each other in this configuration.
+% PF This aboves surprises me.  Maybe when you have time, we can discuss this.
 
-However, writing and reading are never enabled at the same time in this work (the reason is explained
-later in this chapter). But 
-in order to provide the correct interface for future works, the register file implements all three 
-ports anyway. 
+Although writing and reading are never enabled at the same time in this work (the reason is explained
+later in this chapter), the register file implements all three 
+ports anyway in order to provide the correct interface for future works, 
 
 Four ports are used to control the operation of the register file. First of all, the 
 two clock enable signals (cpu\_clk\_en) allow reading for cpu\_clk\_en[0] and writing for cpu\_clk\_en[1].  Then, 
-a cpu\_wren signal also allows to allow writing operations or not. However, in the case where the writes and 
+a cpu\_wren signal indicates whether writing operations are allowed. However, in the case where the writes and 
 reads of the register file are executed in two different steps, cpu\_wren and cpu\_clk\_en[1] must be in the 
-high state for a write to take place. In case a user would like to use all the ports simulataneously, 
+high state for a write to take place. In case a user would like to use all the ports simultaneously, 
 it would be required to set both cpu\_clk\_en signals to the high state. In this configuration, writing 
 is then totally controlled by the cpu\_wren signal. Finally, the alive signal allows, as for the instruction and 
 data memories, to make the register file listen to the CPU or MAU buses. The different ports of the register file 
 are shown in Figure \ref{fig:components/rf}.
 
 For access from the MAU, the register file exposes only one port which is used either for 
-reading or writing (depending on the state of mau\_wren). That is why the mau bus only hava one 
+reading or writing (depending on the state of mau\_wren). That is why the mau bus only has one 
 address signal, a read signal and a write signal. When writing, the value is stored on 
 both memories, while reading only operates on one memory.
 
@@ -451,13 +451,12 @@ module is given, in Figure \ref{fig:components/cl}.
 
 As mentioned earlier, the different modules making up the machine are executed in sequence and not 
 in parallel. This allows to avoid pipelining in the machine and to simplify its realization. The 
-execution of an instruction thus takes seven clock cycles. Pipelining could be a very interesting 
+execution of an instruction takes seven clock cycles. Implementing pipelining could be a very interesting 
 and useful subject for future works. 
 
 For this sequence to be realized, the modules must be executed in the right order. It is therefore 
 important to have a module that generates the sequence. This module is the clock\_controller. It
-generates a signal named clk\_sequence which contains the seven clk\_enable signals which are 
-necessary for the realization of the machine. The interface of the clock\_controller is given in
+generates a signal named clk\_sequence which contains the seven clk\_enable signals which orchestrate the machine. The interface of the clock\_controller is given in
 Figure \ref{fig:components/cc}. 
 
 \begin{figure}[H]
@@ -469,7 +468,7 @@ Figure \ref{fig:components/cc}.
 
 At the level of the realization, this module is very simple, it initializes a register to 
 $0b0000001$ when the alive signal is low, then when alive is high, it carries out a circular logical 
-left shift at each clock cycle. Thus, only one bit of the clk\_sequence signal is high at a time, 
+left shift at each clock cycle. Thus, only one bit of the clk\_sequence signal is high at any time, 
 and thus only one module is activated. The internal circuits of this module are shown in Figure 
 \ref{fig:components/cc_in}. It is then sufficient to associate the generated signal with the clk\_en 
 signals of the different modules in the right order to obtain the expected execution sequence.
@@ -485,7 +484,7 @@ signals of the different modules in the right order to obtain the expected execu
 \section{Instruction Set Architecture}
 \subsection{Instructions formats}
 
-Two instruction formats are used in the instruction set, the first one is used for all instructions 
+Two instruction formats are used in the instruction set.  The first one is used for all instructions 
 requiring two operands ($R_a$ and $R_b$ in Figure \ref{fig:instructions/format}) which is for example 
 the case for simple arithmetic instructions. The second format is used for all instructions 
 requiring a single operand and a constant. This is the case for example for conditional jump 
@@ -493,7 +492,8 @@ operations. As can be seen in Figure \ref{fig:instructions/format}, the $R_x$ co
 addresses. As they are on 5 bits and no bank change operation exists, 32 registers are addressable. 
 $R_c$ stores the result of the instruction when a result exists. It should be noted that the 
 constants are on 16 bits and signed. In Figure \ref{fig:memories/altsyncram} the most general interface 
-with two true ports is shown. 
+with two true ports is shown.
+% PF I do not understand why this last sentence is there.  Maybe better link?
 
 \begin{figure}[H]
     \centering
@@ -545,8 +545,8 @@ $[R_x]$ means the content of register $R_x$.
     \label{fig:instructions/subc}
 \end{figure}
 
-Concerning the comparison operations, they are simply put a $0$ in $R_c$ when the comparison is 
-false, a $1$ otherwise.
+The comparison operations simply put a $0$ in $R_c$ when the comparison is 
+false, and $1$ otherwise.
 
 \subsubsection*{Memory instructions}
 
@@ -573,7 +573,7 @@ aligned. Both instructions are detailed in Table \ref{tab:instruction/dm}.
 
 The purpose of these instructions is to modify the value of the program counter conditionally or 
 not. The different instructions are listed in Table \ref{tab:instruction/pc}. The values of 
-column Next PC is writen to PC and the address of the next instruction before the jump is
+column Next PC is written to PC and the address of the next instruction before the jump is
 stored in Rc. Note that [Ra] should be byte aligned for JMP but the constant should be 32 bits 
 aligned for BEQ and BNE (as they already multiply the constant by 4).
 
@@ -620,12 +620,12 @@ circuit and how the modules have been interconnected are explained in this secti
     \label{fig:beta/all}
 \end{figure}
 
-\subsection{Modules sequence}
+\subsection{Module sequence}
 
 The first thing to establish is the execution sequence.  The first step is to fetch an instruction 
 from the memory instruction, so it is executed first. Then, the opcode of this instruction must be 
 decoded by the control logic. The control logic has the second position. The register file can now 
-be executed in read mode, in order to obtain the values of the registers useful in the current 
+be operated in read mode, in order to obtain the values of the registers useful in the current 
 instruction. This step could not have been carried out at the same time as the previous one because 
 a multiplexer controlled by a signal from the control logic is present at the cpu\_read\_address\_2 
 input of the Register File. This allows it to choose between Rb and Rc, Ra always being the address 
@@ -660,8 +660,8 @@ section.
 
 \subsubsection*{Arithmetic and logic instructions}
 
-In order for an ALU instruction to perform correctly, two things are required. Firstly, that the 
-necessary registers are read from the register file and secondly that the ALU executes the operation. 
+In order for an ALU instruction to perform correctly, two things are required. First, the 
+necessary registers must be read from the register file and second the ALU must execute the operation. 
 To do this, the instruction coming from the instruction memory is split. The bits corresponding to 
 Ra go to the address of the first port and the bits corresponding to Rb to the second port. As the 
 results are stored in the register Rc, the bits corresponding to Rc in the instruction are 
@@ -675,7 +675,7 @@ file so that it can store this value in Rc.
 
 At the control logic level, three signals are necessary. The first is used to control the operation 
 of the ALU, it is alufn. The second is bsel and allows to choose if the second operand of the ALU 
-is the constant or the value read in register Rb. And lastly, the signal werf allows to 
+is the constant or the value read in register Rb. And last, the signal werf allows to 
 authorize the write operation in the register file. The current content of the control logic is 
 shown in Table \ref{tab:cl/alu}.
 
@@ -699,9 +699,7 @@ To make this operation possible, a sum with constant must be performed and its r
 address for the data memory. This is why the output of the ALU is set as an address for the data 
 memory. Then the value read from the data memory must be used as a write value to the register file. 
 As a signal has already been connected to this register file entry, a multiplexer must be added 
-which chooses between the ALU output and the value read from the data memory.
-
-Concerning the control logic, a signal named wdsel is added to drive the newly added multiplexer.
+which chooses between the ALU output and the value read from the data memory.  This also means the control logic must provide a signal, named wdsel, to drive the newly added multiplexer.
 
 For the storage operation in data memory (ST), $<$[Ra] + constant$>$ = [Rc] must be executed.
 Everything remains the same as for the load at the ALU and the first port of the register file. 
@@ -733,17 +731,19 @@ logical control is displayed in Table \ref{tab:cl/dm}.
 \subsubsection*{Program counter instructions}
 
 For the JMP instruction, it is first necessary to save the value of PC + 4 in Rc. This means that 
-the output pc\_next of the program counter must be able to be used as a write value for the register 
-file. pc\_nect is therefore added to the multiplexer driven by wdsel. Then, the value of PC must be 
+the output pc\_next of the program counter must be able to be used as
+% PF must be able to be used as: this is heavy, try to rephrase the whole sentence in a nicer way
+a write value for the register 
+file. pc\_next is therefore added to the multiplexer driven by wdsel. Then, the value of PC must be 
 set to the value given in Ra. The reading of the first port of the register file is therefore 
 connected to the data port of the register file. The register file must also be set to JMP mode.
 
-Only one signal must be added to the control logic, this is the pcsel which will allow the program 
+Only one signal, pcsel, must be added to the control logic: it will allow the program 
 counter mode to be set.
 
 For the branch instructions, everything happens as for JMP except that the value of pc is different 
 in the control logic and that the constant contained in the instruction is connected to the offset 
-input of the program counter.. The final content of the control logic is given in Table \ref{tab:cl/all}.
+input of the program counter. The final content of the control logic is given in Table \ref{tab:cl/all}.
 
 \begin{table}[H]
     \centering
@@ -774,7 +774,7 @@ EXIT is called.
 
 \subsection{Other signals and ports}
 
-The Beta machine is only part of the system designed during this work. In fact, it consists of the 
+The Beta machine is only one part of the system designed during this work. In fact, it consists of the 
 CPU of this system. It therefore has other ports which allow its connection with other super-modules. 
 
 First there are the four ports exported\_address, exported\_data, exported\_wren and io\_data,
@@ -822,8 +822,8 @@ the CPU and a bus representation is used. However, all signals are available in 
 
 The IO unit was very briefly discussed in the previous section, especially in terms of its 
 addressing by the store (ST) and load (LD) operations. It should be noted that this module is 
-very experimental in this work. It was mainly added to add interraction to the programs that 
-are loaded on the beta machine. Its implementation is therefore very direct, naive and 
+very experimental in this work. It was mainly added to add interaction to the programs that 
+are loaded on the beta machine. Its implementation is therefore very straightforward, naive and 
 incomplete. Incomplete means that only three IOs of the DE10 Nano have controllers in the IOU. 
 These three IOs are the 8 LEDs, the 2 buttons and the 4 switches respectively shown in pink, green
 and red in Figure \ref{fig:iou/ios}.
@@ -836,7 +836,7 @@ and red in Figure \ref{fig:iou/ios}.
 \end{figure}
 
 The interface that the IOU exposes is the one in Figure \ref{fig:iou/iou}. It is identical to 
-the memory instruction except that the IOU has the three ports buttons, leds and switches that 
+the memory instruction except that the IOU has the three ports, i.e., buttons, leds and switches, that 
 allow to connect this module to the physical IOs on the board.
 
 \begin{figure}[H]
@@ -846,14 +846,14 @@ allow to connect this module to the physical IOs on the board.
     \label{fig:iou/iou}
 \end{figure}
 
-Concerning the internal circuit that is shown in Figure \ref{fig:iou/iou_in}, it looks again very 
+The internal circuit, shown in Figure \ref{fig:iou/iou_in}, looks again very 
 much like a memory with the multiplexing between the two ports (MAU and CPU). Inside, a register 
 represents an IO. The buttons and switches are read-only, the multiplexer added for writing thus has 
 only one output port, the one of the LEDs. On the output side, the values of each register are 
 multiplexed to data\_read. As it can be deduced from the multiplexers, the addresses of the IOs are 
 0x0 for the buttons, 0x1 for the LEDs and 0x2 for the switches. 
 
-Concerning reads and writes, the data word contains the value of all the elements of the addressed 
+When it comes to reads and writes, the data word contains the value of all the elements of the addressed 
 IO on its last bits. For example, when writing the LEDs, the last 8 bits of data\_write contain the 
 new state of each LED. To know to which bit corresponds a precise LED, the user can look at the
 DE10 Nano board. The LEDs, buttons and switches are identified on the board.
