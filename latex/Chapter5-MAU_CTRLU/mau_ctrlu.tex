@@ -5,7 +5,7 @@ access to several memories of the system. Another super-unit, the Control Unit i
 The latter keeps the state of the machine (on or off) and gives access to this register to the 
 ARM part. The ARM processor can therefore switch the machine on and off as it wishes from this 
 access. Before introducing these two super-units, the Avalon protocol is first described. This 
-protocol allows the communications through the bridges existing between the ARM and FPGA part of
+protocol allows the communications through the bridges existing between the ARM and FPGA parts of
 the Cyclone V.
 
 \section{Communication between ARM and FPGA sides}
@@ -68,7 +68,7 @@ protocol. This module is used as many times as there are memories to connect to 
 The different signals this module uses are shown in Figure \ref{fig:mau/bus_bridge}. Note that this
 module has an integrated timer that is reset each time the Avalon to external bus bridge receives
 an acknowledgement from the external slave. When this timer reaches 0, the request from the master 
-(denoted by Avalon Switch Fabric in the Figure) is deleted.
+(denoted by Avalon Switch Fabric in Figure \ref{fig:mau/bus_bridge}) is deleted.
 
 \begin{figure}[ht!]
     \center
@@ -98,12 +98,14 @@ it is decided that the
 addressable space is 256Kbytes long and that the words are on 32bits for each access except for the 
 access to the GPU mask memory which is on 4Kbytes with 128bits words. Each of these accesses are 
 put on the HPS-FPGA bridge, their offset is given in Table \ref{mau/bus}. These dimensions were 
-chosen to make the offset easy to understand. Indeed, only the sixth number changes in the 
+chosen to make the offset easy to remember. Indeed, only the sixth number changes in the 
 hexadecimal address. Moreover, this gives future users a large margin if they want to change the 
 dimensions of the memories. As far as the mask memory is concerned, the address range is simply the 
 size of the memory. This has been done especially to discourage any modification at this level. 
 Indeed, this would lead to a large modification of the GPU which could degrade its performance or 
-make it impossible to include in the design (due to lack of space on the FPGA).
+make it impossible to include in the design (due to lack of space on the FPGA). More over, the size
+of this memory is already the maximum adressable size possible for the store operation, using the
+GPU format.
 
 \begin{table}[ht!]
     \centering
@@ -142,8 +144,8 @@ the MAU can be considered.
 \subsection{Memory Access}
 
 In fact, the Memory Access Unit is composed of only two types of modules. The Memory Access 32, and 
-the Memory Access 128 allowing both the interfacing between an external bus and a memory (these two
-modules respectively have words of 32 and 128 bits). To do this, they both implement a finite state machine. 
+the Memory Access 128 both allowing the interfacing between an external bus and a memory (these two
+modules respectively manage words of 32 and 128 bits). To do this, they both implement a finite state machine. 
 That of Memory Access 32 is given in Figure \ref{fig:ma_fsm}. The only difference that the 128 bits version 
 has is that the address is not multiplied by 4 in the Iddle state. 
 
@@ -177,10 +179,10 @@ address. The interfaces of the memory acess are given in Figures \ref{fig:ma32} 
 \subsection{Memory Access Unit circuit}
 
 The Memory Access Unit is therefore a simple parallelization of four Memory Access 32 modules and 
-one Memory Access 128 module. The MAU will later be connected to the different signals exported to 
+one Memory Access 128 module. The MAU is later connected to the different signals exported in 
 QSys. The circuit of the MAU is given in Figure \ref{fig:mau_in} and its interface is shown in 
 Figure \ref{fig:mau}. In order to simplify the interface of the MAU, not all signals are put in it 
-and a bus representation is used. However, all signals are available in the internal circuit.
+and a bus representation is used. However, all signals are shown in the internal circuit.
 
 \begin{figure}[ht!]
     \center
@@ -200,22 +202,22 @@ and a bus representation is used. However, all signals are available in the inte
 
 The control unit is a very simple unit. It manages the state of the machine. By managing the state is meant that 
 it decides whether the machine is switched on or off. Initially, the machine is switched off (alive 
-in the low state). When alive is low, the memories of the machine can be manipulated by the ARM 
+is in the low state). When alive is low, the memories of the machine can be manipulated by the ARM 
 processor. It is thus at this moment that the machine is programmed. Once this is done, the ARM 
 processor can start the machine by switching alive to the high state, the means by which this is 
 achieved are seen just after. During the execution of a program, it can be stopped in two ways. 
 Firstly by the ARM processor which can force the stop, by passing alive to the low state. Secondly, 
-the beta machine itself can order the stop by executing the EXIT instruction which will change the 
-halt signal to high. The control unit will then respond to this signal by switching alive to low.
+the beta machine itself can order the stop by executing the EXIT instruction which changes the 
+halt signal to high. The control unit then responds to this signal by switching alive to low.
 
 As for the MAU, it is necessary to connect a module to the interconnect to make this unit 
 accessible from the ARM processor. Once again, the Avalon protocol is not used directly. 
 Instead, a module called Parallel IO (PIO) is used. This one gives direct access to a register 
-from the interconnect (and thus from the ARM processor). This module also uses the MM avalon, so 
+from the interconnect (and thus from the ARM processor). This module also uses Avalon MM, so 
 the register has an address from the point of view of the ARM processor. A difference with 
 the Avalon to external bus bridge of the MAU is that the PIO is put on the lightweight HPS-FPGA 
 bridge. This choice is made because the PIO is not frequently used and does not require large data 
-transfers. For this kind of modules, the HPS documentation advises to use the lightweight.
+transfers. For this kind of modules, the HPS documentation advises to use the lightweight bridge.
 
 The connection of the parallel IO in QSys is shown in Figure \ref{fig:qsys/ctrlu}. The same color 
 code as usual is used.
@@ -244,7 +246,9 @@ has been done as so to have only one bit for the command. If the change of state
 when a 1 appeared, the final state would have been uncertain. Indeed, it is impossible to know for 
 how many clock cycles the 1 is maintained by the ARM. Depending on the number of cycles it would 
 take to reset its signal to 0, the state would switch several times between on and off. With 
-the intermediate state, any bounce between states is avoided.
+the intermediate state, any bounce between states is avoided. And simply use 1 for alive and 0 for
+stop is not a good idea neither as the ARM processor would have to alsways listen to state changes
+coming from the beta machine, to make sure that theirs values are coherent.
 
 \begin{figure}[ht!]
     \center
