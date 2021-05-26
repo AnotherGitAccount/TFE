@@ -6,18 +6,18 @@ that was found for it and therefore kept. This unit provides a
 graphic memory and the tools to draw patterns of 8x8 pixels, called masks. The writing in this 
 memory is done from the beta machine (the CPU) through the store instruction (ST). The specific way 
 of addressing the memory and the structure of the commands are described later. As far as the colors 
-are concerned, it has been decided to work with 12bit RGB colors, that is to say 4 bits per primary 
+are concerned, it has been decided to work with 12 bit RGB colors, that is to say 4 bits per primary 
 color.
 
 In addition to this, the GPU also provides the HDMI controller. This controller simply reads the 
-graphics memory in loop and draws its content on the screen. The controller handles a 
+graphic memory in loop and draws its content on the screen. The controller handles a 
 16:9 screen using a resolution of 848x480 pixels and a refresh rate of 60Hz. The protocol used is 
 the VESA 848x480, it is described later. 
 
 Before moving on to the description of the different modules making up the GPU, a description of 
 how the screen and the masks are interpreted by the GPU is done. The VESA protocol is also detailed.
 
-\subsection{Screen and tiles representation}
+\subsection{Screen and tile representation}
 
 As said before, the masks are 8x8 pixels and the goal is to be able to apply them anywhere on the 
 screen. 
@@ -66,7 +66,7 @@ problems. The first one is that this is impossible for the Cyclone V. Indeed, it
 the Cyclone V has just over 500 M10K memory blocks. However, to represent all the tiles, one would 
 need 3888 memories because the definition of a memory in the code must use at least one whole M10K, 
 which is simply impossible. Secondly, this would generate way to many connections in the circuits
-and a complex multiplexing stage in the memory circuits. Which is not tractable for the Cylone V 
+and a complex multiplexing stage in the memory circuits. This is not tractable for the Cylone V 
 neither.
 
 Another way is to try to divide the set of tiles into four groups. These four groups should be 
@@ -103,8 +103,12 @@ mask. Then there is \textit{set primary}, corresponding to 1, which sets the pix
 location to the primary color, this is better explained later. When the value is 2, 
 for \textit{set secondary}, it is then the secondary color that is applied. And 
 finally, for the value 3 corresponding to a \textit{reset}, the pixel becomes black. Each of these 
-values can therefore be represented on 2bits. Table \ref{tab:mask_op} summarizes the possible 
-operations of a mask. 
+values can therefore be represented on 2 bits. Table \ref{tab:mask_op} summarizes the possible 
+operations of a mask.
+% PF In general here, I do not see well the constraints imposed by the material vs the design choices.
+% PF I am a bit confused: I do not understand the relation to the 4 bits per color in the graphic memory and the primary/secondary color in masks
+% PF This is made clear later...
+
 
 \begin{table}[H]
     \centering
@@ -167,7 +171,7 @@ Figure \ref{fig:gpu/store_data}.
 \subsection{VESA protocol}
 
 The VESA protocol works exactly like the VGA protocol. That is, four signals are present. On the 
-one hand there is the 24 bit color signal (8 bits for each primary color, only 4 are trully used
+one hand there is the 24 bit color signal (8 bits for each primary color, only 4 are truly used
 here, the least significant bits are replaced by zeros), the vertical and 
 horizontal synchronization signals and the display enable signal. The synchronization signals 
 inform the screen of the end of a line for horizontal synchronization and the end of a frame (all 
@@ -176,9 +180,9 @@ signals, several things happen. First, there is a pause just after the signal. T
 horizontal back porch. Then, after this pause the colors are sent, the value must be maintained for 
 a certain time to fix a pixel. All the pixels of the line are assigned one after the other, in a 
 burst. Of course there are specific timing criteria that must be met for this to work, this is 
-discussed next. After sending all the colors, a new pause time takes place, called horizontal front 
+discussed next. After sending all the colors, a new pause takes place, called horizontal front 
 porch. And finally, after this pause, a new horizontal synchronization signal is sent. For the 
-frames, it's the same. Before the frame, there is a pause (vertical front porch) followed by the 
+frames, it is similar. Before the frame, there is a pause (vertical front porch) followed by the 
 vertical synchronization followed by the vertical back porch. Note that the horizontal and vertical 
 synchronizations are independent, so both must be evaluated at each moment. When no pause or 
 synchronization occurs, either horizontal or vertical, the display is said to be enable. The 
@@ -189,11 +193,11 @@ The operation of the protocol is shown in Figure \ref{fig:gpu/screen_vesa}. The 
 of the signals are available in Table \ref{tab:gpu/vesa}. In this figure, 
 the protocol is described in relation to the pixels, and therefore the position on the screen. As 
 the screen only includes the pixels of the region where display enable is high, the frame shown is 
-a virtual screen, not the physical one which is smaller. The description is made in relation to the 
+a virtual screen, not the physical one, which is smaller. The description is made in relation to the 
 pixels because 
 it is easier to understand but also to implement. Indeed, as shown later in this report, pixel 
-counters are sufficient to implement this protocol. Then, it is enough to fix the good clock 
-frequency so that the timings of each pixel are respected. For VESA 848x480, a clock of 33.750MHz
+counters are sufficient to implement this protocol. Then, it is enough to fix the right clock 
+frequency so that the timings of each pixel are respected. For VESA 848x480, a  33.750MHz clock
 is used. Figure \ref{fig:gpu/vesa_signals} shows the value of the signals according to the position
 on the screen.
 
@@ -236,15 +240,15 @@ on the screen.
 
 The graphic memory has two functions. The first one is of course to store the state of all the 
 pixels of the screen. This is done as discussed above by splitting the memory into four parts. One 
-for each goupe of the Figure \ref{fig:gpu/screen_tiling} tiling. Each of these sub-memories is then 
+for each group of the Figure \ref{fig:gpu/screen_tiling} tiling. Each of these sub-memories is then 
 divided into three memories, one for 
 each primary color. This was done this way because it is more optimal to have three memories whose 
-word size is a power of two. By dividing by three, each word has 4bits while it would have had 
-12bits in the case of full colors, which is not a power of 2. A fifth port with a different clock 
+word size is a power of two. By dividing by three, each word has 4 bits while it would have had 
+12 bits in the case of full colors, which is not a power of 2. A fifth port with a different clock 
 from the first 4 ports is also exposed by the graphic memory. This one allows the reading of the 
 memory tile by tile for the HDMI controller part of the GPU. This operation is completely independent
 of the CPU accesses of this memory, that is why another port is used. The tile loaded from this port
-is refered to as Tile b.
+is referred to as Tile b.
 
 The second function is to correctly direct the values in memory to the outputs when reading, and 
 the values in input to the memories when writing. Indeed, depending on the editing position (address), the 
@@ -255,7 +259,7 @@ possible configurations.
 From now on, the current tile (at the target position) will be tile 0. The one to the right of it
 will be tile 1, the one below it will be tile 2 and the one below it on the right will be tile 3. 
 Figure \ref{fig:gpu/tile_ids} summarizes this. Note that the colors are set by tiles. A memory word 
-is therefore $4 \times 64$ = 256bits.
+is therefore $4 \times 64$ = 256 bits.
 
 \begin{figure}[H]
     \centering
@@ -275,8 +279,8 @@ The internal circuit is given in Figure \ref{fig:gpu/memory_unit_in} and its int
 of each memory are grounded since the second port is read-only, that is the one corresponding to
 Tile b. The HDMI controller doesn't need to write in memory. For the rest, the signals are 
 simply retransmitted. The addresses in the three internal memories are the same since it is the
-same tile that is targeted each time. The words are all 256bits long as each word contains 64 
-pixels and one of their color components on 4bits. 
+same tile that is targeted each time. The words are all 256 bits long as each word contains 64 
+pixels and one of their color components on 4 bits. 
 
 Now that the memory units are described, it is possible to establish the complete memory circuit.
 The complete circuit is shown in Figure \ref{fig:gpu/memory_in}. It consists of a parallel 
@@ -289,7 +293,7 @@ multiplexed from the values in memory in the different memory units. All these m
 that the tiles are correctly routed, as explained above. These multiplexers are controlled by five 
 signals: sw0, sw1, sw2, sw3 and swb which are respectively linked to tile 0, tile 1, tile 2, tile 3 
 and tile b. The determination of the values of these switches as well as those of the addresses of 
-the memory units are not displayed in the circuit so as not to make it more cumbersome. But their
+the memory units are not displayed in the circuit for simplicity. But their
 value are simply based on the selected tile location, Tile 0. Depending on its location, it belongs 
 to one of the four tile groups. The groups of the neighbor tiles are also computed based on the 
 locations of these tiles and their respective switches are set according to the group of the tile. 
@@ -329,7 +333,7 @@ are put together in a bus to simplify the representation of the module.
 \subsection{Mask memory}
 
 The mask memory is identical to the CPU instruction memory except that the Altsyncram used contains 
-only 256 words of 128bits. This allows to store 256 masks. The circuit is given in Figure
+only 256 words of 128 bits. This allows to store 256 masks. The circuit is given in Figure
 \ref{fig:gpu/mask_memory_in} and \ref{fig:gpu/mask_memory} provides its interface. Note that if the 
 address is equal to 255, then the mask sent to the data\_read output is a constant mask 
 (named clear mask) which clears all pixels.
@@ -357,11 +361,10 @@ another module.
 
 \subsubsection*{Shifter Unit}
 
-This is the module that is responsible of the shifting. To do this it simply takes the signed 
+This module is responsible for shifting. To do this it simply takes the signed 
 offsets given in input and shifts the bits of the mask. The offsets being given in pixels and the
 masks having two bits per pixel, it is necessary to multiply by two each offset. To achieve an 
-horizontal offset, each line of the mask is shifted 2 $\times$ offset\_x while for a vertical offset 
-, the whole mask is shifted of 16 $\times$ offset\_y given that there are 8 pixels 
+horizontal offset, each line of the mask is shifted 2 $\times$ offset\_x while for a vertical offset, the whole mask is shifted of 16 $\times$ offset\_y given that there are 8 pixels 
 by line. The circuit and the interface of the shifter unit are respectively given in Figures
 \ref{fig:gpu/shifter_unit_in} and \ref{fig:gpu/shifter_unit}.
 
@@ -419,8 +422,7 @@ described for this pixel in the corresponding mask. This module is a kind of gia
 fact, it contains a multiplexer for each primary color of each pixel and will select an input 
 (the current value of the pixel, the primary color, the secondary color or the black color) 
 according to the value of the mask at that position. Its operation is very simple to understand 
-and its circuit impossible to draw on a page of this report. That's why the internal circuit is 
-passed for this module. The interface is however given in Figure \ref{fig:gpu/mlu}.
+and its circuit impossible to draw on a page of this report, so the circuit is not detailed here. The interface is however given in Figure \ref{fig:gpu/mlu}.
 Note that this circuit is completely combinatorial. Concerning the tile buses, they are simply
 made up of the three color signals of the corresponding tile.
 
@@ -434,7 +436,7 @@ made up of the three color signals of the corresponding tile.
 \subsection{Graphic Counter (GC)}
 
 The graphics counter is the first element fully included in the HDMI controller part of the GPU. 
-It simply counts and provides several counts. Firstly, it provides the current position of the 
+It simply counts and provides several counts. First, it provides the current position of the 
 pixel taken into account, so cnt\_h and cnt\_v representing the horizontal and vertical position 
 of the pixel. These go through all the virtual screen of the VESA, that is to say from 0 to 1087 
 for cnt\_h and from 0 to 516 for cnt\_v. These counts are then used to correctly generate the 
@@ -447,7 +449,7 @@ when cnt\_h and cnt\_v correspond to the location of the first pixel of the firs
 memory, the one at the top left corner of the useful screen. And their values continue to increase 
 until the end of the VESA virtual screen.
 
-It should be noted that the useful screen does not correspond to the entire active area of the 
+Notice also that the useful screen does not correspond to the entire active area of the 
 VESA. As mentioned earlier, not all the space is used because of memory constraints. The useful 
 screen is centered in this active region. When the counter is in the useful region of the screen, 
 the in\_mem signal is high to warn that the position given by the counter corresponds to a tile 
@@ -463,8 +465,7 @@ region are given in Figure \ref{fig:gpu/gc_screen}.
 
 All these counters are implemented with the help of registers by choosing correctly the clk\_enable 
 signals and the reset signals. The inner circuit without the in\_memory which is only a condition 
-on the values of h\_cnt and v\_cnt is given in Figure \ref{fig:gpu/gc_in}
-. The interface is also shown in Figure \ref{fig:gpu/gc}.
+on the values of h\_cnt and v\_cnt is given in Figure \ref{fig:gpu/gc_in}. The interface is also shown in Figure \ref{fig:gpu/gc}.
 
 \begin{figure}[H]
     \centering
@@ -499,8 +500,7 @@ only a condition, it is not shown. The interface is shown in Figure \ref{fig:gpu
 \subsection{I2C HDMI Config}
 
 This module is provided by Terasic to configure the HDMI controller present on the DE10 nano board. 
-In this work, it is used as a library. That is to say, it has not been tried to understand what it 
-does, what are its internal circuits. In the GPU, it is simply connected to the pins of the physical
+In this work, it is used as a library, i.e., its description is not detailed here since it has been used as a black box. In the GPU, it is simply connected to the pins of the physical
 HDMI controller as Terasic suggests in its tutorial. The interface is provided in 
 Figure \ref{fig:gpu/i2c}.
 
@@ -520,7 +520,7 @@ mask logic unit where they are processed in a combinatorial way. Each mask opera
 associated to it, taking into account the primary and secondary colors. Once this is done, the 
 memory is enabled again, in writing mode this time. 
 
-As for some CPU memories, the mask memory has a MAU access that allows reading and writing of this 
+Similarly to some CPU memories, the mask memory has a MAU access that allows reading and writing of this 
 memory from the ARM processor.
 
 This constitutes the computational part of the GPU, the one that the CPU controls through its ST and 
@@ -560,7 +560,7 @@ VESA protocol clock that is used. It is called gpu\_clk. The GPU interface is av
 
 \section{Clock Unit (CLKU)}
 
-As it has been seen, two clocks are needed. One as high as possible for the CPU and the modules 
+As seen previously, two clocks are needed. One as high as possible for the CPU and the modules 
 working synchronously with it and one for the 33.750MHz HDMI controller. The CPU clock cannot 
 exceed 50MHz. Indeed, other higher frequencies have been tested but do not meet the timing 
 constraints at compile time. For the CPU, the clock unit only passes the FPGA 50MHz physical clock 
