@@ -1,16 +1,16 @@
 \chapter{Accessivity tools and demonstrations}
 
-With the entire system designed and programmed on the FPGA, it's time to test it. But before that, 
+With the entire system designed and programmed on the FPGA, it is time to test it. But before that, 
 one needs tools to allow to write in the memories of the machine from Linux, on the ARM processor. 
 In addition to that, tools simplifying the development on the system are presented. After the 
-presentation of the different tools, the different assembler demonstrations are detailed.
+presentation of the different tools, the various assembler demonstrations are detailed.
 
 \section{Tools}
 
 \subsection{Beta assembler}
 
-The first tool is a tool that was developed by Romain Mormont. It allows the assembly of assembler 
-code using the ISA described earlier in the report into machine code for beta machine. This tool 
+The first tool was developed by Romain Mormont. It compiles
+assembly code using the ISA described earlier in the report into machine code for beta machine. This tool 
 had already been created before this work, so it was decided to take advantage of it and not 
 reinvent the wheel. Some minor modifications were made to add a binary file backup that could be 
 used for programming the beta machine of this work, to add the exit instruction and to remove the 
@@ -19,7 +19,7 @@ div instruction.
 \subsection{Beta utils}
 
 Beta utils is a utility that allows access to memory and system control from the ARM processor. In 
-fact, to do this it is enough to write and read in the space address of the bridge avalon on which
+fact, to do this it is enough to write and read in the space address of the bridge Avalon on which
 a slave is connected in QSys. To have access to a given slave, it is necessary to add its offset 
 (specified in QSys) to the starting address of the bridge in the physical memory. The start and end 
 addresses of each bridge are constant and specified in Figure \ref{fig:cyc5/address_space}. 
@@ -30,9 +30,9 @@ physical addresses. In order for it to be able to read and write to specific loc
 memory, a mapping must first be created between the physical memory and the virtual memory of the 
 Beta utils process. To do this, the system call mmap is used. This creates a mapping and returns a 
 pointer allowing access to the specified physical memory in a contiguous manner from the virtual 
-memory. This means that $pointer + n$ corresponds to the nth element of the mapped physical region. 
-This solution is not the fastest but is more than sufficient for the operations performed by Beta 
-utils and has the merit of being simple. 
+memory. This means that $pointer + n$ corresponds to the $n$th element of the mapped physical region. 
+This solution is not the fastest but it is more than sufficient for the operations performed by Beta 
+utils and has the advantage of being simple. 
 
 For the communication with the memories, the tool allows two operations. Both can only be done 
 when the system on FPGA is stable, in other words when the alive signal is low. The first one is 
@@ -52,6 +52,8 @@ Figure \ref{fig:tools/read} shows its use. The memory identifiers are IM for
 instruction memory, DM for data memory, RF for register file, IO for io memory and MK for mask 
 memory.
 
+% PF very minor, no need to fix: but why on earth would you prefer dirty PNG
+% over sans-serif fixed width text in verbatim, maybe with inverted colors.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1]{Chapter7-Tools-Demos/res/utils_read.PNG}
@@ -71,7 +73,7 @@ Figure \ref{fig:tools/st_sd}.
 
 \subsection{Mask Drawer}
 
-The mask drawer is a small tool coded in python developed for this work. It provides a graphical 
+The mask drawer is a small tool coded in Python developed for this work. It provides a graphical 
 interface, shown in Figure \ref{fig:tools/mask_drawer}, that allows editing of masks. In the window 
 there are five buttons. 
 Four are used to select the state to be applied: keep, primary color, secondary color and clear. 
@@ -90,11 +92,11 @@ can be resumed. If it does not exist, it is created.
     \label{fig:tools/mask_drawer}
 \end{figure}
 
-\section{Assembler desmonstrations}
+\section{Assembler demonstrations}
 
 Once the implementation of the system was completed, I was fortunate to be put in contact and have 
 a discussion with two Intel employees, Nadel Alexander research scientist at Intel Israel and 
-Gyuszi Suto principal engineer at Intel Oregon. During this discussion, these two people provided 
+Gyuszi Suto principal engineer at Intel Oregon. During this discussion, they provided us with 
 guidance on how it was appropriate to verify the system. The easiest way, for them, was to perform 
 several demonstrations using the different parts of the system and verify experimentally that 
 everything worked. This is far from the verification methods presented in an article 
@@ -117,7 +119,9 @@ libraries are all documented in their files.
 The first demonstration is to solve the Towers of Hanoi problem graphically. The Hanoi Towers 
 problem consists of moving a stack of N elements of different dimensions that are ordered from the 
 widest at the base to the narrowest at the top of the tower. To do this, the elements can be moved 
-one by one and placed on a stack. There are three stacks. The tower is initially placed on one of 
+one by one and placed on a stack.
+%, always satisfying the condition that no element stands on top of a smaller one  PF: OK, said later
+ There are three stacks. The tower is initially placed on one of 
 them. For a move to be valid, the element at the top of the stack on which the moved element is to 
 be placed must be larger than this one. In other words, an element must always be placed on top of 
 a larger element. The goal is then to move the whole tower to another stack. When the demo is 
@@ -126,13 +130,14 @@ the program solves the problem step by step, until the tower is placed in the ce
 movement, there is a wait so that the resolution is possible to follow. This demonstration in 
 action on the system developed in this work is available on 
 \href{https://www.youtube.com/watch?v=0W0SXzncl-Q}{YouTube}.
+% PF make sure links appear in some different style to show people can click
 
 \subsection{Stacker game}
 
-Solving the Towers of Hanoi does not include the IOs part, so a small game with interractions has 
+Solving the Towers of Hanoi does not include the IOs part, so a small game with interactions has 
 been added. However, here the task was delegated to a friend, 
-Gauderic Schnackers who is a graduated physicist engineer. This allowed two things. Firstly to 
-validate the whole system but also to validate the accessibility of the system. This is important 
+Gauderic Schnackers who is a graduated physicist engineer. This allowed two things. First this
+validated the whole system, but it also validated the accessibility of the system. This is important 
 as the system is to be used as laboratory material in an introductory course. Since Gauderic had 
 never worked so low on a machine and never programmed in assembler, he was the perfect tester. 
 
