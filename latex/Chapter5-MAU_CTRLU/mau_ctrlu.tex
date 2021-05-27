@@ -1,6 +1,6 @@
 \chapter{Memory Access Unit and Control Unit design}
 
-In this section the Memory Access Unit is described, which gives the ARM part read and write 
+This section describes the Memory Access Unit, which gives the ARM part read and write 
 access to several memories of the system. Another super-unit, the Control Unit is also described here. 
 The latter keeps the state of the machine (on or off) and gives access to this register to the 
 ARM part. The ARM processor can therefore switch the machine on and off as it wishes from this 
@@ -10,24 +10,23 @@ the Cyclone V.
 
 \section{Communication between ARM and FPGA sides}
 
-The communication between the two parts takes place via one of the priously mentionned bridges using 
+The communication between the two parts takes place via one of the previously mentioned bridges using 
 the Avalon protocol described by Intel. This protocol allows 
 high-speed communication. The Avalon interface has different sub-interfaces for different types 
 of communication. Each type is adapted to certain applications. In this project where the protocol 
 is used to communicate between master and slave devices, the Avalon MM is used. 
-The Avalon MM protocol is address based which is very suitable for the needs of this project.
-The read and write operations of this protocol are described right below.
+The Avalon MM protocol is address-based which is very suitable for the needs of this project.
+We here describe the read and write operations of this protocol.
 
 \subsection{Read operation}
 
-First, let's start by reading. The sequence diagram of the protocol for the reading operation is 
+The sequence diagram of the protocol for the reading operation is 
 visible in Figure \ref{fig:avalon/mm_read}. In the diagram, two masters are represented but only 
 the unique master case is described. In the first place, the master simply has to give
-the start address to which it wants to read, the length of the burst (the number of words desired) 
-as well as to switch the read and beginbursttransfer signals to high. The slave then responds 
-to this with a waitrequest that goes up. The master must imperatively keep all signals except 
-beginbursttransfer which returns to the low state unchanged during the waitrequest to give the 
-slaves time to capture them. Once ready, the slave removes the waitrequest and informs that  
+the start address to which it wants to read, the length of the burst (the number of words desired).  It also has to switch the read and beginbursttransfer signals to high.  The slave then responds 
+to this with a waitrequest that goes up. The master must imperatively keep all signals unchanged --- except 
+beginbursttransfer which returns to the low state --- during the waitrequest to give the 
+slave time to capture them. Once ready, the slave removes the waitrequest and informs that  
 data is available by switching readdatavalid to high and sending the first word. The other words 
 are then sent to the master in the order of their addresses. 
 
@@ -44,7 +43,7 @@ For writing, it's even simpler. As can be seen in Figure \ref{fig:avalon/mm_writ
 is similar to reading. The master has to provide the first address, the length of the 
 burst and also to switch beginbursttransfer to high. In addition to that, the first word 
 is also provided. Here again, the slave responds with a waitrequest. As soon as the waitrequest 
-is switched off, the master sets the beginbusttransfer to low and send the words one after the other, 
+is switched off, the master sets the beginbursttransfer to low and sends the words one after the other, 
 starting at the next clock cycle. If the write signal goes down, the burst is paused and resumes 
 as soon as it goes up again.
 
@@ -61,11 +60,11 @@ used. These modules are described in the sections where they are needed.
 
 \section{Memory Access Unit (MAU)}
 
-As already repeated several times the MAU allows access to several memories of the machine. In order 
+Like previously mentioned several times the MAU allows access to several memories of the machine. In order 
 to simplify the protocol in the machine, a module called Avalon to External Bus Bridge is used. This 
 module manages the Avalon protocol and exposes an interface (the external bus) using a simpler 
 protocol. This module is used as many times as there are memories to connect to the interconnect.
-The different signals this module uses are shown in Figure \ref{fig:mau/bus_bridge}. Note that this
+The various signals used by this module are shown in Figure \ref{fig:mau/bus_bridge}. Note that this
 module has an integrated timer that is reset each time the Avalon to external bus bridge receives
 an acknowledgement from the external slave. When this timer reaches 0, the request from the master 
 (denoted by Avalon Switch Fabric in Figure \ref{fig:mau/bus_bridge}) is deleted.
@@ -78,7 +77,9 @@ an acknowledgement from the external slave. When this timer reaches 0, the reque
 \end{figure}
 
 The protocol is considered simpler because it offers an interface closer to that used by the memories 
-than that of the Avalon. Indeed, the usual signals address, write data, read data and R$\overline{W}$ are 
+than that of the Avalon.
+% PF above sentence is heavy, try to simplify and make clearer
+Indeed, the usual signals address, write data, read data and R$\overline{W}$ are 
 present. Moreover, this protocol is very simple to use. Indeed, as can be seen in Figure \ref{fig:mau/bus_bridge_protocol}. The master 
 places all the necessary elements on the bus and then switches the bus enable signal to high. This means 
 that the slave can act. The slave then does what it has to do. Either take the data and write it to 
@@ -95,8 +96,8 @@ during a clock cycle to validate the transaction.
 
 It is possible to configure the address range and the word size used by these bus. For this work, 
 it is decided that the 
-addressable space is 256Kbytes long and that the words are on 32bits for each access except for the 
-access to the GPU mask memory which is on 4Kbytes with 128bits words. Each of these accesses are 
+addressable space is 256 Kbytes long and that the words are on 32 bits for each access except for the 
+access to the GPU mask memory which is on 4 Kbytes with 128 bits words. Each of these accesses are 
 put on the HPS-FPGA bridge, their offset is given in Table \ref{mau/bus}. These dimensions were 
 chosen to make the offset easy to remember. Indeed, only the sixth number changes in the 
 hexadecimal address. Moreover, this gives future users a large margin if they want to change the 
@@ -104,7 +105,7 @@ dimensions of the memories. As far as the mask memory is concerned, the address 
 size of the memory. This has been done especially to discourage any modification at this level. 
 Indeed, this would lead to a large modification of the GPU which could degrade its performance or 
 make it impossible to include in the design (due to lack of space on the FPGA). More over, the size
-of this memory is already the maximum adressable size possible for the store operation, using the
+of this memory is already the maximum addressable size possible for the store operation, using the
 GPU format.
 
 \begin{table}[ht!]
@@ -147,7 +148,7 @@ In fact, the Memory Access Unit is composed of only two types of modules. The Me
 the Memory Access 128 both allowing the interfacing between an external bus and a memory (these two
 modules respectively manage words of 32 and 128 bits). To do this, they both implement a finite state machine. 
 That of Memory Access 32 is given in Figure \ref{fig:ma_fsm}. The only difference that the 128 bits version 
-has is that the address is not multiplied by 4 in the Iddle state. 
+has is that the address is not multiplied by 4 in the Idle state. 
 
 \begin{figure}[ht!]
     \center
@@ -155,12 +156,13 @@ has is that the address is not multiplied by 4 in the Iddle state.
     \caption{Memory Access 32 finite state machine}
     \label{fig:ma_fsm}
 \end{figure}
+% PF : change Iddle to Idle in the fsm above
 
 This state machine simply follows the protocol described earlier. It only acts when the bus is high 
 and sends an acknowledge during a clock cycle once the request is executed (the finite state machine 
 is reevaluated at each clock cycle). On the read side, a state seems to be useless (Read 1). This 
 one is in fact very important, it gives the memory time to fetch the value present at the requested 
-address. The interfaces of the memory acess are given in Figures \ref{fig:ma32} and \ref{fig:ma128}.
+address. The interfaces of the memory access are given in Figures \ref{fig:ma32} and \ref{fig:ma128}.
 
 \begin{figure}[ht!]
     \center
@@ -200,13 +202,13 @@ and a bus representation is used. However, all signals are shown in the internal
 
 \section{Control Unit (CTRLU)}
 
-The control unit is a very simple unit. It manages the state of the machine. By managing the state is meant that 
+The control unit is a very simple unit. It manages the state of the machine. This means that 
 it decides whether the machine is switched on or off. Initially, the machine is switched off (alive 
 is in the low state). When alive is low, the memories of the machine can be manipulated by the ARM 
 processor. It is thus at this moment that the machine is programmed. Once this is done, the ARM 
 processor can start the machine by switching alive to the high state, the means by which this is 
 achieved are seen just after. During the execution of a program, it can be stopped in two ways. 
-Firstly by the ARM processor which can force the stop, by passing alive to the low state. Secondly, 
+First, the ARM processor can stop it by passing alive to the low state. Second, 
 the beta machine itself can order the stop by executing the EXIT instruction which changes the 
 halt signal to high. The control unit then responds to this signal by switching alive to low.
 
@@ -218,9 +220,7 @@ the register has an address from the point of view of the ARM processor. A diffe
 the Avalon to external bus bridge of the MAU is that the PIO is put on the lightweight HPS-FPGA 
 bridge. This choice is made because the PIO is not frequently used and does not require large data 
 transfers. For this kind of modules, the HPS documentation advises to use the lightweight bridge.
-
-The connection of the parallel IO in QSys is shown in Figure \ref{fig:qsys/ctrlu}. The same color 
-code as usual is used.
+The connection of the parallel IO in QSys is shown in Figure \ref{fig:qsys/ctrlu}. The usual color code is used.
 
 \begin{figure}[ht!]
     \center
@@ -246,9 +246,9 @@ has been done as so to have only one bit for the command. If the change of state
 when a 1 appeared, the final state would have been uncertain. Indeed, it is impossible to know for 
 how many clock cycles the 1 is maintained by the ARM. Depending on the number of cycles it would 
 take to reset its signal to 0, the state would switch several times between on and off. With 
-the intermediate state, any bounce between states is avoided. And simply use 1 for alive and 0 for
-stop is not a good idea neither as the ARM processor would have to alsways listen to state changes
-coming from the beta machine, to make sure that theirs values are coherent.
+the intermediate state, any bounce between states is avoided. Furthermore, simply using 1 for alive and 0 for
+stop is not a good idea either since the ARM processor would have to always listen to state changes
+coming from the beta machine to ensure that theirs values are coherent.
 
 \begin{figure}[ht!]
     \center
@@ -262,9 +262,8 @@ into a logic AND gate whose two inputs are inverted and the output of this gate 
 PIO register (the corresponding circuit is shown when the entire system is connected later in this 
 report). The PIO register is  therefore high when the machine is stopped and low at any other time. 
 This is done because when the register goes from low to high, an interrupt is sent to the ARM 
-processor. As it is interesting to receive the interrupt when the machine is shut down, it has been 
-done this way. However, this interrupt has not been taken into account in this work but it could be 
-used as a basis for a future work to add interaction between the ARM processor and beta machine. 
+processor. Since it is interesting to receive the interrupt when the machine is shut down, it has been 
+done this way. However, this interrupt is not used in this work but it could trigger an interaction between the ARM processor and beta machine. 
 A visual summary is displayed in Figure \ref{fig:ctrlu/summary} and the interface of the Control 
 Unit is therefore the one given in Figure \ref{fig:ctrlu}.
 
