@@ -1,5 +1,7 @@
 \chapter{The Beta machine CPU and IO unit design}
 % PF Maybe use $\beta$ machine?  I think it looks better
+% QP I prefer keeping "beta" because I don't want to mess up with my figures and 
+% stuff due to a ctrl-f > replace all
 
 As explained in the introduction, the goal of this work is to design a Beta machine. This machine is 
 in fact a minimal CPU based on the Harvard architecture, i.e., data and instructions are stored in 
@@ -27,7 +29,7 @@ is set to 0b00, the program counter acts like a simple 32bits 4-by-4 counter.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter3-CPU/res/pc}
-    \caption{Program Counter}
+    \caption{Program Counter.}
     \label{fig:components/pc}
 \end{figure}
 
@@ -42,7 +44,7 @@ is set to 0b00, the program counter acts like a simple 32bits 4-by-4 counter.
     JMP                                                         & 0b10                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes the \\ value on data.\end{tabular}                                                                                                              \\ \hline
     BNE                                                         & 0b11                                                        & \begin{tabular}[c]{@{}l@{}}The current value of the counter program pc\_out becomes\\  the value taken on the input pc\_in if the value on data is 0. \\ Otherwise, the current value becomes pc\_in + 4 $\times$ offset.\end{tabular}     \\ \hline
     \end{tabular}
-    \caption{Program counter modes}
+    \caption{Program counter modes.}
     \label{tab:pc/modes}
 \end{table}
 
@@ -62,11 +64,12 @@ the reset (rst) is high, the register is synchronously reset to 0.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/pc_internal}
-    \caption{Program Counter internal circuit}
+    \caption{Program Counter internal circuit.}
     \label{fig:components/pc_in}
 \end{figure}
 
 %PF There are ways to do it in a less expensive way, with a little logic arround pcsel and only one of these multiplexers
+% QP OK discussed by mail
 
 The Verilog implementation of the program counter is relatively straight-forward.
 
@@ -83,7 +86,7 @@ input changes once per cycle.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/pc_simu_00.PNG}
-    \caption{Program Counter in normal mode simulations for various pc\_in values}
+    \caption{Program Counter in normal mode simulations for various pc\_in values.}
     \label{fig:sim/pc_00}
 \end{figure}
 
@@ -93,7 +96,7 @@ pc\_out became this value. Results are provided in Figure \ref{fig:sim/pc_10}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/pc_simu_10.PNG}
-    \caption{Program Counter in jmp mode simulations for various data values}
+    \caption{Program Counter in jmp mode simulations for various data values.}
     \label{fig:sim/pc_10}
 \end{figure}
 
@@ -104,14 +107,14 @@ Results are given in Figure \ref{fig:sim/pc_01} for BEQ and \ref{fig:sim/pc_11} 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/pc_simu_01.PNG}
-    \caption{Program Counter in BEQ mode simulations for various data and offset values}
+    \caption{Program Counter in BEQ mode simulations for various data and offset values.}
     \label{fig:sim/pc_01}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/pc_simu_11.PNG}
-    \caption{Program Counter in BNE mode simulations for various data and offset values}
+    \caption{Program Counter in BNE mode simulations for various data and offset values.}
     \label{fig:sim/pc_11}
 \end{figure}
 
@@ -122,6 +125,7 @@ moving on to the practical implementation that comes later.
 
 %PF allows: si en français, on utilise beaucoup ce genre de construction
 % en Anglais, on l'évite plutôt
+% QP OK
 The Arithmetic Logic Unit (ALU), as its name suggests, is used for arithmetic, logic and bit shifting 
 operations. These operations are selected using the alufn signal. The chosen operation is then 
 applied on the two operands data\_a and data\_b and the result is sent on res. The various
@@ -132,7 +136,7 @@ that only the five last bits of data\_b are used and that they are interpreted a
 \begin{figure}[ht]
     \centering
     \includegraphics[scale=0.8]{Chapter3-CPU/res/alu}
-    \caption{Arithmetic Logic Unit (ALU)}
+    \caption{Arithmetic Logic Unit (ALU).}
     \label{fig:components/alu}
 \end{figure}
 
@@ -159,7 +163,7 @@ that only the five last bits of data\_b are used and that they are interpreted a
     No operation                                                     & 0b1110                                                      & res = 0                                                        \\ \hline
     No operation                                                     & 0b1111                                                      & res = 0                                                        \\ \hline
     \end{tabular}
-    \caption{ALU operations}
+    \caption{ALU operations.}
     \label{tab:alu/alufn}
 \end{table}
 
@@ -172,7 +176,7 @@ no reset, that's why the register reset is always 0.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_internal}
-    \caption{Arithmetic Logic Unit (ALU) internal circuit}
+    \caption{Arithmetic Logic Unit (ALU) internal circuit.}
     \label{fig:components/alu_in}
 \end{figure}
 
@@ -216,7 +220,7 @@ The results of the simulations are shown in Figures \ref{fig:sim/alu_0} to \ref{
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_0.PNG}
     \caption{ALU simulations for alufn = 0b0000 (No operation), 0b0001 (Addition), 0b0010 (Substraction) 
     and 0b0011 (Multiplication). data\_a, data\_b and res values are shown in signed decimal 
-    representation}
+    representation.}
     \label{fig:sim/alu_0}
 \end{figure}
 
@@ -224,7 +228,7 @@ The results of the simulations are shown in Figures \ref{fig:sim/alu_0} to \ref{
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_1_0.PNG}
     \caption{ALU simulations for alufn = 0b0100 (No op) and 0b0101 (Bitwise-and). data\_a, data\_b and
-    res values are shown in hexadecimal representation}
+    res values are shown in hexadecimal representation.}
     \label{fig:sim/alu_1}
 \end{figure}
 
@@ -232,7 +236,7 @@ The results of the simulations are shown in Figures \ref{fig:sim/alu_0} to \ref{
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_1_1.PNG}
     \caption{ALU simulations for alufn = 0b0110 (Bitwise-or) and 0b0111 (Bitwise-xor). data\_a, data\_b and
-    res values are shown in hexadecimal representation}
+    res values are shown in hexadecimal representation.}
     \label{fig:sim/alu_2}
 \end{figure}
 
@@ -241,7 +245,7 @@ The results of the simulations are shown in Figures \ref{fig:sim/alu_0} to \ref{
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_2.PNG}
     \caption{ALU simulations for alufn = 0b1000 (Compare equal), 0b1001 (Compare less) and
     0b1010 (Compare less equal). data\_a, data\_b and res values are shown in signed decimal 
-    representation}
+    representation.}
     \label{fig:sim/alu_3}
 \end{figure}
 
@@ -250,7 +254,7 @@ The results of the simulations are shown in Figures \ref{fig:sim/alu_0} to \ref{
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_3_0.PNG}
     \caption{ALU simulations for alufn = 0b1011 (Logical left shift). data\_a and
     res values are shown in hexadecimal representation. data\_b is shown in signed decimal 
-    representation}
+    representation.}
     \label{fig:sim/alu_4}
 \end{figure}
 
@@ -259,7 +263,7 @@ The results of the simulations are shown in Figures \ref{fig:sim/alu_0} to \ref{
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_3_1.PNG}
     \caption{ALU simulations for alufn = 0b1100 (Logical right shift). data\_a and
     res values are shown in hexadecimal representation. data\_b is shown in signed decimal 
-    representation}
+    representation.}
     \label{fig:sim/alu_5}
 \end{figure}
 
@@ -268,7 +272,7 @@ The results of the simulations are shown in Figures \ref{fig:sim/alu_0} to \ref{
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_3_2.PNG}
     \caption{ALU simulations for alufn = 0b1101 (Arithmetic right shift). data\_a and
     res values are shown in hexadecimal representation. data\_b is shown in signed decimal 
-    representation}
+    representation.}
     \label{fig:sim/alu_6}
 \end{figure}
 
@@ -277,7 +281,7 @@ The results of the simulations are shown in Figures \ref{fig:sim/alu_0} to \ref{
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_simu_4.PNG}
     \caption{ALU simulations for alufn = 0b1110 (No operation) and 0b1111 (No operation).
      data\_a, data\_b and res values are shown in signed decimal 
-    representation}
+    representation.}
     \label{fig:sim/alu_7}
 \end{figure}
 
@@ -291,11 +295,13 @@ the one hand by a parameterization (for example to specify the size of the memor
 words, the choice of the type MLAB or M10K, the number of ports, of clocks, the inputs / outputs 
 which are registered, if there is a clock enable or not, ...) and on the other hand by the inputs 
 and outputs which are used or not (for example for the ROM all the ports linked to the writing are unused and the write enable is put at the ground, in the low state). 
+In Figure \ref{fig:memories/altsyncram} the most general interface 
+with two true ports is shown.
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{Chapter3-CPU/res/altsyncram.PNG}
-    \caption{Altsyncram - True Dual-port mode}
+    \caption{Altsyncram - True Dual-port mode \cite{ram}.}
     \label{fig:memories/altsyncram}
 \end{figure}
 
@@ -328,7 +334,7 @@ are shown in Figure \ref{fig:components/im}.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter3-CPU/res/instruction_memory}
-    \caption{Instruction memory}
+    \caption{Instruction memory.}
     \label{fig:components/im}
 \end{figure}
 
@@ -341,7 +347,7 @@ the ram\_32768 to access the memory.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/instruction_memory_in}
-    \caption{Instruction memory internal circuit}
+    \caption{Instruction memory internal circuit.}
     \label{fig:components/im_in}
 \end{figure}
 
@@ -358,14 +364,14 @@ is displayed in Figure \ref{fig:components/dm} and its internal circuits in Figu
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter3-CPU/res/data_memory}
-    \caption{Data memory}
+    \caption{Data memory.}
     \label{fig:components/dm}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/data_memory_in}
-    \caption{Data memory internal circuit}
+    \caption{Data memory internal circuit.}
     \label{fig:components/dm_in}
 \end{figure}
 
@@ -382,6 +388,7 @@ By having two rams with two ports, one port of each can be used to perform mirro
 other port is used to have a read access. This gives two independent reads and a single write. In 
 fact, the memories are copies of each other in this configuration.
 % PF This aboves surprises me.  Maybe when you have time, we can discuss this.
+% QP OK
 
 Although writing and reading are never enabled at the same time in this work (the reason is explained
 later in this chapter), the register file implements all three 
@@ -405,7 +412,7 @@ both memories, while reading only operates on one memory.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{Chapter3-CPU/res/reg_file}
-    \caption{Register file}
+    \caption{Register file.}
     \label{fig:components/rf}
 \end{figure}
 
@@ -419,7 +426,7 @@ the input address points to register 31.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/reg_file_in}
-    \caption{Register file internal circuit}
+    \caption{Register file internal circuit.}
     \label{fig:components/rf_in}
 \end{figure}
 
@@ -443,7 +450,7 @@ module is given, in Figure \ref{fig:components/cl}.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1]{Chapter3-CPU/res/control_logic}
-    \caption{Control logic}
+    \caption{Control logic.}
     \label{fig:components/cl}
 \end{figure}
 
@@ -462,7 +469,7 @@ Figure \ref{fig:components/cc}.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter3-CPU/res/clock_controller}
-    \caption{Clock controller}
+    \caption{Clock controller.}
     \label{fig:components/cc}
 \end{figure}
 
@@ -476,7 +483,7 @@ signals of the different modules in the right order to obtain the expected execu
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter3-CPU/res/clock_controller_in}
-    \caption{Clock controller internal circuit}
+    \caption{Clock controller internal circuit.}
     \label{fig:components/cc_in}
 \end{figure}
 
@@ -491,14 +498,14 @@ requiring a single operand and a constant. This is the case for example for cond
 operations. As can be seen in Figure \ref{fig:instructions/format}, the $R_x$ contain register 
 addresses. As they are on 5 bits and no bank change operation exists, 32 registers are addressable. 
 $R_c$ stores the result of the instruction when a result exists. It should be noted that the 
-constants are on 16 bits and signed. In Figure \ref{fig:memories/altsyncram} the most general interface 
-with two true ports is shown.
+constants are on 16 bits and signed.
 % PF I do not understand why this last sentence is there.  Maybe better link?
+% QP yes, it was an error
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{Chapter3-CPU/res/instruction}
-    \caption{Instructions format}
+    \caption{Instructions format.}
     \label{fig:instructions/format}
 \end{figure}
 
@@ -528,7 +535,7 @@ different instructions listed in Table \ref{tab:instruction/alu} are supported.
     Logical right shift                                         & SHR                                                             & 0x2D                                                         & SHRC                                                                  & 0x3D                                                               \\ \hline
     Arithmetic rifht shift                                      & SRA                                                             & 0x2E                                                         & SRAC                                                                  & 0x3E                                                               \\ \hline
     \end{tabular}
-    \caption{Arithmetic and logic instructions}
+    \caption{Arithmetic and logic instructions.}
     \label{tab:instruction/alu}
 \end{table}
 
@@ -541,7 +548,7 @@ $[R_x]$ means the content of register $R_x$.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{Chapter3-CPU/res/instruction_subc}
-    \caption{SUBC instruction example}
+    \caption{SUBC instruction example.}
     \label{fig:instructions/subc}
 \end{figure}
 
@@ -565,7 +572,7 @@ aligned. Both instructions are detailed in Table \ref{tab:instruction/dm}.
     Load                                                        & LD                                                              & 0x18                                                         & {[}Rc{]} = $<${[}Ra{]} + Constant$>$      \\ \hline
     Store                                                       & ST                                                              & 0x19                                                         & $<${[}Ra{]} + Constant$>$ = {[}Rc{]}        \\ \hline
     \end{tabular}
-    \caption{Memory instructions}
+    \caption{Memory instructions.}
     \label{tab:instruction/dm}
 \end{table}
 
@@ -587,7 +594,7 @@ aligned for BEQ and BNE (as they already multiply the constant by 4).
     Branch Equal                                                & BEQ                                                             & 0x1D                                                         & {[}Ra{]} == 0                                                        & PC + 4 $\times$ (Constant + 1)             \\ \hline
     Branch Not Equal                                            & BNE                                                             & 0x1E                                                         & {[}Ra{]} != 0                                                        & PC + 4 $\times$ (Constant + 1)                \\ \hline
     \end{tabular}
-    \caption{Program counter instructions}
+    \caption{Program counter instructions.}
     \label{tab:instruction/pc}
 \end{table}
 
@@ -604,7 +611,7 @@ or result. The instruction is detailed in Table \ref{tab:instruction/ctrl}
     \multicolumn{1}{|c|}{\cellcolor[HTML]{DAE8FC}\textbf{Name}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Operation}} & \multicolumn{1}{c|}{\cellcolor[HTML]{DAE8FC}\textbf{Opcode}} \\ \hline
     Exit                                                        & EXIT                                                            & 0x3F                                                         \\ \hline
     \end{tabular}
-    \caption{Exit instruction}
+    \caption{Exit instruction.}
     \label{tab:instruction/ctrl}
 \end{table}
 
@@ -616,7 +623,7 @@ circuit and how the modules have been interconnected are explained in this secti
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/beta_machine_in}
-    \caption{Beta machine internal circuit}
+    \caption{Beta machine internal circuit.}
     \label{fig:beta/all}
 \end{figure}
 
@@ -640,7 +647,7 @@ so that the PC is updated. The execution sequence is displayed in Figure \ref{fi
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter3-CPU/res/sequence}
-    \caption{Execution sequence}
+    \caption{Execution sequence.}
     \label{fig:beta/sequence}
 \end{figure}
 
@@ -688,7 +695,7 @@ shown in Table \ref{tab:cl/alu}.
     ALU instruction                                                    & opcode         & 1             & 1             \\ \hline
     ALU constant instruction                                           & opcode         & 1             & 0             \\ \hline
     \end{tabular}
-    \caption{Control logic - ALU instructions}
+    \caption{Control logic - ALU instructions.}
     \label{tab:cl/alu}
 \end{table}
 
@@ -724,15 +731,16 @@ logical control is displayed in Table \ref{tab:cl/dm}.
     Load instruction                                                   & add            & 1             & 0             & 10                                                          & 0                                                        & x                                                            \\ \hline
     Store instruction                                                  & add            & 0             & 0             & xx                                                          & 1                                                        & 1                                                            \\ \hline
     \end{tabular}
-    \caption{Control logic - ALU and memory instructions}
+    \caption{Control logic - ALU and memory instructions.}
     \label{tab:cl/dm}
 \end{table}
 
 \subsubsection*{Program counter instructions}
 
 For the JMP instruction, it is first necessary to save the value of PC + 4 in Rc. This means that 
-the output pc\_next of the program counter must be able to be used as
+the pc\_next output of the program counter must be usable as
 % PF must be able to be used as: this is heavy, try to rephrase the whole sentence in a nicer way
+% QP OK
 a write value for the register 
 file. pc\_next is therefore added to the multiplexer driven by wdsel. Then, the value of PC must be 
 set to the value given in Ra. The reading of the first port of the register file is therefore 
@@ -759,7 +767,7 @@ input of the program counter. The final content of the control logic is given in
     BEQ instruction                                                    & xxxx           & 1             & x             & 00             & 0           & x               & 01          \\ \hline
     BNE instruction                                                    & xxxx           & 1             & x             & 00             & 0           & x               & 11          \\ \hline
     \end{tabular}
-    \caption{Control logic - ALU, memory and program counter instructions}
+    \caption{Control logic - ALU, memory and program counter instructions.}
     \label{tab:cl/all}
 \end{table}
 
@@ -797,7 +805,7 @@ in Table \ref{tab:beta/address}.
     IOU                                                               & 01               \\ \hline
     GPU                                                               & 10               \\ \hline
     \end{tabular}
-    \caption{Super unit addresses}
+    \caption{Super unit addresses.}
     \label{tab:beta/address}
 \end{table}
 
@@ -814,7 +822,7 @@ the CPU and a bus representation is used. However, all signals are available in 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter3-CPU/res/beta_machine}
-    \caption{Beta machine, the CPU}
+    \caption{Beta machine, the CPU.}
     \label{fig:beta/interface}
 \end{figure}
 

@@ -3,7 +3,7 @@
 With the entire system designed and programmed on the FPGA, it is time to test it. But before that, 
 one needs tools to allow to write in the memories of the machine from Linux, on the ARM processor. 
 In addition to that, tools simplifying the development on the system are presented. After the 
-presentation of the different tools, the various assembler demonstrations are detailed.
+presentation of the different tools, the various assembly demonstrations are detailed.
 
 \section{Tools}
 
@@ -37,39 +37,49 @@ utils and has the advantage of being simple.
 For the communication with the memories, the tool allows two operations. Both can only be done 
 when the system on FPGA is stable, in other words when the alive signal is low. The first one is 
 writing. This one allows to write the content of a binary file in the chosen memory, with a certain 
-offset in it. The use of this operation is described in Figure \ref{fig:tools/program}.
+offset in it. 
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{Chapter7-Tools-Demos/res/utils_program.PNG}
-    \caption{Program command}
-    \label{fig:tools/program}
-\end{figure}
+{\small
+\begin{lstlisting}[caption=Program command.]
+-p, --program <memory_id> <file_path> <size> <offset>
+Programs a memory with a binary file - only works if machine is off, 
+parameters are
+    .memory_id: the id of the memory to be programmed
+    .file_path: path to the binary file
+    .size: number of bytes in the binary file
+    .offset: offset where to start writing
+\end{lstlisting}}
 
 Reading is done from a starting 
 offset to an ending offset. The bytes are simply displayed, there is no saving to a file. 
-Figure \ref{fig:tools/read} shows its use. The memory identifiers are IM for 
+The memory identifiers are IM for 
 instruction memory, DM for data memory, RF for register file, IO for io memory and MK for mask 
 memory.
 
 % PF very minor, no need to fix: but why on earth would you prefer dirty PNG
 % over sans-serif fixed width text in verbatim, maybe with inverted colors.
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{Chapter7-Tools-Demos/res/utils_read.PNG}
-    \caption{Read command}
-    \label{fig:tools/read}
-\end{figure}
+% QP because I was lazy the day I wrote it for some reasons, it's fixed :)
 
-To switch on and off the system, two operations are provided, they are given in 
-Figure \ref{fig:tools/st_sd}.
+{\small
+\begin{lstlisting}[caption=Read command.]
+-r, --read <memory_id> <start> <end>
+Reads and displays the content of a memory from byte start to byte end
+    .memory_id: the id of the memory to be programmed
+    .start: the first byte to read
+    .end: the last byte to read
+\end{lstlisting}}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{Chapter7-Tools-Demos/res/utils_power.PNG}
-    \caption{Start and shutdown commands.}
-    \label{fig:tools/st_sd}
-\end{figure}
+
+To switch on and off the system, two commands are provided: start and shutdown.
+
+{\small
+\begin{lstlisting}[caption=Start and shutdown commands.]
+-st, --start
+Starts the machine
+
+-sd, --shutdown
+Stops the machine
+\end{lstlisting}}
 
 \subsection{Mask Drawer}
 
@@ -79,7 +89,7 @@ there are five buttons.
 Four are used to select the state to be applied: keep, primary color, secondary color and clear. 
 Once a state has been selected, simply click on the grid to change the state of the pixel. A square 
 on the grid represents a pixel. If the mouse is held down on the left button, all the cells through 
-which the cursor passes will have their state changed. It is also possible to simply click one cell 
+which the cursor passes have their state changed. It is also possible to simply click one cell 
 by one cell. The right click is a shortcut to the keep state. Once the mask is drawn, it can be 
 saved as a binary file by clicking on generate. Note that the mask drawer takes as argument the 
 name of the file, without its extension. If this file already exists, it is opened and its edition 
@@ -92,21 +102,21 @@ can be resumed. If it does not exist, it is created.
     \label{fig:tools/mask_drawer}
 \end{figure}
 
-\section{Assembler demonstrations}
+\section{Assembly demonstrations}
 
 Once the implementation of the system was completed, I was fortunate to be put in contact and have 
 a discussion with two Intel employees, Nadel Alexander research scientist at Intel Israel and 
 Gyuszi Suto principal engineer at Intel Oregon. During this discussion, they provided us with 
 guidance on how it was appropriate to verify the system. The easiest way, for them, was to perform 
 several demonstrations using the different parts of the system and verify experimentally that 
-everything worked. This is far from the verification methods presented in an article 
+everything worked. This is far from the verification methods presented in an article \cite{intel} 
 explaining how verification is done at Intel that Nadel Alexander suggested reading. But doing such 
 verification (formal verification and so on) would be the work of one or more master theses. 
 Therefore, after discussion and reading of the article, it was decided to use the experimental 
 approach, in addition to the simulations done on the ALU to prove that some confidence can be given 
 to this system. The demonstrations are explained in this section.
 
-\subsection{Assembler libraries}
+\subsection{Assembly libraries}
 
 Before moving on to the demos, this section briefly describes the libraries written for this job to 
 simplify programming for users. The first one gpu\_utils provides all the functions to use the gpu. 
@@ -121,6 +131,7 @@ problem consists of moving a stack of N elements of different dimensions that ar
 widest at the base to the narrowest at the top of the tower. To do this, the elements can be moved 
 one by one and placed on a stack.
 %, always satisfying the condition that no element stands on top of a smaller one  PF: OK, said later
+% QP read
  There are three stacks. The tower is initially placed on one of 
 them. For a move to be valid, the element at the top of the stack on which the moved element is to 
 be placed must be larger than this one. In other words, an element must always be placed on top of 
@@ -131,6 +142,7 @@ movement, there is a wait so that the resolution is possible to follow. This dem
 action on the system developed in this work is available on 
 \href{https://www.youtube.com/watch?v=0W0SXzncl-Q}{YouTube}.
 % PF make sure links appear in some different style to show people can click
+% QP done
 
 \subsection{Stacker game}
 
@@ -139,7 +151,7 @@ been added. However, here the task was delegated to a friend,
 Gauderic Schnackers who is a graduated physicist engineer. This allowed two things. First this
 validated the whole system, but it also validated the accessibility of the system. This is important 
 as the system is to be used as laboratory material in an introductory course. Since Gauderic had 
-never worked so low on a machine and never programmed in assembler, he was the perfect tester. 
+never worked so low on a machine and never programmed in assembly, he was the perfect tester. 
 
 This game is very simple, the goal is to stack sticks of a certain length to the top of the screen. 
 If two sticks don't stack perfectly, the protruding part of the stick is subtracted and the next 

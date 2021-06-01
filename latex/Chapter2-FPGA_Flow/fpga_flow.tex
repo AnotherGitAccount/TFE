@@ -16,7 +16,7 @@ the inputs and outputs of the FPGA. This step is named I/O Planing in Figure \re
 \begin{figure}[ht]
     \centering
     \includegraphics[scale=0.5]{Chapter2-FPGA_Flow/res/blockdiagram-quartus-flow.png}
-    \caption{Intel FPGA design flow on Quartus}
+    \caption{Intel FPGA design flow on Quartus \cite{quartus}.}
     \label{fig:flow/design_flow}
 \end{figure}
 
@@ -24,6 +24,7 @@ the inputs and outputs of the FPGA. This step is named I/O Planing in Figure \re
 
 % PF generally, in computer science, the user is female: her design
 % not important.  I would use "her/his"
+% QP OK, there are to many him/his to modify so I didn't do it
 During this I/O Planing step, the user has to choose which input or output of his design goes to 
 which physical input or output of the FPGA. It is also during this step that the types of I/Os, the 
 standards they should use etc. are set. In the context of this work, this step could be skipped. 
@@ -87,7 +88,7 @@ is registered. The corresponding circuit is shown in Figure
 \ref{fig:verilog/register_and}.
 
 {\small
-\begin{lstlisting}[language=Verilog, caption=Verilog Registered AND gate example]
+\begin{lstlisting}[language=Verilog, caption=Verilog Registered AND gate example.]
 module registered_and(
     clk,
     input0,
@@ -125,7 +126,7 @@ endmodule
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter2-FPGA_Flow/res/register_and}
-    \caption{Intel FPGA design flow on Quartus}
+    \caption{Intel FPGA design flow on Quartus.}
     \label{fig:verilog/register_and}
 \end{figure}
 
@@ -139,17 +140,19 @@ describing the module just defined.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{Chapter2-FPGA_Flow/res/megawizard.PNG}
-    \caption{IP creation Mega Wizard window}
+    \caption{IP creation Mega Wizard window.}
     \label{fig:tools/megawizard}
 \end{figure}
 
 \subsection{Interconnect Design Entry}
 
 This step is equivalent to the simple design entry, i.e., the goal is to describe the architecture. 
-However, as the tool to design the interconnect is specific, a section is dedicated to it. As discussed previously the interconnect is the part of the architecture that links the FPGA and the ARM. The 
+However, as the tool to design the interconnect is specific, a section is dedicated to it. 
+As discussed previously the interconnect is the part of the architecture that links the FPGA and the ARM. The 
 use of the buses is done through several signals, which can quickly become intricate to 
 maintain directly through Verilog files. The specific tool for this, Qsys, allows to link 
-the masters and slaves of the FPGA to those of the ARM processor in a graphic interface. In this 
+the masters and slaves of the FPGA to those of the ARM processor in a graphic interface. In fact,
+one can add several slaves or masters in QSys and link them to the desired bridge.  In this 
 tool, the address space of each slave has to be specified. Qsys checks if the specified 
 addresses are not outside the address space of the master to which they are connected. Figure \ref{fig:tools/qsys} 
 shows the interface to the HPS (ARM processor) and the connections to a slave.
@@ -168,7 +171,7 @@ programming software.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter2-FPGA_Flow/res/qsys.PNG}
-    \caption{QSys window with an HPS named hps\_0 and a slave module named mm\_bus}
+    \caption{QSys window with an HPS named hps\_0 and a slave module named mm\_bus.}
     \label{fig:tools/qsys}
 \end{figure}
 
@@ -185,6 +188,7 @@ bus, ... Finally, a master-slave connection is shown in blue.
 
 % PF I must say that this above section is a bit more abstract to me, most probably because I do not see
 % clearly what you are doing with these connections
+% QP I added a sentence in paragraph 1 but I don't see how to better explain.
 
 \subsection{Simulation}
 
@@ -211,7 +215,7 @@ These two steps are the firsts of the compilation. The compiler transforms the d
  \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter2-FPGA_Flow/res/rtl.PNG}
-    \caption{The beta machine CPU high level view in RTL viewer}
+    \caption{The beta machine CPU high level view in RTL viewer.}
     \label{fig:tools/rtl}
 \end{figure}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210507224633" modified="D:20210509212542"/>
+<info created="D:20210507224633" modified="D:20210602005210"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -358,7 +358,7 @@ bus\_rw = 0</text>
 240 800 l
 h
 </path>
-<text matrix="1 0 0 1 -13.5212 -8.5" transformations="translations" pos="176 784" stroke="black" type="label" width="60.476" height="10.756" depth="3.59" valign="baseline" size="Large">Iddle (00)</text>
+<text matrix="1 0 0 1 -9.61916 -8.5" transformations="translations" pos="176 784" stroke="black" type="label" width="52.672" height="10.756" depth="3.59" valign="baseline" size="Large">Idle (00)</text>
 <text matrix="1 0 0 1 -30.8116 1.09" transformations="translations" pos="165.114 755.35" stroke="black" type="label" width="116.829" height="6.919" depth="0.83" valign="baseline">address = bus\_address $\times$ 4</text>
 <text matrix="1 0 0 1 8.1453 -1.06" transformations="translations" pos="164.355 749.283" stroke="black" type="label" width="40.432" height="6.42" depth="0" valign="baseline">wren = 0</text>
 <text matrix="1 0 0 1 -19.1164 -2.887" transformations="translations" pos="165.872 743.216" stroke="black" type="label" width="91.922" height="6.926" depth="1.93" valign="baseline">bus\_acknowledge = 0</text>

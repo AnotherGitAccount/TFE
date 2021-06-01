@@ -37,7 +37,7 @@ screen. Figure \ref{fig:gpu/screen_size} summarizes all this.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/screen_size}
-    \caption{Useful screen area in the physical screen}
+    \caption{Useful screen area in the physical screen.}
     \label{fig:gpu/screen_size}
 \end{figure}
 
@@ -49,7 +49,7 @@ drawn between two tiles as shown in Figure \ref{fig:gpu/mask_2tiles}.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/mask_2tiles}
-    \caption{Mask overlapping two tiles}
+    \caption{Mask overlapping two tiles.}
     \label{fig:gpu/mask_2tiles}
 \end{figure}
 
@@ -78,7 +78,7 @@ a tiling.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/screen_tiling}
-    \caption{Screen tiling}
+    \caption{Screen tiling.}
     \label{fig:gpu/screen_tiling}
 \end{figure}
 
@@ -90,7 +90,7 @@ once, which validates the possibility of representing all tiles using four disti
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/screen_tiling_cases}
-    \caption{Screen tiling selection cases}
+    \caption{Screen tiling selection cases.}
     \label{fig:gpu/screen_tiling_cases}
 \end{figure}
 
@@ -108,6 +108,7 @@ operations of a mask.
 % PF In general here, I do not see well the constraints imposed by the material vs the design choices.
 % PF I am a bit confused: I do not understand the relation to the 4 bits per color in the graphic memory and the primary/secondary color in masks
 % PF This is made clear later...
+% QP Read
 
 
 \begin{table}[H]
@@ -121,7 +122,7 @@ operations of a mask.
     Set secondary                                                         & 0b10                \\ \hline
     Reset                                                                 & 0b11                \\ \hline
     \end{tabular}
-    \caption{Mask operations}
+    \caption{Mask operations.}
     \label{tab:mask_op}
 \end{table}
 
@@ -132,7 +133,7 @@ This correspondence is shown in Figure \ref{fig:gpu/mask_vector}.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/mask_vector}
-    \caption{Mask vector representation}
+    \caption{Mask vector representation.}
     \label{fig:gpu/mask_vector}
 \end{figure}
 
@@ -151,7 +152,7 @@ Figure \ref{fig:gpu/store_address}.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/store_address}
-    \caption{Store instruction address}
+    \caption{Store instruction address.}
     \label{fig:gpu/store_address}
 \end{figure}
 
@@ -164,13 +165,13 @@ Figure \ref{fig:gpu/store_data}.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/store_data}
-    \caption{Store instruction data}
+    \caption{Store instruction data.}
     \label{fig:gpu/store_data}
 \end{figure}
 
 \subsection{VESA protocol}
 
-The VESA protocol works exactly like the VGA protocol. That is, four signals are present. On the 
+The VESA protocol \cite{vesa} works exactly like the VGA protocol. That is, four signals are present. On the 
 one hand there is the 24 bit color signal (8 bits for each primary color, only 4 are truly used
 here, the least significant bits are replaced by zeros), the vertical and 
 horizontal synchronization signals and the display enable signal. The synchronization signals 
@@ -204,7 +205,7 @@ on the screen.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/screen_vesa}
-    \caption{VESA virtual screen schematic}
+    \caption{VESA virtual screen schematic.}
     \label{fig:gpu/screen_vesa}
 \end{figure}
 
@@ -223,14 +224,14 @@ on the screen.
     VBP             & Vertical Back Porch       & 23                                                                    \\ \hline
     VDEN            & Vertical Display Enable   & 480                                                                   \\ \hline
     \end{tabular}
-    \caption{VESA 848x480 counts}
+    \caption{VESA 848x480 counts.}
     \label{tab:gpu/vesa}
 \end{table}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/vesa_signals.PNG}
-    \caption{VESA signals - video signal represents both display enable signals}
+    \caption{VESA signals - video signal represents both display enable signals \cite{vesa}.}
     \label{fig:gpu/vesa_signals}
 \end{figure}
 
@@ -264,7 +265,7 @@ is therefore $4 \times 64$ = 256 bits.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/tile_ids}
-    \caption{Tile identifiers}
+    \caption{Tile identifiers.}
     \label{fig:gpu/tile_ids}
 \end{figure}
 
@@ -301,21 +302,21 @@ locations of these tiles and their respective switches are set according to the 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/memory_unit}
-    \caption{Memory Unit}
+    \caption{Memory Unit.}
     \label{fig:gpu/memory_unit}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/memory_unit_in}
-    \caption{Memory Unit internal circuit}
+    \caption{Memory Unit internal circuit.}
     \label{fig:gpu/memory_unit_in}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.55]{Chapter4-GPU_CLKU/res/memory_in_part1}
-    \caption{Memory internal circuit}
+    \caption{Memory internal circuit.}
     \label{fig:gpu/memory_in}
 \end{figure}
 
@@ -326,7 +327,7 @@ are put together in a bus to simplify the representation of the module.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/memory}
-    \caption{Memory}
+    \caption{Memory.}
     \label{fig:gpu/memory}
 \end{figure}
 
@@ -341,14 +342,14 @@ address is equal to 255, then the mask sent to the data\_read output is a consta
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/mask_memory_in}
-    \caption{Mask memory internal circuit}
+    \caption{Mask memory internal circuit.}
     \label{fig:gpu/mask_memory_in}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter4-GPU_CLKU/res/mask_memory}
-    \caption{Mask memory}
+    \caption{Mask memory.}
     \label{fig:gpu/mask_memory}
 \end{figure}
 
@@ -371,14 +372,14 @@ by line. The circuit and the interface of the shifter unit are respectively give
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/shifter_unit_in}
-    \caption{Shifter unit internal circuit}
+    \caption{Shifter unit internal circuit.}
     \label{fig:gpu/shifter_unit_in}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter4-GPU_CLKU/res/shifter_unit}
-    \caption{Shifter unit}
+    \caption{Shifter unit.}
     \label{fig:gpu/shifter_unit}
 \end{figure}
 
@@ -393,7 +394,7 @@ identified by id 0. For the others, the offsets are off\_1 = (off\_x - 8, off\_y
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/shifter_offsets}
-    \caption{Masks offsets}
+    \caption{Masks offsets.}
     \label{fig:gpu/shifter_offsets}
 \end{figure}
 
@@ -403,14 +404,14 @@ Figure \ref{fig:gpu/shifter} contains the shifter interface.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/shifter_in}
-    \caption{Shifter internal circuit}
+    \caption{Shifter internal circuit.}
     \label{fig:gpu/shifter_in}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/shifter}
-    \caption{Shifter}
+    \caption{Shifter.}
     \label{fig:gpu/shifter}
 \end{figure}
 
@@ -429,7 +430,7 @@ made up of the three color signals of the corresponding tile.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/mlu}
-    \caption{Mask Logic Unit}
+    \caption{Mask Logic Unit.}
     \label{fig:gpu/mlu}
 \end{figure}
 
@@ -459,7 +460,7 @@ region are given in Figure \ref{fig:gpu/gc_screen}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/gc_screen}
-    \caption{Counters range and useful screen}
+    \caption{Counters range and useful screen.}
     \label{fig:gpu/gc_screen}
 \end{figure}
 
@@ -470,14 +471,14 @@ on the values of h\_cnt and v\_cnt is given in Figure \ref{fig:gpu/gc_in}. The i
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter4-GPU_CLKU/res/gc}
-    \caption{Graphic counter}
+    \caption{Graphic counter.}
     \label{fig:gpu/gc}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/gc_in}
-    \caption{Graphic counter internal circuit}
+    \caption{Graphic counter internal circuit.}
     \label{fig:gpu/gc_in}
 \end{figure}
 
@@ -493,7 +494,7 @@ only a condition, it is not shown. The interface is shown in Figure \ref{fig:gpu
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/synchronizer}
-    \caption{Synchronizer}
+    \caption{Synchronizer.}
     \label{fig:gpu/synchronizer}
 \end{figure}
 
@@ -507,7 +508,7 @@ Figure \ref{fig:gpu/i2c}.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{Chapter4-GPU_CLKU/res/i2c}
-    \caption{I2C HDMI Config}
+    \caption{I2C HDMI Config.}
     \label{fig:gpu/i2c}
 \end{figure}
 
@@ -547,14 +548,14 @@ VESA protocol clock that is used. It is called gpu\_clk. The GPU interface is av
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Chapter4-GPU_CLKU/res/gpu_in}
-    \caption{GPU internal circuit}
+    \caption{GPU internal circuit.}
     \label{fig:gpu/gpu_in}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/gpu}
-    \caption{GPU}
+    \caption{GPU.}
     \label{fig:gpu/gpu}
 \end{figure}
 
@@ -574,6 +575,6 @@ is given in Figure \ref{fig:clku/clku}.
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1.0]{Chapter4-GPU_CLKU/res/clku}
-    \caption{CLKU}
+    \caption{CLKU.}
     \label{fig:clku/clku}
 \end{figure}

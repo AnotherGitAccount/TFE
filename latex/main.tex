@@ -11,10 +11,13 @@
 \usepackage{color}
 \usepackage[table,xcdraw]{xcolor}
 \usepackage{listings}
+\lstset{
+    frame=single
+}
 \usepackage{caption}
-\DeclareCaptionFont{white}{\color{white}}
-\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\linewidth}{#3}}}
-\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\DeclareCaptionFont{white}{\color{black}}
+\DeclareCaptionFormat{listing}{\colorbox{white}{\parbox{\linewidth}{#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white,font=Large}
 
 \setlength\parskip{0.5em}
 \newtheorem{theorem}{Theorem}

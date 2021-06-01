@@ -11,7 +11,7 @@ the Cyclone V.
 \section{Communication between ARM and FPGA sides}
 
 The communication between the two parts takes place via one of the previously mentioned bridges using 
-the Avalon protocol described by Intel. This protocol allows 
+the Avalon protocol \cite{avalon} described by Intel. This protocol allows 
 high-speed communication. The Avalon interface has different sub-interfaces for different types 
 of communication. Each type is adapted to certain applications. In this project where the protocol 
 is used to communicate between master and slave devices, the Avalon MM is used. 
@@ -33,7 +33,7 @@ are then sent to the master in the order of their addresses.
 \begin{figure}[ht!]
   \center
   \includegraphics[width=\linewidth]{"Chapter5-MAU_CTRLU/res/avalon_mm_read.png"}
-  \caption{Read operation using Avalon MM}
+  \caption{Read operation using Avalon MM \cite{avalon}.}
   \label{fig:avalon/mm_read}
 \end{figure}
 
@@ -50,7 +50,7 @@ as soon as it goes up again.
 \begin{figure}[ht!]
   \center
   \includegraphics[width=\linewidth]{"Chapter5-MAU_CTRLU/res/avalon_mm_write.png"}
-  \caption{Write operation using Avalon MM}
+  \caption{Write operation using Avalon MM \cite{avalon}.}
   \label{fig:avalon/mm_write}
 \end{figure}
 
@@ -72,13 +72,14 @@ an acknowledgement from the external slave. When this timer reaches 0, the reque
 \begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/external_bus_bridge.PNG"}
-    \caption{Avalon to external bus bridge interface and signals}
+    \caption{Avalon to external bus bridge interface and signals \cite{bus}.}
     \label{fig:mau/bus_bridge}
 \end{figure}
 
-The protocol is considered simpler because it offers an interface closer to that used by the memories 
-than that of the Avalon.
+Compared to the Avalon protocol, this protocol is considered simpler because it offers an interface 
+closer to that used by the memories.
 % PF above sentence is heavy, try to simplify and make clearer
+% QP OK
 Indeed, the usual signals address, write data, read data and R$\overline{W}$ are 
 present. Moreover, this protocol is very simple to use. Indeed, as can be seen in Figure \ref{fig:mau/bus_bridge_protocol}. The master 
 places all the necessary elements on the bus and then switches the bus enable signal to high. This means 
@@ -90,7 +91,7 @@ during a clock cycle to validate the transaction.
 \begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/external_bus_timings.PNG"}
-    \caption{External bus protocol timings}
+    \caption{External bus protocol timings \cite{bus}.}
     \label{fig:mau/bus_bridge_protocol}
 \end{figure}
 
@@ -120,7 +121,7 @@ GPU format.
     I/Os (IOU)                                                    & 0x0030 0000   & 0x0033 FFFF  & 256kB             & 32                 \\ \hline
     Mask Memory (GPU)                                             & 0x0040 0000   & 0x0040 0FFF  & 4096B             & 128                \\ \hline
     \end{tabular}
-    \caption{Memory bus description}
+    \caption{Memory bus description.}
     \label{mau/bus}
 \end{table}
 
@@ -135,7 +136,7 @@ that they can be used from the FPGA. They are the ones that are connected to the
 \begin{figure}[ht!]
     \center
     \includegraphics[width=\linewidth]{"Chapter5-MAU_CTRLU/res/qsys_mau.PNG"}
-    \caption{Avalon to external bus bridges connections in Qsys}
+    \caption{Avalon to external bus bridges connections in Qsys.}
     \label{fig:avalon/bus}
 \end{figure}
 
@@ -153,10 +154,11 @@ has is that the address is not multiplied by 4 in the Idle state.
 \begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/mau_fsm"}
-    \caption{Memory Access 32 finite state machine}
+    \caption{Memory Access 32 finite state machine.}
     \label{fig:ma_fsm}
 \end{figure}
 % PF : change Iddle to Idle in the fsm above
+% QP : Done
 
 This state machine simply follows the protocol described earlier. It only acts when the bus is high 
 and sends an acknowledge during a clock cycle once the request is executed (the finite state machine 
@@ -167,14 +169,14 @@ address. The interfaces of the memory access are given in Figures \ref{fig:ma32}
 \begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/memory_access_32"}
-    \caption{Memory Access 32}
+    \caption{Memory Access 32.}
     \label{fig:ma32}
 \end{figure}
 
 \begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/memory_access_128"}
-    \caption{Memory Access 128}
+    \caption{Memory Access 128.}
     \label{fig:ma128}
 \end{figure}
 
@@ -189,14 +191,14 @@ and a bus representation is used. However, all signals are shown in the internal
 \begin{figure}[ht!]
     \center
     \includegraphics[width=\linewidth]{"Chapter5-MAU_CTRLU/res/mau_in"}
-    \caption{Memory Access Unit internal circuit}
+    \caption{Memory Access Unit internal circuit.}
     \label{fig:mau_in}
 \end{figure}
 
 \begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/mau"}
-    \caption{Memory Access Unit}
+    \caption{Memory Access Unit.}
     \label{fig:mau}
 \end{figure}
 
@@ -225,7 +227,7 @@ The connection of the parallel IO in QSys is shown in Figure \ref{fig:qsys/ctrlu
 \begin{figure}[ht!]
     \center
     \includegraphics[width=\linewidth]{"Chapter5-MAU_CTRLU/res/qsys_ctrlu.PNG"}
-    \caption{Parallel IO connections in QSys}
+    \caption{Parallel IO connections in QSys.}
     \label{fig:qsys/ctrlu}
 \end{figure}
 
@@ -253,7 +255,7 @@ coming from the beta machine to ensure that theirs values are coherent.
 \begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/ctrlu_fsm"}
-    \caption{Finite state machine of the Control Unit}
+    \caption{Finite state machine of the Control Unit.}
     \label{fig:ctrlu/fsm}
 \end{figure}
 
@@ -270,13 +272,13 @@ Unit is therefore the one given in Figure \ref{fig:ctrlu}.
 \begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/ctrlu_summary"}
-    \caption{ARM, Beta Machine and CTRLU interaction summary}
+    \caption{ARM, Beta Machine and CTRLU interaction summary.}
     \label{fig:ctrlu/summary}
 \end{figure}
 
 \begin{figure}[ht!]
     \center
     \includegraphics[scale=0.8]{"Chapter5-MAU_CTRLU/res/ctrlu"}
-    \caption{Control Unit}
+    \caption{Control Unit.}
     \label{fig:ctrlu}
 \end{figure}
