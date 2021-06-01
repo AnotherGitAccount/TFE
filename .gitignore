@@ -4,6 +4,10 @@
 *.fls
 *.synctex.gz
 *.log
+*.bbl
+*.blg
+*.out
+*.toc
 hardware/db/
 hardware/greybox_tmp/
 hardware/incremental_db/
