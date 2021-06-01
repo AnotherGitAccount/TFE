@@ -1,3 +1,28 @@
+\chapter*{Acknowledgements}
+
+I am grateful to all those who helped and supported me during this work. In particular professors 
+Fontaine Pascal and Mathy Laurent who were very regular in their follow-up by participating with me 
+in regular meetings. In addition to that, they were available to answer all my questions during the 
+whole duration of this work, which was very reassuring and helpful. I would like to thank Professor 
+Fontaine in particular for his very careful review of this work and for the many pertinent 
+suggestions that resulted from it. But also for putting me in touch with people who could guide me 
+on certain choices for this work.
+
+These two people are Nadel Alexander who is a research scientist at Intel Israel and Gyuszi 
+Suto a principal engineer at Intel Oregon. I thank them greatly for the time they devoted to me through 
+several emails and a video conference meeting during which I could present my work and discuss with 
+them. They specifically helped me in the choices of how I could 
+improve the confidence one could have in a Central Processing Unit (CPU) such as the one developed in this work.
+
+I would also like to thank Mormont Romain, a PhD student at the University of Liège in machine learning
+who provided an assembler software that outputs beta machine code. He also took 
+the time to explain me how it works and how to use it by mail. One last person directly involved in 
+this work is Schnackers Gauderic, a physics engineer who took the time to try out the system 
+designed in this work by programming a 2D video game on it. I thank him for this and for his friendship.
+
+Finally, I could not end my thanks without thinking of all my family and friends who have always been 
+very supportive and who knew how to entertain me when I wanted to work too much.
+
 \chapter*{Introduction}
 
 Although some liberties have been taken at the end of the work, the main objective of this master thesis
@@ -5,7 +30,7 @@ is to provide a laboratory tool for the computation structures course INFO0012-2
 the course needed a replica of the beta machine, an Harvard architecture based CPU that is learned
 throughout the course. This machine had to be physically implemented so that the students could 
 really take it in hand rather than using simulations. In order to design it in hardware, it was 
-decided to work on an FPGA, a Cyclone V from Altera to be precise. In fact, everything was done on a 
+decided to work on an Field Programmable Gate Array (FPGA), a Cyclone V from Altera to be precise. In fact, everything was done on a 
 development board, the DE10-Nano from Terasic. This allows to focus almost exclusively on the logic and 
 structural implementation rather than on all the electrical details intrinsic to such 
 implementations.
@@ -26,30 +51,29 @@ Now that the groundwork has been laid, the core of the matter can be addressed. 
 third chapter contains a description of the beta machine. In this description, the reader is 
 made aware of the dimensioning of the machine: the word size, the endianness of the machine, its 
 instruction set, etc. Following this, the implementation of the CPU on FPGA is presented in detail. 
-An informal verification by simulation of the program counter and the ALU is finally conducted.
+The IO unit which provides access to several IOs of the DE10-nano board to the CPU is also
+described in this chapter.
 
-Chapter 4 covers the design of the Memory Access Unit (MAU) which gives access to the memories of 
+At this stage, the specifications are fulfilled for the hardware part of this master thesis. That
+said, it would have been a shame to deliver this machine without any interface other than what is 
+possible using the IO unit. This is why the following chapter details the implementation of a 
+graphics accelerator which will be abusively called GPU (Graphics Processing Unit). The HDMI controller and the protocols 
+allowing its use are introduced beforehand. The clock unit (CLKU) is also presented.
+
+Chapter 5 covers the design of the Memory Access Unit (MAU) which gives access to the memories of 
 the beta machine from the ARM processor. The description of the Control Unit (CTRLU) allowing the 
 startup and shutdown of the machine from the ARM processor is given here. The communication 
 protocol common to both units is first presented before detailing the implementations. 
 
-At this stage, the specifications are fulfilled for the hardware part of this master thesis. That
-said, it would have been a shame to deliver this machine without any interface other than what is 
-possible from the ARM processor. This is why the following chapter details the implementation of a 
-graphics accelerator which will be abusively called GPU. The HDMI controller and the protocols 
-allowing its use are introduced beforehand. The clock unit (CLKU) is also presented just after a 
-brief introduction to PLLs.
-
 In order to provide easy access to the machine, an operating system must be installed on the ARM 
-part of the FPGA. Chapter 6 discusses the choices made at this level and what has been tried 
-for this project. A brief discussion of the booting process and the creation of images are included.
+part of the FPGA. Chapter 6 discusses the choices made at this level.
 
-Then, a chapter is dedicated to the different tools developed to facilitate the access and the 
-programming of the machine by the users.
-
-Finally, the last chapter of this document lists different demonstrations programmed in assembly language
-that serve as proof of concept. The assembly libraries written for this work are also briefly 
-presented.
+Finally, a chapter is dedicated to the different tools developed to facilitate the access and the 
+programming of the machine by the users. This last chapter also lists different demonstrations 
+programmed in assembly language that serve as proof of concept. The assembly libraries written for 
+this work are also briefly presented.
 
 % PF: when you first use an acronym, define it
+% QP: Ok
 % PF: do not forget acknowledgements
+% QP: Job done!
