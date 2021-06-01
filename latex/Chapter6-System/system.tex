@@ -9,7 +9,7 @@ ARM processor are detailed.
 
 In the previous sections, the ARM-FPGA interconnect was described using QSys. Now that all the 
 required elements have been defined, all that remains is to generate the HPS system from QSys. 
-This is done simply by pressing the generate button and choosing verilog as output language in QSys.
+This is done simply by pressing the generate button and choosing Verilog as output language in QSys.
 This operation generates a module that can be used in the project. In fact, the module gives access 
 to all the signals exported to QSys (as input or output depending on the signal). In addition to 
 that, some signals such as reset, clock, etc. are present in the module interface. Inside the HPS 
@@ -58,18 +58,18 @@ IOs of the FPGA.
 \section{ARM side Operating System}
 
 The ARM processor can be used in two ways. Either in bare metal where the programming will be done 
-directly in assembler on the processor. This method has the disadvantage of not being very 
+directly in assembly on the processor. This method has the disadvantage of not being very 
 accessible and of being expensive. The bare metal programming tools for the processor are not 
 free and are professional licensed softwares. The second method is to install an operating system. 
 This can be done by flashing an SD card that serves as storage for the ARM processor. On this card 
 are created several partitions containing the bootloader (u-boot generally), the OS (Angström on 
-the images of Terasic but any linux can be adapted) and the programming file of the FPGA part. In 
+the images of Terasic but any Linux can be adapted) and the programming file of the FPGA part. In 
 this configuration, the bootloader configures the FPGA before launching the operating system. 
 
 The image used to flash the SD card in this work is one provided by Intel using u-boot and ubuntu. The 
 Terasic image containing Angström was also tested but this distribution is no longer maintained, so 
 the image was not selected for use. The big disadvantage of the Intel image is that it takes up a 
-lot more space, Ubuntu being much larger than a linux embedded like Angström. It could be the work of 
+lot more space, Ubuntu being much larger than an embedded Linux like Angström. It could be the work of 
 another master thesis to improve the choice of the OS. Once the OS is installed and booted, one just 
 has to program on it to be able to interact with the system on FPGA. This is the subject of the next 
 section.
