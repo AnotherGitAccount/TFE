@@ -1,6 +1,9 @@
 \chapter{GPU and Clock Unit design}
 
 \section{GPU}
+
+\href{https://github.com/AnotherGitAccount/TFE/tree/master/hardware/rtl/gpu}{Github link to the verilog files of the GPU.}
+
 The GPU bears its name rather badly because it is not really programmable. But this is the only name 
 that was found for it and therefore kept. This unit provides a 
 graphic memory and the tools to draw patterns of 8x8 pixels, called masks. The writing in this 
@@ -560,6 +563,8 @@ VESA protocol clock that is used. It is called gpu\_clk. The GPU interface is av
 \end{figure}
 
 \section{Clock Unit (CLKU)}
+
+\href{https://github.com/AnotherGitAccount/TFE/tree/master/hardware/rtl/clku}{Github link to the verilog files of the CTRLU.}
 
 As seen previously, two clocks are needed. One as high as possible for the CPU and the modules 
 working synchronously with it and one for the 33.750MHz HDMI controller. The CPU clock cannot 

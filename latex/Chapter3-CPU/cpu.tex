@@ -16,6 +16,8 @@ machine with the desired instruction set.
 
 \section{Beta machine components}
 
+\href{https://github.com/AnotherGitAccount/TFE/blob/master/hardware/rtl/cpu}{Github link to the verilog files of the CPU.}
+
 \subsection{Program counter}
 
 The program counter is a module with seven inputs (clk, clk\_en, rst, pcsel, offset, data, pc\_in) 
@@ -173,7 +175,7 @@ selecting the result that appears on the output. This value is then recorded in 
 register on the rising edge of the clock if the clk\_en is in the high state. For the ALU, there is 
 no reset, that's why the register reset is always 0.
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Chapter3-CPU/res/alu_internal}
     \caption{Arithmetic Logic Unit (ALU) internal circuit.}
@@ -827,6 +829,8 @@ the CPU and a bus representation is used. However, all signals are available in 
 \end{figure}
 
 \section{IO Unit (IOU)}
+
+\href{https://github.com/AnotherGitAccount/TFE/blob/master/hardware/rtl/iou}{Github link to the verilog files of the IOU.}
 
 The IO unit was very briefly discussed in the previous section, especially in terms of its 
 addressing by the store (ST) and load (LD) operations. It should be noted that this module is 

@@ -60,6 +60,8 @@ used. These modules are described in the sections where they are needed.
 
 \section{Memory Access Unit (MAU)}
 
+\href{https://github.com/AnotherGitAccount/TFE/tree/master/hardware/rtl/mau}{Github link to the verilog files of the MAU.}
+
 Like previously mentioned several times the MAU allows access to several memories of the machine. In order 
 to simplify the protocol in the machine, a module called Avalon to External Bus Bridge is used. This 
 module manages the Avalon protocol and exposes an interface (the external bus) using a simpler 
@@ -203,6 +205,8 @@ and a bus representation is used. However, all signals are shown in the internal
 \end{figure}
 
 \section{Control Unit (CTRLU)}
+
+\href{https://github.com/AnotherGitAccount/TFE/tree/master/hardware/rtl/ctrlu}{Github link to the verilog files of the CTRLU.}
 
 The control unit is a very simple unit. It manages the state of the machine. This means that 
 it decides whether the machine is switched on or off. Initially, the machine is switched off (alive 
