@@ -2,14 +2,12 @@
 
 The goal of this work was to design a CPU, the beta machine, for the laboratories of the Computer 
 Structures [INFO0012] 
-course at the University of Liege. As described in this document, this has been done completely. In 
+course at the University of Liège. As described in this document, this has been done completely. In 
 addition to that, access to some IOs as well as a graphical accelerator called GPU in the work has been
-implemented. They allow to add a lot of interraction for the students. In addition to that, it has 
-been made so that the values in different memories can be written and read from the ARM processor. 
+implemented. They allow to add a lot of interraction for the students. In addition, a facility to write and read the values in different memories from the ARM processor has been provided. 
 The ARM processor was chosen as the access to the system developed in this work in order to simplify 
-the access. Indeed, it is enough to know how to navigate in a linux terminal and to launch a program 
-to be able to use the system and the beta machine, which is very simple. The whole work was done 
-keeping in mind that it should be simple to use this system. Finally, several demonstrations were 
+the access.  Thanks to this, it is enough to know how to navigate in a Linux terminal and to launch a program 
+to be able to use the system and the beta machine, which is very simple. The whole work was done with simplicity in mind.  Finally, several demonstrations were 
 made to show that everything worked as it should.
 
 This work has therefore fully met its objectives. However, several things could be improved in future 
@@ -17,7 +15,7 @@ work. First, it would be possible to greatly increase the performance of the pro
 its different paths and modules. Just by removing the execution sequence, the troughput would be 
 multiplied by 7. Concerning pipelining, if it is done at all levels (especially for complex operations 
 of the alu: multiplication and division), it would increase the clock frequency of the CPU. With 
-this done correctly, it is possible to go up to 100 or 200MHz, against the current 50MHz. Then, it 
+this done correctly, it would certainly be possible to go up to 100 or 200 MHz, compared to the current 50MHz. Then, it 
 is possible to add more IOs. At least managing all the ones on the card and adding audio management 
 on the HDMI would be a nice addition. Finally, modifications to the software on the ARM side and 
 memory access on the FPGA side could allow debugging with breakpoints in the code etc., which could 
