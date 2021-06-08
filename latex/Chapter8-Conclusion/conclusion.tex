@@ -3,7 +3,7 @@
 The goal of this work was to design a harvard 32bits CPU, the beta machine, for the laboratories of the Computer 
 Structures [INFO0012] 
 course at the University of Liège. As described in this document, this has been done completely. 
-Indeed, the beta machine is implemented with arithmetic, shift, conditional branch and jump operations. As 
+The machine is implemented with arithmetic, shift, conditional branch and jump operations. As 
 it is a Harvard architecture, it has two memories: one for data (65kB) and one for instructions (131kB). In addition to 
 all this, a register file provides 32 registers of 32 bits to the machine. This is more than enough for many applications.
 
@@ -15,7 +15,7 @@ GPU, it allows rendering on a 16:9 60Hz screen with a resolution of 848x480 pixe
 576x432 can be written). The writing is done using masks that the user can program. The masks 
 allow to write 8x8 pixels per operation with two different colors (it can also be chosen to clear 
 a pixel or to keep its current value). This allows for a more efficient GPU, in fact in the best 
-case it accelerates the writing by 64, which is a great saving in clock cycles.
+case it accelerates the writing by 64, which is a great saving in terms of clock cycles.
 
 In addition, a facility to write and 
 read the values in different memories from the ARM processor has been provided. 
