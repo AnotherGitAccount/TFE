@@ -1,13 +1,28 @@
 \chapter{Conclusion}
 
-The goal of this work was to design a CPU, the beta machine, for the laboratories of the Computer 
+The goal of this work was to design a harvard 32bits CPU, the beta machine, for the laboratories of the Computer 
 Structures [INFO0012] 
-course at the University of Liège. As described in this document, this has been done completely. In 
-addition to that, access to some IOs as well as a graphical accelerator called GPU in the work has been
-implemented. They allow to add a lot of interraction for the students. In addition, a facility to write and read the values in different memories from the ARM processor has been provided. 
+course at the University of Liège. As described in this document, this has been done completely. 
+Indeed, the beta machine is implemented with arithmetic, shift, conditional branch and jump operations. As 
+it is a Harvard architecture, it has two memories: one for data (65kB) and one for instructions (131kB). In addition to 
+all this, a register file provides 32 registers of 32 bits to the machine. This is more than enough for many applications.
+
+Access to some IOs as well as a graphical accelerator called GPU in the work has been
+implemented. They allow to add a lot of interraction for the students. 
+The IO access unit is easily accessible through the CPU Load and Store operations and allows the 
+reading and/or writing of three IOs: two push buttons, four switches and eight LEDs. Concerning the 
+GPU, it allows rendering on a 16:9 60Hz screen with a resolution of 848x480 pixels (of which 
+576x432 can be written). The writing is done using masks that the user can program. The masks 
+allow to write 8x8 pixels per operation with two different colors (it can also be chosen to clear 
+a pixel or to keep its current value). This allows for a more efficient GPU, in fact in the best 
+case it accelerates the writing by 64, which is a great saving in clock cycles.
+
+In addition, a facility to write and 
+read the values in different memories from the ARM processor has been provided. 
 The ARM processor was chosen as the access to the system developed in this work in order to simplify 
 the access.  Thanks to this, it is enough to know how to navigate in a Linux terminal and to launch a program 
-to be able to use the system and the beta machine, which is very simple. The whole work was done with simplicity in mind.  Finally, several demonstrations were 
+to be able to use the system and the beta machine, which is very simple. The whole work was done with simplicity 
+in mind.  Finally, several demonstrations were 
 made to show that everything worked as it should.
 
 This work has therefore fully met its objectives. However, several things could be improved in future 
